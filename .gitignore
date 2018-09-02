@@ -8,6 +8,7 @@
 # dependencies
 /node_modules
 /functions/node_modules
+/functions/serviceAccountKey.json
 
 # IDEs and editors
 /.idea
