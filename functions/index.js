@@ -11,7 +11,7 @@ admin.initializeApp({
   databaseURL: 'https://superlist-80690.firebaseio.com'
 });
 
-const db = admin.firestore();
+const fsDB = admin.firestore();
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
