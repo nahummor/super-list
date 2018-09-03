@@ -1,0 +1,9 @@
+.container {
+  margin-top: 0.5rem;
+  height: calc(100vh - 4rem - 0.5rem);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+}

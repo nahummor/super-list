@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nm-app-header-menu',
@@ -8,7 +9,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class AppHeaderMenuComponent implements OnInit {
   @Output()
   sidenavToggle = new EventEmitter<void>();
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -17,7 +18,7 @@ export class AppHeaderMenuComponent implements OnInit {
   }
 
   public onExit() {
-    console.log('Exit ...');
+    this.router.navigate(['auth/login']); // navigate to login component
   }
 
   public onLogin() {

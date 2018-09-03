@@ -6,17 +6,8 @@
   <mat-sidenav-content>
 
     <nm-app-header-menu (sidenavToggle)="sidenav.toggle()"></nm-app-header-menu>
-
     <div class="app-container">
-      <button mat-raised-button
-              color="primary">Send</button>
-      <button mat-raised-button
-              color="accent">Send</button>
-      <button mat-raised-button
-              color="warn">Send</button>
-      <h1>
-        Welcome to {{ title }}!
-      </h1>
+      <router-outlet></router-outlet>
     </div>
 
   </mat-sidenav-content>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -9,7 +10,7 @@ export class AppSidenavMenuComponent implements OnInit {
   @Output()
   closeSideNav = new EventEmitter<void>();
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -22,10 +23,13 @@ export class AppSidenavMenuComponent implements OnInit {
   }
 
   public onExit() {
-    console.log('Exit.....');
+    this.closeSideNav.emit();
+    this.router.navigate(['/auth/login']);
   }
 
   public onLogin() {
+    this.closeSideNav.emit();
+    // navigate to application
     console.log('Login....');
   }
 }
