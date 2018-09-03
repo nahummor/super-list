@@ -1,0 +1,15 @@
+@import './shared/_varibales.scss';
+
+mat-sidenav {
+  width: 10rem;
+
+  @media (min-width: $xs-screen-size) {
+    width: 16rem;
+  }
+}
+
+.app-container {
+  margin-top: 0.5rem;
+  text-align: center;
+  height: calc(100vh - 4rem - 0.5rem);
+}

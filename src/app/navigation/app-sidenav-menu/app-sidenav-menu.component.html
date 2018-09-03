@@ -1,0 +1,28 @@
+<mat-nav-list>
+  <a mat-list-item
+     (click)="onToggleSidenav()"
+     routerLink="/newUser">
+    <mat-icon>face</mat-icon>
+    <span class="nav-caption">משתמש חדש</span>
+  </a>
+  <a mat-list-item
+     (click)="onToggleSidenav()"
+     routerLink="/newUser">
+    <mat-icon>face</mat-icon>
+    <span class="nav-caption">פעולה נוספת</span>
+  </a>
+  <mat-list-item>
+    <button mat-icon-button
+            *ngIf="isUserAuth()"
+            (click)="onExit()">
+      <mat-icon>eject</mat-icon>
+      <span class="nav-caption">יציאה</span>
+    </button>
+    <button mat-icon-button
+            *ngIf="!isUserAuth()"
+            (click)="onLogin()">
+      <mat-icon>eject</mat-icon>
+      <span class="nav-caption">כניסה</span>
+    </button>
+  </mat-list-item>
+</mat-nav-list>

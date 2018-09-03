@@ -1,11 +1,23 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <button mat-raised-button
-          color="primary">Send</button>
-  <button mat-raised-button
-          color="accent">Send</button>
-  <button mat-raised-button
-          color="warn">Send</button>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav
+               role="navigation">
+    <nm-app-sidenav-menu (closeSideNav)="sidenav.toggle()"></nm-app-sidenav-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <nm-app-header-menu (sidenavToggle)="sidenav.toggle()"></nm-app-header-menu>
+
+    <div class="app-container">
+      <button mat-raised-button
+              color="primary">Send</button>
+      <button mat-raised-button
+              color="accent">Send</button>
+      <button mat-raised-button
+              color="warn">Send</button>
+      <h1>
+        Welcome to {{ title }}!
+      </h1>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
