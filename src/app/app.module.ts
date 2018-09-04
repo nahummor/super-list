@@ -11,6 +11,7 @@ import { AppSidenavMenuComponent } from './navigation/app-sidenav-menu/app-siden
 import { AuthModule } from './auth/auth.module';
 import { ErrorMsgComponent } from './messages-box/error-msg/error-msg.component';
 import { OkMsgComponent } from './messages-box/ok-msg/ok-msg.component';
+import { MainComponent } from './super-list/main/main.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { OkMsgComponent } from './messages-box/ok-msg/ok-msg.component';
     AppHeaderMenuComponent,
     AppSidenavMenuComponent,
     ErrorMsgComponent,
-    OkMsgComponent
+    OkMsgComponent,
+    MainComponent
   ],
   imports: [
     AppRoutingModule,
