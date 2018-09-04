@@ -8,7 +8,10 @@
 # dependencies
 /node_modules
 /functions/node_modules
+#API Keys
 /functions/serviceAccountKey.json
+/environments/environment.prod.ts
+/environments/environment.ts
 
 # IDEs and editors
 /.idea
