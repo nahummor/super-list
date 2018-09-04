@@ -1,3 +1,4 @@
+import { AngularFireAppModule } from './../angularFireApp.module';
 import { MaterialModule } from './../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -10,14 +11,16 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    AngularFireAppModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    AngularFireAppModule
   ]
 })
 export class SharedModule {}

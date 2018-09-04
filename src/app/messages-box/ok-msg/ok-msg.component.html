@@ -1,0 +1,12 @@
+<div class="main-container">
+  <p mat-dialog-title
+     class="dialog-title">הודעה</p>
+  <mat-dialog-content class="dialog-content">
+    {{message}}
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog-action">
+    <button (click)="onClickOk()"
+            mat-raised-button
+            color="primary">אישור</button>
+  </mat-dialog-actions>
+</div>

@@ -1,4 +1,5 @@
 import { Router } from '@angular/router';
+import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -10,7 +11,7 @@ export class AppSidenavMenuComponent implements OnInit {
   @Output()
   closeSideNav = new EventEmitter<void>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {}
 
@@ -19,17 +20,16 @@ export class AppSidenavMenuComponent implements OnInit {
   }
 
   public isUserAuth(): boolean {
-    return true;
+    return this.authService.isUserAuth();
   }
 
   public onExit() {
     this.closeSideNav.emit();
-    this.router.navigate(['/auth/login']);
+    this.authService.logout();
   }
 
   public onLogin() {
     this.closeSideNav.emit();
-    // navigate to application
-    console.log('Login....');
+    this.router.navigate(['/auth/login']);
   }
 }

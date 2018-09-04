@@ -1,5 +1,67 @@
-<div class="container">
+<section class="add-new-user-container">
+  <form [formGroup]="addUserForm"
+        (ngSubmit)="onAddUser()">
+    <mat-card class="login-card">
+      <mat-card-header class="card-header">
+        <mat-card-title>
+          <h3>רישום משתמש חדש</h3>
+        </mat-card-title>
+        <div class="card-subtitle">
+          <p>פרטים</p>
+        </div>
+      </mat-card-header>
+      <mat-card-content class="card-content"
+                        dir="rtl">
+        <mat-form-field>
+          <input matInput
+                 formControlName="userName"
+                 placeholder="שם משתמש">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-hint>נא להקליד כתובת אימייל חוקית</mat-hint>
+          <mat-error *ngIf="addUserForm.get('userName').errors &&  addUserForm.get('userName').errors['required']">שם משתמש
+            שדה חובה</mat-error>
+          <mat-error *ngIf="addUserForm.get('userName').errors &&  addUserForm.get('userName').errors['email']">כתובת מייל
+            לא חוקית</mat-error>
+        </mat-form-field>
 
-  <h2>add new-user works!</h2>
-
-</div>
+        <mat-form-field formGroupName="pass">
+          <input matInput
+                 type="password"
+                 formControlName="password"
+                 placeholder="סיסמה">
+          <mat-icon matSuffix>visibility_off</mat-icon>
+        </mat-form-field>
+        <div style="height: 13px;position: relative;top: -15px;font-size:0.8125rem">
+          <mat-error *ngIf="addUserForm.get('pass').get('password').errors &&  addUserForm.get('pass').get('password').errors['minlength']">אורך
+            סיסמה לפחות 6 תוים</mat-error>
+        </div>
+        <mat-form-field formGroupName="pass">
+          <input matInput
+                 type="password"
+                 formControlName="confirmPassword"
+                 placeholder="אימות סיסמה">
+          <mat-icon matSuffix>visibility_off</mat-icon>
+          <mat-hint *ngIf="!addUserForm.get('pass').errors">נא להקליד סיסמאות זהות</mat-hint>
+        </mat-form-field>
+        <div style="height: 13px;position: relative;top: -15px;font-size:0.8125rem">
+          <mat-error *ngIf="addUserForm.get('pass').errors &&  addUserForm.get('pass').errors['unmatched']">סיסמאות לא זהות</mat-error>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="card-action">
+        <button mat-raised-button
+                *ngIf="isDoneAddingUser"
+                [disabled]="!addUserForm.valid"
+                type="submit"
+                color="primary">הוספה</button>
+        <div class="add-user-spinner"
+             *ngIf="!isDoneAddingUser">
+          <!-- <h4>מוסיף משתמש חדש</h4> -->
+          <mat-spinner [diameter]="35"></mat-spinner>
+        </div>
+      </mat-card-actions>
+      <mat-card-footer>
+        <!-- card footer  -->
+      </mat-card-footer>
+    </mat-card>
+  </form>
+</section>

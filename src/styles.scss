@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~font-awesome/css/font-awesome.css';
 
 * {
   box-sizing: border-box;
@@ -8,4 +9,12 @@
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+}
+
+.my-snack-bar {
+  background: #e57373 !important;
+  border-radius: 6px !important;
+  // position: relative;
+  // top: 5rem;
+  // right: 9rem;
 }

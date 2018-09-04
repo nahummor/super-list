@@ -1,3 +1,4 @@
+import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class AppHeaderMenuComponent implements OnInit {
   @Output()
   sidenavToggle = new EventEmitter<void>();
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {}
 
@@ -18,14 +19,14 @@ export class AppHeaderMenuComponent implements OnInit {
   }
 
   public onExit() {
-    this.router.navigate(['auth/login']); // navigate to login component
+    this.authService.logout();
   }
 
   public onLogin() {
-    console.log('Login .....');
+    this.router.navigate(['/auth/login']);
   }
 
   public isUserAuth(): boolean {
-    return true;
+    return this.authService.isUserAuth();
   }
 }

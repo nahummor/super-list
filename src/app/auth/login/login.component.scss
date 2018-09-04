@@ -1,9 +1,67 @@
-.container {
-  margin-top: 0.5rem;
-  height: calc(100vh - 4rem - 0.5rem);
+// .container {
+//   margin-top: 0.5rem;
+//   height: calc(100vh - 4rem - 0.5rem);
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center; // ציר ראשי
-  align-items: center; // ציר חוצה
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center; // ציר ראשי
+//   align-items: center; // ציר חוצה
+// }
+@import '../../shared/_varibales.scss';
+
+.mat-card {
+  background: #f3e5f5;
+}
+
+.login-container {
+  @include flex-row-center();
+  align-items: center;
+  height: 100%;
+
+  .login-card {
+    width: 20rem;
+
+    .card-header {
+      @include flex-column-center();
+      align-items: center;
+
+      .card-subtitle {
+        align-self: flex-end;
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+
+    .card-action {
+      @include flex-column-center();
+      margin-bottom: 1rem;
+
+      button {
+        width: 100%;
+        margin-bottom: 0.8rem;
+        font-size: 1.5rem;
+      }
+      .spinner-div {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        h3 {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .card-content {
+    @include flex-column-center();
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
 }

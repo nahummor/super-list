@@ -1,9 +1,55 @@
-.container {
-  margin-top: 0.5rem;
-  height: calc(100vh - 4rem - 0.5rem);
+// .container {
+//   margin-top: 0.5rem;
+//   height: calc(100vh - 4rem - 0.5rem);
+// }
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center; // ציר ראשי
-  align-items: center; // ציר חוצה
+@import '../../shared/_varibales.scss';
+
+.mat-card {
+  background: #f3e5f5;
+}
+
+.add-new-user-container {
+  @include flex-column-center();
+
+  height: 100%;
+
+  .login-card {
+    width: 20rem;
+
+    .card-header {
+      @include flex-column-center();
+      align-items: center;
+
+      .card-subtitle {
+        align-self: flex-end;
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+
+    .card-action {
+      @include flex-row-center();
+      button {
+        width: 50%;
+      }
+
+      .add-user-spinner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; // ציר ראשי
+        align-items: center; // ציר חוצה
+      }
+    }
+  }
+
+  .card-content {
+    @include flex-column-center();
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
 }

@@ -1,1 +1,15 @@
 $xs-screen-size: 37.5rem;
+
+@mixin flex-row-center() {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+}
+
+@mixin flex-column-center() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+}
