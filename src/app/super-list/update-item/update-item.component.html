@@ -1,0 +1,45 @@
+<div class="main-container">
+  <h3>עדכון פריט</h3>
+  <form dir="rtl"
+        [formGroup]="updateItemForm"
+        (ngSubmit)="onUpdateItem()"
+        class="update-item-form">
+    <mat-form-field>
+      <input matInput
+             formControlName="name"
+             placeholder="שם הפריט">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             formControlName="description"
+             placeholder="תיאור">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             formControlName="amount"
+             placeholder="כמות">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             placeholder="מחיר"
+             formControlName="cost">
+    </mat-form-field>
+    <div class="update-item-btn">
+      <button (click)="onClickClose()"
+              mat-raised-button
+              color="accent"
+              type="button"
+              matTooltip="סגור חלונית">
+        <b>ביטול</b>
+      </button>
+      <button id="btnSubmit"
+              [disabled]="!updateItemForm.valid"
+              mat-raised-button
+              type="submit"
+              matTooltip="עדכון פריט חדש"
+              color="primary">
+        <b>שמירה</b>
+      </button>
+    </div>
+  </form>
+</div>

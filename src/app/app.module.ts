@@ -12,6 +12,16 @@ import { AuthModule } from './auth/auth.module';
 import { ErrorMsgComponent } from './messages-box/error-msg/error-msg.component';
 import { OkMsgComponent } from './messages-box/ok-msg/ok-msg.component';
 import { MainComponent } from './super-list/main/main.component';
+import { AddNewListComponent } from './super-list/add-new-list/add-new-list.component';
+import { SnackBarMsgComponent } from './messages-box/snack-bar-msg/snack-bar-msg.component';
+import { SppinerMsgBoxComponent } from './messages-box/sppiner-msg-box/sppiner-msg-box.component';
+import { ListContainerComponent } from './super-list/list-container/list-container.component';
+import { ListItemComponent } from './super-list/list-item/list-item.component';
+import { AddItemComponent } from './super-list/add-item/add-item.component';
+import { YesNoMsgComponent } from './messages-box/yes-no-msg/yes-no-msg.component';
+import { UpdateItemComponent } from './super-list/update-item/update-item.component';
+import { SavedListComponent } from './super-list/saved-list/saved-list.component';
+import { UpdateListDetailesComponent } from './super-list/update-list-detailes/update-list-detailes.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +30,17 @@ import { MainComponent } from './super-list/main/main.component';
     AppSidenavMenuComponent,
     ErrorMsgComponent,
     OkMsgComponent,
-    MainComponent
+    MainComponent,
+    AddNewListComponent,
+    SnackBarMsgComponent,
+    SppinerMsgBoxComponent,
+    ListContainerComponent,
+    ListItemComponent,
+    AddItemComponent,
+    YesNoMsgComponent,
+    UpdateItemComponent,
+    SavedListComponent,
+    UpdateListDetailesComponent
   ],
   imports: [
     AppRoutingModule,
@@ -30,7 +50,17 @@ import { MainComponent } from './super-list/main/main.component';
     MaterialModule,
     SharedModule
   ],
-  entryComponents: [ErrorMsgComponent, OkMsgComponent],
+  entryComponents: [
+    AddItemComponent,
+    AddNewListComponent,
+    ErrorMsgComponent,
+    OkMsgComponent,
+    SnackBarMsgComponent,
+    SppinerMsgBoxComponent,
+    UpdateItemComponent,
+    UpdateListDetailesComponent,
+    YesNoMsgComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,12 @@
+.main-container {
+  .update-item-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .update-item-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}

@@ -1,0 +1,52 @@
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; // ציר ראשי
+  align-items: center; // ציר חוצה
+  padding: 5px;
+  direction: rtl;
+
+  .card-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+
+  .content {
+    width: 90%;
+  }
+
+  .update-icon-hide {
+    display: none;
+  }
+
+  .update-icon-display {
+    display: inline;
+  }
+
+  .item-card {
+    width: 80vw;
+  }
+
+  .card-action-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .description {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @media (min-width: 900px) {
+    .item-card {
+      width: 40vw;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title
+    class="dialog-title"> הודעת מערכת</h2>
+<mat-dialog-content class="dialog-content">
+  <span style="margin-right: 0.5rem;margin-top: 0.625rem">
+    <mat-icon>help_outline</mat-icon>
+  </span>
+  <p style="text-align: center">{{message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-action">
+  <button (click)="onClickYes()"
+          mat-raised-button
+          color="primary">כן</button>
+  <button (click)="onClickNo()"
+          mat-raised-button
+          color="primary">לא</button>
+</mat-dialog-actions>

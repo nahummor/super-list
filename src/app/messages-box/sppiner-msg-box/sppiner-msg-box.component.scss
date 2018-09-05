@@ -1,0 +1,8 @@
+.main-container {
+  .delete-list-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+}

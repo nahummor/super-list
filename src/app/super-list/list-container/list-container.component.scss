@@ -1,0 +1,30 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+
+  .floating-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 16rem;
+    z-index: 1000;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 0.5rem;
+  }
+
+  .main-header {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  @media (min-width: 900px) {
+    .floating-button {
+      padding: 1.5rem;
+    }
+  }
+}

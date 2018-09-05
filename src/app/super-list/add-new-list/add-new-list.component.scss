@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+
+  .add-new-list-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center; // ציר ראשי
+    // align-items: center; // ציר חוצה
+  }
+
+  .op-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .add-list-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+}

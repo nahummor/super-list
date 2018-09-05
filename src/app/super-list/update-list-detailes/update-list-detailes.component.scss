@@ -1,0 +1,18 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+
+  .update-list-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .update-list-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
