@@ -8,6 +8,7 @@
 # dependencies
 /node_modules
 /functions/node_modules
+
 #API Keys
 /functions/serviceAccountKey.json
 /src/environments/environment.prod.ts

@@ -11,10 +11,6 @@ import { environment } from './../environments/environment';
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  exports: [
-    AngularFireModule,
-    AngularFirestoreModule,
-    AngularFireAuthModule
-  ]
+  exports: [AngularFireModule, AngularFirestoreModule, AngularFireAuthModule]
 })
-export class AngularFireAppModule { }
+export class AngularFireAppModule {}

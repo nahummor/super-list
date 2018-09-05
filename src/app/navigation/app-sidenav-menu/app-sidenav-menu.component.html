@@ -6,10 +6,11 @@
     <span class="nav-caption">משתמש חדש</span>
   </a>
   <a mat-list-item
+     *ngIf="isUserAuth()"
      (click)="onToggleSidenav()"
-     routerLink="/auth/new-user">
+     routerLink="/main">
     <mat-icon>face</mat-icon>
-    <span class="nav-caption">פעולה נוספת</span>
+    <span class="nav-caption">ראשי</span>
   </a>
   <mat-list-item>
     <button mat-icon-button

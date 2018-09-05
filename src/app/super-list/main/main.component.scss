@@ -1,0 +1,24 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+  height: 100%;
+
+  .ver-title {
+    align-self: flex-start;
+  }
+
+  button {
+    width: 80vw;
+    height: 50px;
+    margin: 10px;
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    button {
+      width: 40vw;
+    }
+  }
+}

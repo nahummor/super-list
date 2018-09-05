@@ -19,8 +19,8 @@
     <li>
       <a routerLink="/auth/new-user">משתמש חדש</a>
     </li>
-    <li>
-      <a routerLink="/auth/login">פעולה נוספת</a>
+    <li *ngIf="isUserAuth()">
+      <a routerLink="/main">ראשי</a>
     </li>
   </ul>
 </mat-toolbar>

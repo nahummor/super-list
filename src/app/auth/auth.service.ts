@@ -60,7 +60,7 @@ export class AuthService {
           this.token = token;
         });
         this.authUser = true;
-        this.router.navigate(['/auth/new-user']); // navigate to application
+        this.router.navigate(['/main']); // navigate to application
       } else {
         this.authUser = false;
         this.router.navigate(['/auth/login']);
