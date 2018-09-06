@@ -20,6 +20,9 @@
       <a routerLink="/auth/new-user">משתמש חדש</a>
     </li>
     <li *ngIf="isUserAuth()">
+      <a routerLink="/sharedList/main">רשימות משותפות</a>
+    </li>
+    <li *ngIf="isUserAuth()">
       <a routerLink="/main">ראשי</a>
     </li>
   </ul>

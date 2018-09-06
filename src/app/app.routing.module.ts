@@ -12,7 +12,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: ListContainerComponent
   },
-  { path: 'savedList', canActivate: [AuthGuard], component: SavedListComponent }
+  {
+    path: 'savedList',
+    canActivate: [AuthGuard],
+    component: SavedListComponent
+  },
+  {
+    path: 'sharedList',
+    canLoad: [AuthGuard],
+    loadChildren: './shared-list/shared-list.module#SharedListModule'
+  }
+
   // { path: 'path/:routeParam', component: MyComponent },
   // { path: 'staticPath', component: ... },
   // { path: '**', component: ... },

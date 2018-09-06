@@ -40,6 +40,11 @@ export class SuperListService {
     this.token = this.authService.getToken();
   }
 
+  public setUserId() {
+    this.uid = this.authService.getUserId();
+    this.superList = null; // איפוס רשימה לאחר החלפת משתמש
+  }
+
   public getItemUpdate() {
     this.db
       .collection('super-list')
@@ -166,6 +171,8 @@ export class SuperListService {
   }
 
   public getUserLists() {
+    console.log('User ID: ', this.uid);
+
     return this.db
       .collection('super-list')
       .doc(this.uid)

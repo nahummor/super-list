@@ -58,9 +58,9 @@ export class AuthService {
       if (user) {
         this.afAuth.auth.currentUser.getIdToken().then(token => {
           this.token = token;
+          this.authUser = true;
+          this.router.navigate(['/main']); // navigate to application
         });
-        this.authUser = true;
-        this.router.navigate(['/main']); // navigate to application
       } else {
         this.authUser = false;
         this.router.navigate(['/auth/login']);

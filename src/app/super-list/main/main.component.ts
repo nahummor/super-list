@@ -3,6 +3,7 @@ import { AddNewListComponent } from './../add-new-list/add-new-list.component';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
+import { SuperListService } from '../super-list.service';
 
 @Component({
   selector: 'nm-main',
@@ -13,10 +14,13 @@ export class MainComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private superListSrvice: SuperListService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.superListSrvice.setUserId();
+  }
 
   public onAddNewList() {
     const dialogRef = this.dialog.open(AddNewListComponent, {

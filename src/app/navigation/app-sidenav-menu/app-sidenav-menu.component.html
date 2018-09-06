@@ -13,6 +13,13 @@
     <mat-icon>face</mat-icon>
     <span class="nav-caption">ראשי</span>
   </a>
+  <a mat-list-item
+     *ngIf="isUserAuth()"
+     (click)="onToggleSidenav()"
+     routerLink="/sharedList/main">
+    <mat-icon>list</mat-icon>
+    <span class="nav-caption">רשימות משותפות</span>
+  </a>
   <mat-list-item>
     <button mat-icon-button
             *ngIf="isUserAuth()"

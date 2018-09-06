@@ -4,6 +4,7 @@
   height: 100%;
 
   .main-header {
+    // margin-bottom: 30vh;
     @include flex-column-center();
     height: 10%;
   }
