@@ -1,8 +1,14 @@
+@import '../../shared/_varibales.scss';
+
 .main-container {
   display: flex;
   flex-direction: column;
   justify-content: center; // ציר ראשי
-  align-items: center; // ציר חוצה
+  align-items: flex-start; // ציר חוצה
+
+  @media (min-width: $xs-screen-size) {
+    align-items: center;
+  }
 
   .floating-button {
     display: flex;
@@ -14,17 +20,18 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    padding: 0.5rem;
+    margin-right: 0.5rem;
   }
 
   .main-header {
     margin-top: 2px;
     margin-bottom: 2px;
+    align-self: center;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: $xs-screen-size) {
     .floating-button {
-      padding: 1.5rem;
+      margin-right: 3rem;
     }
   }
 }

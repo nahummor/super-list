@@ -16,7 +16,7 @@
               (click)="onLogin()"
               color="primary">כניסה</button>
     </li>
-    <li>
+    <li *ngIf="!isUserAuth()">
       <a routerLink="/auth/new-user">משתמש חדש</a>
     </li>
     <li *ngIf="isUserAuth()">

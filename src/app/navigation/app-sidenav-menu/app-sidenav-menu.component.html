@@ -1,5 +1,6 @@
 <mat-nav-list>
   <a mat-list-item
+     *ngIf="!isUserAuth()"
      (click)="onToggleSidenav()"
      routerLink="/auth/new-user">
     <mat-icon>face</mat-icon>
