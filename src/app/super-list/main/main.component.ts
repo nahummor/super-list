@@ -26,6 +26,7 @@ export class MainComponent implements OnInit {
     const dialogRef = this.dialog.open(AddNewListComponent, {
       width: '25rem'
     });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'add-new-list') {
         const snakBarRef = this.snackBar.openFromComponent(

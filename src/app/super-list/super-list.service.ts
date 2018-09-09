@@ -243,8 +243,8 @@ export class SuperListService {
       .snapshotChanges()
       .pipe(
         map(docArray => {
-          console.log('docArray data: ', docArray.payload.data());
-          console.log('docArray ID: ', docArray.payload.id);
+          // console.log('docArray data: ', docArray.payload.data());
+          // console.log('docArray ID: ', docArray.payload.id);
           return {
             id: docArray.payload.id,
             ...docArray.payload.data()

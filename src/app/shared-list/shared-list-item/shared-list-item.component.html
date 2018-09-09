@@ -1,0 +1,43 @@
+<div class="main-container">
+  <mat-card class="item-card">
+    <!-- <mat-card-header> -->
+    <!-- <mat-card-title> -->
+    <div class="card-title">
+      <div>
+        <mat-checkbox color="primary"
+                      labelPosition="before"></mat-checkbox>
+      </div>
+      <div class="content">
+        <b>{{amount}} {{name}}</b>
+      </div>
+      <div class="update-icon-hide"
+           [ngClass]="{'update-icon-display': updateItemId === id}">
+        <mat-icon color="accent">add_shopping_cart</mat-icon>
+      </div>
+    </div>
+    <!-- </mat-card-title> -->
+    <mat-card-subtitle>מחיר {{cost}}</mat-card-subtitle>
+    <!-- </mat-card-header> -->
+    <mat-card-content>
+      <p class="description">{{description}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="card-action-button">
+        <button mat-mini-fab
+                matTooltip="מחיקת פריט"
+                matTooltipPosition="above"
+                (click)="deleteItem()"
+                color="warn">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <button mat-mini-fab
+                matTooltip="שינוי פריט"
+                matTooltipPosition="above"
+                (click)="updateItem()"
+                color="primary">
+          <mat-icon>create</mat-icon>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

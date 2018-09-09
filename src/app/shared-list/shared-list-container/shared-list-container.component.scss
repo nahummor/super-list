@@ -1,0 +1,37 @@
+@import '../../shared/_varibales.scss';
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: flex-start; // ציר חוצה
+
+  @media (min-width: $xs-screen-size) {
+    align-items: center;
+  }
+
+  .floating-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 16rem;
+    z-index: 1000;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 0.5rem;
+  }
+
+  .main-header {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    align-self: center;
+  }
+
+  @media (min-width: $xs-screen-size) {
+    .floating-button {
+      margin-right: 3rem;
+    }
+  }
+}

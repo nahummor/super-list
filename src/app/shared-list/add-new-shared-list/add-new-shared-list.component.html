@@ -1,0 +1,34 @@
+<div class="container">
+  <form dir="rtl"
+        *ngIf="isDoneAddingList"
+        [formGroup]="addNewListForm"
+        (ngSubmit)="onAddNewList()"
+        class="add-new-list-form">
+    <h2>רשימה חדשה משותפת</h2>
+    <mat-form-field>
+      <input matInput
+             formControlName="name"
+             placeholder="שם">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             formControlName="description"
+             placeholder="תיאור">
+    </mat-form-field>
+    <div class="op-buttons">
+      <button type="button"
+              color="accent"
+              (click)="onCancel()"
+              mat-raised-button>ביטול</button>
+      <button type="submit"
+              [disabled]="!addNewListForm.valid"
+              color="primary"
+              mat-raised-button>הוספה</button>
+    </div>
+  </form>
+  <div class="add-list-spinner"
+       *ngIf="!isDoneAddingList">
+    <h3>מוסיף רשימה חדשה משופפת</h3>
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</div>

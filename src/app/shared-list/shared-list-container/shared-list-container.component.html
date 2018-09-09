@@ -1,0 +1,28 @@
+<div class="main-container">
+  <h3 class="main-header">{{superList.name}}</h3>
+  <h4 class="main-header">{{superList.description}}</h4>
+
+  <nm-shared-list-item *ngFor="let item of superList.items"
+                       [id]="item.id"
+                       [name]="item.name"
+                       [amount]="item.amount"
+                       [description]="item.description"
+                       [cost]="item.cost"></nm-shared-list-item>
+
+  <div class="floating-button">
+    <button mat-fab
+            matTooltip="פריט חדש"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="addItem()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-fab
+            matTooltip="רשימת פריטים"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="goToList()">
+      <mat-icon>list</mat-icon>
+    </button>
+  </div>
+</div>

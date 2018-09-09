@@ -99,6 +99,37 @@ exports.deleteList = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.addNewSharedList = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const token = request.body.token;
+    const name = request.body.name;
+    const description = request.body.description;
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        db.collection('shared-list')
+          .add({
+            name: name,
+            description: description,
+            items: []
+          })
+          .then(docRef => {
+            response.status(200).json({
+              message: 'רשימה חדשה נקלטה בהצלחה',
+              superList: {
+                id: docRef.id,
+                name: name,
+                description: description,
+                items: []
+              }
+            });
+          });
+      });
+  });
+});
+
 exports.addNewList = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const uid = request.body.uid;
