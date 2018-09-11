@@ -1,3 +1,6 @@
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { AddSharedItemComponent } from './../add-shared-item/add-shared-item.component';
+import { SnackBarMsgComponent } from './../../messages-box/snack-bar-msg/snack-bar-msg.component';
 import { Subscription } from 'rxjs';
 import { SharedListService } from './../shared-list.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +19,9 @@ export class SharedListContainerComponent implements OnInit, OnDestroy {
   constructor(
     private sharedListService: SharedListService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -27,7 +32,7 @@ export class SharedListContainerComponent implements OnInit, OnDestroy {
         this.route.snapshot.params['description']
       )
       .subscribe(data => {
-        console.log('shared list data: ', data);
+        // console.log('shared list data: ', data);
         this.superList = {
           id: data[0].id,
           name: data[0].name,
@@ -42,27 +47,27 @@ export class SharedListContainerComponent implements OnInit, OnDestroy {
   }
 
   public goToList() {
-    // this.router.navigate(['savedList']);
+    this.router.navigate(['sharedList/savedList']);
   }
 
   public addItem() {
-    //   const dialogRef = this.dialog.open(AddItemComponent, {
-    //     data: {
-    //       superList: this.superList
-    //     },
-    //     width: '25rem'
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     console.log('resuls: ', result);
-    //     if (result === 'add item') {
-    //       const snakBarRef = this.snackBar.openFromComponent(
-    //         SnackBarMsgComponent,
-    //         {
-    //           duration: 2000,
-    //           data: { msg: 'פריט חדש נקלט בהצלחה' }
-    //         }
-    //       );
-    //     }
-    //   });
+    const dialogRef = this.dialog.open(AddSharedItemComponent, {
+      data: {
+        superList: this.superList
+      },
+      width: '25rem'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('resuls: ', result);
+      if (result === 'add item') {
+        const snakBarRef = this.snackBar.openFromComponent(
+          SnackBarMsgComponent,
+          {
+            duration: 2000,
+            data: { msg: 'פריט חדש נקלט בהצלחה' }
+          }
+        );
+      }
+    });
   }
 }

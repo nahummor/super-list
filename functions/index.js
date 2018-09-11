@@ -65,6 +65,68 @@ exports.deleteItem = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.deleteSharedItem = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const token = request.body.token;
+    const listId = request.body.listId;
+    const item = request.body.deleteItem;
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        db.collection('shared-list')
+          .doc(listId)
+          .update({ items: admin.firestore.FieldValue.arrayRemove(item) })
+          .then(
+            () => {
+              response.status(200).json({
+                message: 'פריט נמחק בהצלחה',
+                deleteItem: item
+              });
+            },
+            error => {
+              response.status(401).json({
+                title: 'Error',
+                message: 'Error Delete Shared Item',
+                error: error
+              });
+            }
+          );
+      })
+      .catch(error => {
+        response.status(403).json({ errorMsg: 'Unauthorized user' });
+      });
+  });
+});
+
+exports.deleteSharedList = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const uid = request.body.uid;
+    const token = request.body.token;
+    const listId = request.body.listId;
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        db.collection('shared-list')
+          .doc(listId)
+          .delete()
+          .then(writeResult => {
+            response.status(200).json({
+              message: 'רשימה משותפת נמחקה בהצלחה',
+              listId: listId,
+              writeResult: writeResult
+            });
+          });
+      })
+      .catch(error => {
+        response.status(403).json({ errorMsg: 'Unauthorized user' });
+      });
+  });
+});
+
 exports.deleteList = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const uid = request.body.uid;
@@ -83,7 +145,7 @@ exports.deleteList = functions.https.onRequest((request, response) => {
           .then(
             writeResult => {
               response.status(200).json({
-                message: 'רשימה חדשה נמחקה בהצלחה',
+                message: 'רשימה נמחקה בהצלחה',
                 listId: listId,
                 writeResult: writeResult
               });
@@ -171,18 +233,68 @@ exports.addNewList = functions.https.onRequest((request, response) => {
   });
 });
 
-exports.addItem = functions.https.onRequest((request, response) => {
+exports.addSharedItem = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    let uid = request.body.uid;
-    let superList = request.body.superList;
-    let newItem = request.body.newItem;
-    let token = request.body.token;
+    const sharedList = request.body.sharedList;
+    const newItem = request.body.newItem;
+    const token = request.body.token;
 
     admin
       .auth()
       .verifyIdToken(token)
       .then(decodedIdToken => {
-        newItem.id = superList.items.length;
+        // set item id
+        if (sharedList.items.length > 0) {
+          let index = sharedList.items.length - 1;
+          newItem.id = sharedList.items[index].id + 1;
+        } else {
+          newItem.id = 0;
+        }
+
+        db.collection('shared-list')
+          .doc(sharedList.id)
+          .update({ items: admin.firestore.FieldValue.arrayUnion(newItem) })
+          .then(
+            () => {
+              response.status(200).json({
+                message: 'פריט חדש נקלט בהצלחה',
+                sharedList: sharedList
+              });
+            },
+            error => {
+              response.status(401).json({
+                title: 'Error',
+                message: 'Error Add new Item',
+                error: error
+              });
+            }
+          );
+      })
+      .catch(error => {
+        response.status(403).json({ errorMsg: 'Unauthorized user' });
+      });
+  });
+});
+
+exports.addItem = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const uid = request.body.uid;
+    const superList = request.body.superList;
+    const newItem = request.body.newItem;
+    const token = request.body.token;
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        // set item id
+        if (superList.items.length > 0) {
+          let index = superList.items.length - 1;
+          newItem.id = superList.items[index].id + 1;
+        } else {
+          newItem.id = 0;
+        }
+        // newItem.id = superList.items.length;
         superList.items.push(newItem);
 
         db.collection('super-list')
@@ -214,6 +326,60 @@ exports.addItem = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.updateSharedItem = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const token = request.body.token;
+    const listId = request.body.listId;
+    const oldItem = request.body.oldItem;
+    const newItem = request.body.newItem;
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        db.collection('shared-list')
+          .doc(listId)
+          .get()
+          .then(doc => {
+            response.status(200).json({
+              message: 'פריט עודכן בהצלחה',
+              id: doc.id,
+              data: doc.data()
+            });
+          });
+
+        // db.collection('shared-list')
+        //   .doc(listId)
+        //   .update({ items: admin.firestore.FieldValue.arrayRemove(oldItem) })
+        //   .then(
+        //     () => {
+        //       db.collection('shared-list')
+        //         .doc(listId)
+        //         .update({
+        //           items: admin.firestore.FieldValue.arrayUnion(newItem)
+        //         })
+        //         .then(() => {
+        //           response.status(200).json({
+        //             message: 'פריט עודכן בהצלחה',
+        //             newItem: newItem
+        //           });
+        //         });
+        //     },
+        //     error => {
+        //       response.status(401).json({
+        //         title: 'Error',
+        //         message: 'Error Update Shared Item',
+        //         error: error
+        //       });
+        //     }
+        //   );
+      })
+      .catch(error => {
+        response.status(403).json({ errorMsg: 'Unauthorized user' });
+      });
+  });
+});
+// ===========================================================================================================
 // [START onCreateTrigger]
 exports.sendWelcomeEmail = functions.auth.user().onCreate(user => {
   const email = user.email; // The email of the user.

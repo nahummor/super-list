@@ -37,8 +37,8 @@ export class ListContainerComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         data => {
-          console.log('*** My List ***');
-          console.log('data: ', data);
+          // console.log('*** My List ***');
+          // console.log('data: ', data);
           this.superList = {
             id: data.id,
             name: data.name,

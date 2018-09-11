@@ -1,0 +1,22 @@
+.main-container {
+  .add-item-form {
+    display: flex;
+    flex-direction: column;
+
+    .add-item-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  }
+
+  .add-item-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+  // @media (min-width:900px) {
+  //   width: 300px;
+  // }
+}

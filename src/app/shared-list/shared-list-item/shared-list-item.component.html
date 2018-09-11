@@ -8,18 +8,18 @@
                       labelPosition="before"></mat-checkbox>
       </div>
       <div class="content">
-        <b>{{amount}} {{name}}</b>
+        <b>{{item.amount}} {{item.name}}</b>
       </div>
-      <div class="update-icon-hide"
+      <!-- <div class="update-icon-hide"
            [ngClass]="{'update-icon-display': updateItemId === id}">
         <mat-icon color="accent">add_shopping_cart</mat-icon>
-      </div>
+      </div> -->
     </div>
     <!-- </mat-card-title> -->
-    <mat-card-subtitle>מחיר {{cost}}</mat-card-subtitle>
+    <mat-card-subtitle>מחיר {{item.cost}}</mat-card-subtitle>
     <!-- </mat-card-header> -->
     <mat-card-content>
-      <p class="description">{{description}}</p>
+      <p class="description">{{item.description}}</p>
     </mat-card-content>
     <mat-card-actions>
       <div class="card-action-button">

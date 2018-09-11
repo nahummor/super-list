@@ -1,4 +1,4 @@
-import { SharedSavedListComponent } from './../sheared-list/shared-saved-list/shared-saved-list.component';
+import { SharedSavedListComponent } from './shared-saved-list/shared-saved-list.component';
 import { SharedMainComponent } from './shared-main/shared-main.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';

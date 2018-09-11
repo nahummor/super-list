@@ -363,9 +363,9 @@ export class SuperListService {
   }
 
   public updateListDetailes(listId: string, name: string, description: string) {
-    console.log(listId);
-    console.log(name);
-    console.log(description);
+    // console.log(listId);
+    // console.log(name);
+    // console.log(description);
 
     return this.db
       .collection('super-list')
@@ -380,7 +380,8 @@ export class SuperListService {
   public updateItem(item: Item) {
     // console.log('update lis ID: ', this.superList.id);
     // console.log('update item: ', item);
-    this.superList.items[item.id] = item;
+    const itemIndex = this.getItemIndex(item.id);
+    this.superList.items[itemIndex] = item;
 
     this.db
       .collection('super-list')
@@ -390,7 +391,8 @@ export class SuperListService {
       .update({ items: this.superList.items })
       .then(
         () => {
-          this.setItemUpdate(item.id, item.name, this.superList.name);
+          // this.setItemUpdate(item.id, item.name, this.superList.name);
+          this.setItemUpdate(itemIndex, item.name, this.superList.name);
           this.userUpdateItem = true;
         },
         error => {

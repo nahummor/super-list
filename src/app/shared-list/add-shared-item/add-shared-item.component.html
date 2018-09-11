@@ -1,0 +1,47 @@
+<div class="main-container">
+  <form dir="rtl"
+        *ngIf="isDoneAddingItem"
+        [formGroup]="addItemForm"
+        (ngSubmit)="addItem()"
+        class="add-item-form">
+    <h3>פריט חדש</h3>
+    <mat-form-field>
+      <input matInput
+             formControlName="name"
+             placeholder="שם הפריט">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             formControlName="description"
+             placeholder="תיאור">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             formControlName="amount"
+             placeholder="כמות"
+             type="number">
+    </mat-form-field>
+    <div class="add-item-btn">
+      <button (click)="onClickClose()"
+              mat-raised-button
+              color="accent"
+              type="button"
+              matTooltip="סגור חלונית">
+        <b>סגור</b>
+      </button>
+      <button id="btnSubmit"
+              [disabled]="!addItemForm.valid"
+              mat-raised-button
+              type="submit"
+              matTooltip="הוספת פריט חדש"
+              color="primary">
+        <b>הוספה</b>
+      </button>
+    </div>
+  </form>
+  <div class="add-item-spinner"
+       *ngIf="!isDoneAddingItem">
+    <h3>מוסיף פריט חדש</h3>
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</div>

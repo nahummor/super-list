@@ -8,7 +8,7 @@ import { environment } from './../environments/environment';
 @NgModule({
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule
   ],
   exports: [AngularFireModule, AngularFirestoreModule, AngularFireAuthModule]

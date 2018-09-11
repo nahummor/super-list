@@ -1,0 +1,35 @@
+<div class="main-container">
+  <h3>עדכון פרטי רשימה</h3>
+  <form dir="rtl"
+        (ngSubmit)="listUpdate()"
+        [formGroup]="updateListForm"
+        class="update-list-form">
+    <mat-form-field>
+      <input matInput
+             formControlName="name"
+             placeholder="שם">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             formControlName="description"
+             placeholder="תיאור">
+    </mat-form-field>
+    <div class="update-list-btn">
+      <button (click)="onClickClose()"
+              mat-raised-button
+              color="accent"
+              type="button"
+              matTooltip="סגור חלונית">
+        <b>ביטול</b>
+      </button>
+      <button id="btnSubmit"
+              [disabled]="!updateListForm.valid"
+              mat-raised-button
+              type="submit"
+              matTooltip="שמירה"
+              color="primary">
+        <b>שמירה</b>
+      </button>
+    </div>
+  </form>
+</div>
