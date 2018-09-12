@@ -22,6 +22,8 @@ import { YesNoMsgComponent } from './messages-box/yes-no-msg/yes-no-msg.componen
 import { UpdateItemComponent } from './super-list/update-item/update-item.component';
 import { SavedListComponent } from './super-list/saved-list/saved-list.component';
 import { UpdateListDetailesComponent } from './super-list/update-list-detailes/update-list-detailes.component';
+import { SharedListContainerComponent } from './super-list/shared-list-container/shared-list-container.component';
+import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-shared-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { UpdateListDetailesComponent } from './super-list/update-list-detailes/u
     YesNoMsgComponent,
     UpdateItemComponent,
     SavedListComponent,
-    UpdateListDetailesComponent
+    UpdateListDetailesComponent,
+    SharedListContainerComponent,
+    SavedSharedListComponent
   ],
   imports: [
     AppRoutingModule,

@@ -172,9 +172,6 @@ export class SharedListService {
   }
 
   public updateItem(listId: string, newItem: Item, oldItem: Item) {
-    // console.log('List ID: ', listId);
-    // console.log('New Item: ', newItem);
-    // console.log('Old Item: ', oldItem);
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'

@@ -1,9 +1,10 @@
 <div class="main-container">
-  <h3>עדכון פריט</h3>
-  <form dir="rtl"
+  <form *ngIf="isDoneUpdateItem"
+        dir="rtl"
         [formGroup]="updateItemForm"
         (ngSubmit)="onUpdateItem()"
         class="update-item-form">
+    <h3>עדכון פריט</h3>
     <mat-form-field>
       <input matInput
              formControlName="name"
@@ -42,4 +43,9 @@
       </button>
     </div>
   </form>
+  <div class="update-item-spinner"
+       *ngIf="!isDoneUpdateItem">
+    <h3>מעדכן פריט</h3>
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
 </div>

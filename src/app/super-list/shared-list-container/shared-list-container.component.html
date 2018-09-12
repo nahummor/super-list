@@ -1,0 +1,30 @@
+<div class="main-container">
+  <h3 class="main-header">{{list.name}}</h3>
+  <h4 class="main-header">{{list.description}}</h4>
+
+  <nm-list-item *ngFor="let item of list.items"
+                [opButton]="false"
+                [id]="item.id"
+                [name]="item.name"
+                [amount]="item.amount"
+                [description]="item.description"
+                [done]="item.done"
+                [cost]="item.cost"></nm-list-item>
+
+  <div class="floating-button">
+    <button mat-fab
+            matTooltip="הוספה לרשימות שלי"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="onAddList()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-fab
+            matTooltip="חזרה לרשימת פריטים"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="goToList()">
+      <mat-icon>list</mat-icon>
+    </button>
+  </div>
+</div>

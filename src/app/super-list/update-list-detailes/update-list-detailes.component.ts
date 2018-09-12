@@ -11,6 +11,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 })
 export class UpdateListDetailesComponent implements OnInit {
   public updateListForm: FormGroup;
+  public isDoneUpdateList: boolean;
 
   constructor(
     private superListService: SuperListService,
@@ -20,6 +21,7 @@ export class UpdateListDetailesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isDoneUpdateList = true;
     this.updateListForm = new FormGroup({
       name: new FormControl(this.data.name, Validators.required),
       description: new FormControl(this.data.description, Validators.required)
@@ -27,6 +29,7 @@ export class UpdateListDetailesComponent implements OnInit {
   }
 
   public listUpdate() {
+    this.isDoneUpdateList = false;
     this.superListService
       .updateListDetailes(
         this.data.id,
@@ -35,6 +38,7 @@ export class UpdateListDetailesComponent implements OnInit {
       )
       .then(
         () => {
+          this.isDoneUpdateList = true;
           this.dialogRef.close('update');
         },
         error => {

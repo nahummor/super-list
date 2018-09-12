@@ -27,6 +27,8 @@ export class ListItemComponent implements OnInit {
   cost: number;
   @Input()
   done: boolean;
+  @Input()
+  opButton: boolean;
   public checked: boolean;
 
   constructor(

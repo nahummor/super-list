@@ -1,6 +1,6 @@
 <div class="main-container">
-  <h2>ניהול רשימות משותפות</h2>
-  <mat-card *ngFor="let list of userLists">
+  <h2>רשימות משותפות</h2>
+  <mat-card *ngFor="let list of sharedLists">
     <mat-card-content (click)="showList(list)">
       <h2>{{list.name}}</h2>
       <h3>{{list.description}}</h3>
@@ -8,18 +8,11 @@
     <mat-card-actions>
       <div class="card-action-button">
         <button mat-mini-fab
-                matTooltip="שינוי רשימה"
+                matTooltip="הוספה לרשימות שלי"
                 matTooltipPosition="above"
-                (click)="onListUpdate(list)"
+                (click)="onAddList(list)"
                 color="primary">
-          <mat-icon>create</mat-icon>
-        </button>
-        <button mat-mini-fab
-                matTooltip="מחיקת רשימה"
-                matTooltipPosition="above"
-                (click)="onListDelete(list)"
-                color="warn">
-          <mat-icon>clear</mat-icon>
+          <mat-icon>add</mat-icon>
         </button>
       </div>
     </mat-card-actions>

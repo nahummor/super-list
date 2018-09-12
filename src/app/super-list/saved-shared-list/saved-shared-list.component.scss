@@ -1,0 +1,41 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // ציר ראשי
+  align-items: center; // ציר חוצה
+  // direction: rtl;
+
+  mat-card {
+    margin-bottom: 0.5rem;
+    width: 80vw;
+
+    mat-card-content {
+      direction: rtl;
+      padding: 5px;
+    }
+
+    mat-card-content:hover {
+      cursor: pointer;
+      background: #dedede;
+    }
+
+    .card-action-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  // mat-card:hover {
+  //   background: #dedede;
+  // }
+
+  @media (min-width: 900px) {
+    mat-card {
+      width: 50vw;
+    }
+  }
+}

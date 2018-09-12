@@ -192,13 +192,56 @@ exports.addNewSharedList = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.addSharedListToMyList = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, () => {
+      const uid = request.body.uid;
+      const token = request.body.token;
+      const newList = request.body.list;
+
+      admin
+        .auth()
+        .verifyIdToken(token)
+        .then(decodedIdToken => {
+          // add new list
+          db.collection('super-list')
+            .doc(uid)
+            .collection('user-list')
+            .add(newList)
+            .then(
+              docRef => {
+                response.status(200).json({
+                  message: 'רשימה חדשה נקלטה בהצלחה',
+                  superList: {
+                    id: docRef.id,
+                    name: newList.name,
+                    description: newList.description,
+                    items: newList.items
+                  }
+                });
+              },
+              error => {
+                response.status(401).json({
+                  title: 'Error',
+                  message: 'Error Add New Shared list to user',
+                  error: error
+                });
+              }
+            );
+        })
+        .catch(error => {
+          response.status(403).json({ errorMsg: 'Unauthorized user' });
+        });
+    });
+  }
+);
+
 exports.addNewList = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const uid = request.body.uid;
     const token = request.body.token;
     const name = request.body.name;
     const description = request.body.description;
-    const firstList = request.body.firstList;
 
     admin
       .auth()
@@ -209,23 +252,26 @@ exports.addNewList = functions.https.onRequest((request, response) => {
           .doc(uid)
           .collection('user-list')
           .add({ name: name, description: description, items: [] })
-          .then(docRef => {
-            if (firstList) {
-              db.collection('super-list')
-                .doc(uid)
-                .collection('item-update')
-                .add({ itemName: '', listName: '' });
+          .then(
+            docRef => {
+              response.status(200).json({
+                message: 'רשימה חדשה נקלטה בהצלחה',
+                superList: {
+                  id: docRef.id,
+                  name: name,
+                  description: description,
+                  items: []
+                }
+              });
+            },
+            error => {
+              response.status(401).json({
+                title: 'Error',
+                message: 'Error Add New Shared list to user',
+                error: error
+              });
             }
-            response.status(200).json({
-              message: 'רשימה חדשה נקלטה בהצלחה',
-              superList: {
-                id: docRef.id,
-                name: name,
-                description: description,
-                items: []
-              }
-            });
-          });
+          );
       })
       .catch(error => {
         response.status(403).json({ errorMsg: 'Unauthorized user' });
@@ -341,38 +387,30 @@ exports.updateSharedItem = functions.https.onRequest((request, response) => {
           .doc(listId)
           .get()
           .then(doc => {
-            response.status(200).json({
-              message: 'פריט עודכן בהצלחה',
-              id: doc.id,
-              data: doc.data()
-            });
-          });
+            const list = doc.data();
+            const itemIndex = getItemIndex(oldItem.id, list);
+            list.items[itemIndex] = newItem;
 
-        // db.collection('shared-list')
-        //   .doc(listId)
-        //   .update({ items: admin.firestore.FieldValue.arrayRemove(oldItem) })
-        //   .then(
-        //     () => {
-        //       db.collection('shared-list')
-        //         .doc(listId)
-        //         .update({
-        //           items: admin.firestore.FieldValue.arrayUnion(newItem)
-        //         })
-        //         .then(() => {
-        //           response.status(200).json({
-        //             message: 'פריט עודכן בהצלחה',
-        //             newItem: newItem
-        //           });
-        //         });
-        //     },
-        //     error => {
-        //       response.status(401).json({
-        //         title: 'Error',
-        //         message: 'Error Update Shared Item',
-        //         error: error
-        //       });
-        //     }
-        //   );
+            db.collection('shared-list')
+              .doc(listId)
+              .update({ items: list.items })
+              .then(
+                () => {
+                  response.status(200).json({
+                    message: 'פריט עודכן בהצלחה',
+                    id: doc.id,
+                    newItem: newItem
+                  });
+                },
+                error => {
+                  response.status(401).json({
+                    title: 'Error',
+                    message: 'Error Update Shared Item',
+                    error: error
+                  });
+                }
+              );
+          });
       })
       .catch(error => {
         response.status(403).json({ errorMsg: 'Unauthorized user' });
@@ -382,17 +420,30 @@ exports.updateSharedItem = functions.https.onRequest((request, response) => {
 // ===========================================================================================================
 // [START onCreateTrigger]
 exports.sendWelcomeEmail = functions.auth.user().onCreate(user => {
-  const email = user.email; // The email of the user.
-  const displayName = user.displayName; // The display name of the user.
-  return sendWelcomeEmail(email, displayName);
+  return db
+    .collection('super-list')
+    .doc(user.uid)
+    .collection('item-update')
+    .add({ itemName: '', listName: '' })
+    .then(docRef => {
+      const email = user.email; // The email of the user.
+      const displayName = user.displayName; // The display name of the user.
+      return sendWelcomeEmail(email, displayName);
+    });
 });
 
 // [START onDeleteTrigger]
 exports.sendDeleteUserEmail = functions.auth.user().onDelete(user => {
-  const email = user.email;
-  const displayName = user.displayName;
+  return db
+    .collection('super-list')
+    .doc(user.uid)
+    .delete()
+    .then(result => {
+      const email = user.email;
+      const displayName = user.displayName;
 
-  return sendGoodbyeEmail(email, displayName);
+      return sendGoodbyeEmail(email, displayName);
+    });
 });
 
 // Sends a welcome email to the given user.

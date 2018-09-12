@@ -1,9 +1,10 @@
 <div class="main-container">
-  <h3>עדכון פרטי רשימה</h3>
-  <form dir="rtl"
+  <form *ngIf="isDoneUpdateList"
+        dir="rtl"
         (ngSubmit)="listUpdate()"
         [formGroup]="updateListForm"
         class="update-list-form">
+    <h3>עדכון פרטי רשימה</h3>
     <mat-form-field>
       <input matInput
              formControlName="name"
@@ -32,4 +33,9 @@
       </button>
     </div>
   </form>
+  <div class="update-list-spinner"
+       *ngIf="!isDoneUpdateList">
+    <h3>מעדכן פרטים</h3>
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
 </div>

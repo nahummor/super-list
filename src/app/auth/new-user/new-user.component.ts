@@ -60,7 +60,7 @@ export class NewUserComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(ans => {
-          this.router.navigate(['/auth/login']);
+          // this.router.navigate(['/auth/login']);
         });
       })
       .catch(error => {

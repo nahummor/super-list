@@ -23,7 +23,7 @@
     <mat-card-content>
       <p class="description">{{description}}</p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="opButton">
       <div class="card-action-button">
         <button mat-mini-fab
                 matTooltip="מחיקת פריט"

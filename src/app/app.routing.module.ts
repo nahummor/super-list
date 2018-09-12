@@ -1,3 +1,5 @@
+import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-shared-list.component';
+import { SharedListContainerComponent } from './super-list/shared-list-container/shared-list-container.component';
 import { SavedListComponent } from './super-list/saved-list/saved-list.component';
 import { AuthGuard } from './auth/auth.guard';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
@@ -21,6 +23,16 @@ const routes: Routes = [
     path: 'sharedList',
     canLoad: [AuthGuard],
     loadChildren: './shared-list/shared-list.module#SharedListModule'
+  },
+  {
+    path: 'savedSharedList',
+    canActivate: [AuthGuard],
+    component: SavedSharedListComponent
+  },
+  {
+    path: 'sharedListContainer',
+    canActivate: [AuthGuard],
+    component: SharedListContainerComponent
   }
 
   // { path: 'path/:routeParam', component: MyComponent },

@@ -22,6 +22,7 @@ export interface ItemUpdate {
 })
 export class SuperListService {
   private superList: SuperList;
+  private sharedList: SuperList;
   private uid: string;
   private itemUpdate: ItemUpdate;
   private userUpdateItem: boolean;
@@ -104,6 +105,14 @@ export class SuperListService {
     this.superList = list;
   }
 
+  public setSharedList(list: SuperList) {
+    this.sharedList = list;
+  }
+
+  public getSharedList(): SuperList {
+    return this.sharedList;
+  }
+
   public listExists(name: string) {
     return this.db
       .collection('super-list')
@@ -118,18 +127,40 @@ export class SuperListService {
     // });
   }
 
+  public addSharedListToMyList(): Observable<SuperList> {
+    const jsonHeaders = new HttpHeaders().set(
+      'Content-Type',
+      'application/json'
+    );
+
+    return this.httpClient
+      .post(
+        'https://us-central1-superlist-80690.cloudfunctions.net/addSharedListToMyList',
+        {
+          token: this.token,
+          uid: this.uid,
+          list: this.sharedList
+        },
+        { headers: jsonHeaders }
+      )
+      .pipe(
+        map((data: { message: string; superList: SuperList }) => {
+          return {
+            id: data.superList.id,
+            name: data.superList.name,
+            description: data.superList.description,
+            items: data.superList.items
+          };
+        })
+      );
+  }
+
   public addNewList(name: string, description: string): Observable<SuperList> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
-    // בדיקה האם זו הרשימה הראשונה של המשתמש
-    let firstList: boolean;
-    if (!this.superList) {
-      firstList = true;
-    } else {
-      firstList = false;
-    }
+
     return this.httpClient
       .post(
         'https://us-central1-superlist-80690.cloudfunctions.net/addNewList',
@@ -137,8 +168,7 @@ export class SuperListService {
           token: this.token,
           uid: this.uid,
           name: name,
-          description: description,
-          firstList: firstList
+          description: description
         },
         { headers: jsonHeaders }
       )
@@ -171,7 +201,7 @@ export class SuperListService {
   }
 
   public getUserLists() {
-    console.log('User ID: ', this.uid);
+    // console.log('User ID: ', this.uid);
 
     return this.db
       .collection('super-list')
@@ -183,6 +213,22 @@ export class SuperListService {
           return docArray.map(doc => {
             return {
               id: doc.payload.doc.id,
+              ...doc.payload.doc.data()
+            };
+          });
+        })
+      );
+  }
+
+  public getSharedLists(): Observable<any[]> {
+    return this.db
+      .collection('shared-list')
+      .snapshotChanges()
+      .pipe(
+        map(docArray => {
+          return docArray.map(doc => {
+            return {
+              // id: doc.payload.doc.id,
               ...doc.payload.doc.data()
             };
           });

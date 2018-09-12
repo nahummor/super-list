@@ -13,6 +13,7 @@ export class UpdateSharedItemComponent implements OnInit {
   private updateItem: Item;
   public updateItemForm: FormGroup;
   private listId: string;
+  public isDoneUpdateItem: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateSharedItemComponent>,
@@ -21,6 +22,7 @@ export class UpdateSharedItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isDoneUpdateItem = true;
     this.updateItem = this.data.item;
     this.listId = this.data.listId;
 
@@ -38,6 +40,7 @@ export class UpdateSharedItemComponent implements OnInit {
   }
 
   public onUpdateItem() {
+    this.isDoneUpdateItem = false;
     const oldItem: Item = {
       id: this.data.item.id,
       amount: Number.parseInt(this.data.item.amount),
@@ -59,15 +62,11 @@ export class UpdateSharedItemComponent implements OnInit {
       .updateItem(this.listId, newItem, oldItem)
       .subscribe(data => {
         console.log('Update shared item: ', data);
+        this.isDoneUpdateItem = true;
         this.dialogRef.close('update');
       });
-    // this.sharedListSrvs
-    //   .updateItemV2(this.listId, newItem, oldItem)
-    //   .subscribe(data => {
-    //     console.log('Update shared item: ', data);
-    //     this.dialogRef.close('update');
-    //   });
   }
+
   public onClickClose() {
     this.dialogRef.close('close');
   }

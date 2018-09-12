@@ -43,4 +43,8 @@ export class MainComponent implements OnInit {
   public onGetMyLists() {
     this.router.navigate(['savedList']);
   }
+
+  public onGetSharedList() {
+    this.router.navigate(['savedSharedList']);
+  }
 }

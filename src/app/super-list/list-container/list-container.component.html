@@ -3,6 +3,7 @@
   <h4 class="main-header">{{superList.description}}</h4>
 
   <nm-list-item *ngFor="let item of superList.items"
+                [opButton]="true"
                 [id]="item.id"
                 [updateItemId]="updateItemIdArray[item.id]"
                 [name]="item.name"
