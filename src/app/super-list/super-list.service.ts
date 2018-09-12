@@ -1,7 +1,7 @@
 import { SppinerMsgBoxComponent } from './../messages-box/sppiner-msg-box/sppiner-msg-box.component';
 import { OkMsgComponent } from './../messages-box/ok-msg/ok-msg.component';
 import { Item } from './item';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { AuthService } from './../auth/auth.service';
@@ -28,6 +28,7 @@ export class SuperListService {
   private userUpdateItem: boolean;
   private token: string;
   public userUpdateItemEvent = new EventEmitter<ItemUpdate>();
+  private itemUpdateSub: Subscription;
 
   constructor(
     private httpClient: HttpClient,
@@ -39,6 +40,12 @@ export class SuperListService {
     this.userUpdateItem = false;
     this.getItemUpdate();
     this.token = this.authService.getToken();
+
+    // this.testDelete();
+  }
+
+  public unSubscription() {
+    this.itemUpdateSub.unsubscribe();
   }
 
   public setUserId() {
@@ -47,7 +54,7 @@ export class SuperListService {
   }
 
   public getItemUpdate() {
-    this.db
+    this.itemUpdateSub = this.db
       .collection('super-list')
       .doc(this.uid)
       .collection('item-update')
@@ -65,30 +72,35 @@ export class SuperListService {
           });
         })
       )
-      .subscribe(data => {
-        if (!this.getUserUpdateItem()) {
-          if (data.length > 0) {
-            if (data[0].itemId > -1) {
-              this.userUpdateItemEvent.emit(data[0]);
-              const dialogRef = this.dialog.open(OkMsgComponent, {
-                width: '25rem',
-                data: {
-                  message: `ברשימה ${data[0].listName} עודכן הפריט ${
-                    data[0].itemName
-                  }`
-                }
-              });
-              dialogRef.afterClosed().subscribe(result => {
-                console.log('ans: ', result);
-                this.setUserUpdateItem(false);
-                this.setItemUpdate(-1, '', '');
-              });
+      .subscribe(
+        data => {
+          if (!this.getUserUpdateItem()) {
+            if (data.length > 0) {
+              if (data[0].itemId > -1) {
+                this.userUpdateItemEvent.emit(data[0]);
+                const dialogRef = this.dialog.open(OkMsgComponent, {
+                  width: '25rem',
+                  data: {
+                    message: `ברשימה ${data[0].listName} עודכן הפריט ${
+                      data[0].itemName
+                    }`
+                  }
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                  console.log('ans: ', result);
+                  this.setUserUpdateItem(false);
+                  this.setItemUpdate(-1, '', '');
+                });
+              }
             }
+          } else {
+            this.setUserUpdateItem(false);
           }
-        } else {
-          this.setUserUpdateItem(false);
+        },
+        error => {
+          this.itemUpdateSub.unsubscribe();
         }
-      });
+      );
   }
 
   // set the item was updated
@@ -460,5 +472,36 @@ export class SuperListService {
 
   public setUserUpdateItem(ans: boolean) {
     this.userUpdateItem = ans;
+  }
+
+  public testDelete() {
+    console.log('Start delete');
+    this.db
+      .collection('super-list')
+      .doc('CMiGkfmQRdbjfX8QTOinrELs7Xt2')
+      .collection('item-update')
+      .snapshotChanges()
+      .pipe(
+        map(docArray => {
+          return docArray.map(doc => {
+            return {
+              id: doc.payload.doc.id,
+              ...doc.payload.doc.data()
+            };
+          });
+        })
+      )
+      .subscribe(data => {
+        if (data.length > 0) {
+          const id = data[0].id;
+          console.log('Doc ID: ', id);
+          this.db
+            .collection('super-list')
+            .doc('CMiGkfmQRdbjfX8QTOinrELs7Xt2')
+            .collection('item-update')
+            .doc(id)
+            .delete();
+        }
+      });
   }
 }

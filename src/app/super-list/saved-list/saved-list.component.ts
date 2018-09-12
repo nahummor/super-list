@@ -5,17 +5,19 @@ import { YesNoMsgComponent } from './../../messages-box/yes-no-msg/yes-no-msg.co
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { SuperListService } from './../super-list.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SuperList } from '../super-list';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'nm-saved-list',
   templateUrl: './saved-list.component.html',
   styleUrls: ['./saved-list.component.scss']
 })
-export class SavedListComponent implements OnInit {
+export class SavedListComponent implements OnInit, OnDestroy {
   public userLists: SuperList[];
   public isDoneLoading: boolean;
+  private getUserListsSub: Subscription;
 
   constructor(
     private superListService: SuperListService,
@@ -26,10 +28,16 @@ export class SavedListComponent implements OnInit {
 
   ngOnInit() {
     this.isDoneLoading = false;
-    this.superListService.getUserLists().subscribe((data: SuperList[]) => {
-      this.userLists = data;
-      this.isDoneLoading = true;
-    });
+    this.getUserListsSub = this.superListService
+      .getUserLists()
+      .subscribe((data: SuperList[]) => {
+        this.userLists = data;
+        this.isDoneLoading = true;
+      });
+  }
+
+  ngOnDestroy() {
+    this.getUserListsSub.unsubscribe();
   }
 
   public showList(list: SuperList) {

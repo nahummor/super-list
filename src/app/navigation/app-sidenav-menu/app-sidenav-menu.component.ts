@@ -1,3 +1,4 @@
+import { SuperListService } from './../../super-list/super-list.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
