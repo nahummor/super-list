@@ -2,6 +2,7 @@
 
 .main-container {
   height: 100%;
+  @include user-backgroung();
 
   .main-header {
     @include flex-column-center();

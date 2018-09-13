@@ -1,9 +1,12 @@
+@import '../../shared/varibales.scss';
+
 .main-container {
   display: flex;
   flex-direction: column;
   justify-content: center; // ציר ראשי
   align-items: center; // ציר חוצה
   // direction: rtl;
+  @include user-backgroung();
 
   mat-card {
     margin-bottom: 0.5rem;

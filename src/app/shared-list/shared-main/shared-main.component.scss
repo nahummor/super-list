@@ -2,6 +2,7 @@
 
 .main-container {
   height: 100%;
+  @include admin-backgroung();
 
   .main-header {
     // margin-bottom: 30vh;

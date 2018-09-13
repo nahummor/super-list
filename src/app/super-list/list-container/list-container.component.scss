@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center; // ציר ראשי
   align-items: flex-start; // ציר חוצה
+  @include user-backgroung();
 
   @media (min-width: $xs-screen-size) {
     align-items: center;
