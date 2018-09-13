@@ -41,7 +41,7 @@ export class SuperListService {
     this.getItemUpdate();
     this.token = this.authService.getToken();
 
-    // this.testDelete();
+    this.testDelete();
   }
 
   public unSubscription() {
@@ -478,30 +478,36 @@ export class SuperListService {
     console.log('Start delete');
     this.db
       .collection('super-list')
-      .doc('CMiGkfmQRdbjfX8QTOinrELs7Xt2')
+      .doc(this.uid)
       .collection('item-update')
-      .snapshotChanges()
-      .pipe(
-        map(docArray => {
-          return docArray.map(doc => {
-            return {
-              id: doc.payload.doc.id,
-              ...doc.payload.doc.data()
-            };
-          });
-        })
-      )
+      .get({ source: 'default' })
       .subscribe(data => {
-        if (data.length > 0) {
-          const id = data[0].id;
-          console.log('Doc ID: ', id);
-          this.db
-            .collection('super-list')
-            .doc('CMiGkfmQRdbjfX8QTOinrELs7Xt2')
-            .collection('item-update')
-            .doc(id)
-            .delete();
-        }
+        data.docs.forEach(doc => {
+          console.log('ID', doc.id);
+        });
       });
+    // .snapshotChanges()
+    // .pipe(
+    //   map(docArray => {
+    //     return docArray.map(doc => {
+    //       return {
+    //         id: doc.payload.doc.id,
+    //         ...doc.payload.doc.data()
+    //       };
+    //     });
+    //   })
+    // )
+    // .subscribe(data => {
+    //   if (data.length > 0) {
+    //     const id = data[0].id;
+    //     console.log('Doc ID: ', id);
+    //     this.db
+    //       .collection('super-list')
+    //       .doc('CMiGkfmQRdbjfX8QTOinrELs7Xt2')
+    //       .collection('item-update')
+    //       .doc(id)
+    //       .delete();
+    //   }
+    // });
   }
 }
