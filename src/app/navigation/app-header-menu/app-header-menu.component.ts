@@ -11,9 +11,15 @@ import { Router } from '@angular/router';
 export class AppHeaderMenuComponent implements OnInit {
   @Output()
   sidenavToggle = new EventEmitter<void>();
+  public displayUserName: string;
+
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.displayUserNameEvent.subscribe(userName => {
+      this.displayUserName = userName;
+    });
+  }
 
   public onToggleSidenav() {
     this.sidenavToggle.emit();

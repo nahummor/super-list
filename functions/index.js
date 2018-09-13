@@ -434,16 +434,12 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate(user => {
 
 // [START onDeleteTrigger]
 exports.sendDeleteUserEmail = functions.auth.user().onDelete(user => {
-  return db
-    .collection('super-list')
-    .doc(user.uid)
-    .delete()
-    .then(result => {
-      const email = user.email;
-      const displayName = user.displayName;
+  return deleteUserDb(user.uid).then(() => {
+    const email = user.email;
+    const displayName = user.displayName;
 
-      return sendGoodbyeEmail(email, displayName);
-    });
+    return sendGoodbyeEmail(email, displayName);
+  });
 });
 
 // Sends a welcome email to the given user.
@@ -482,4 +478,34 @@ function getItemIndex(itemId, superList) {
     return item.id === itemId;
   });
   return itemIndex;
+}
+
+// delete user data base after deleting the user
+function deleteUserDb(uid) {
+  return db
+    .collection('super-list')
+    .doc(uid)
+    .collection('item-update')
+    .get()
+    .then(
+      data => {
+        let batch = db.batch();
+        data.docs.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        db.collection('super-list')
+          .doc(uid)
+          .collection('user-list')
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              batch.delete(doc.ref);
+            });
+            batch.commit().then(() => {});
+          });
+      },
+      error => {
+        console.log('Delete User DB Error: ', error);
+      }
+    );
 }

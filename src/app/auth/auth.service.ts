@@ -1,6 +1,6 @@
 import { ErrorMsgComponent } from './../messages-box/error-msg/error-msg.component';
 import { User } from './user';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { OkMsgComponent } from '../messages-box/ok-msg/ok-msg.component';
 import * as firebase from 'firebase/app';
@@ -12,9 +12,12 @@ import { Router } from '@angular/router';
 export class AuthService {
   private token: string;
   private authUser: boolean;
+  private displayUserName: string;
+  public displayUserNameEvent = new EventEmitter<string>();
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {
     this.authUser = false;
+    this.displayUserName = 'no name';
   }
 
   public isUserAuth(): boolean {
@@ -56,12 +59,15 @@ export class AuthService {
   public initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
+        this.displayUserName = user.displayName ? user.displayName : user.email;
+        this.displayUserNameEvent.emit(this.displayUserName + ' : שלום');
         this.afAuth.auth.currentUser.getIdToken().then(token => {
           this.token = token;
           this.authUser = true;
           this.router.navigate(['/main']); // navigate to application
         });
       } else {
+        this.displayUserNameEvent.emit('');
         this.authUser = false;
         this.router.navigate(['/auth/login']);
       }

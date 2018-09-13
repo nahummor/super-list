@@ -5,6 +5,12 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
+  <div class="user-name">
+    <mat-chip-list *ngIf="displayUserName">
+      <mat-chip color="accent"
+                selected>{{displayUserName}}</mat-chip>
+    </mat-chip-list>
+  </div>
   <ul class="navigation-items">
     <li>
       <button mat-button

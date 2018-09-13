@@ -10,6 +10,17 @@
   }
 }
 
+.user-name {
+  width: 100%;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  @media (min-width: $xs-screen-size) {
+    justify-content: flex-start;
+  }
+}
+
 .navigation-items {
   list-style: none;
   display: none;

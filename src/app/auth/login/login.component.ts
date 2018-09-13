@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.authService
       .loginUser(this.loginForm.value)
       .then(result => {
-        console.log(result);
+        console.log('Login Result: ', result);
         this.startLogin = false;
         // return true;
       })
@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
         this.startLogin = false;
         if (
           error.code === 'auth/invalid-email' ||
-          error.code === 'auth/wrong-password'
+          error.code === 'auth/wrong-password' ||
+          error.code === 'auth/user-not-found'
         ) {
           const snackBarRef = this.snackBar.openFromComponent(
             ErrorMsgComponent,

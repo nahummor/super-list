@@ -5,17 +5,19 @@ import { SppinerMsgBoxComponent } from './../../messages-box/sppiner-msg-box/spp
 import { SharedListService } from './../../shared-list/shared-list.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SuperList } from '../../super-list/super-list';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'nm-shared-saved-list',
   templateUrl: './shared-saved-list.component.html',
   styleUrls: ['./shared-saved-list.component.scss']
 })
-export class SharedSavedListComponent implements OnInit {
+export class SharedSavedListComponent implements OnInit, OnDestroy {
   public userLists: SuperList[];
   public isDoneLoading: boolean;
+  private getSharedListSub: Subscription;
 
   constructor(
     private sharedListService: SharedListService,
@@ -26,10 +28,16 @@ export class SharedSavedListComponent implements OnInit {
 
   ngOnInit() {
     this.isDoneLoading = false;
-    this.sharedListService.getSharedList().subscribe((data: SuperList[]) => {
-      this.userLists = data;
-      this.isDoneLoading = true;
-    });
+    this.getSharedListSub = this.sharedListService
+      .getSharedList()
+      .subscribe((data: SuperList[]) => {
+        this.userLists = data;
+        this.isDoneLoading = true;
+      });
+  }
+
+  ngOnDestroy() {
+    this.getSharedListSub.unsubscribe();
   }
 
   public showList(list: SuperList) {

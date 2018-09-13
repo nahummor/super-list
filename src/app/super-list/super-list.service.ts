@@ -40,8 +40,6 @@ export class SuperListService {
     this.userUpdateItem = false;
     this.getItemUpdate();
     this.token = this.authService.getToken();
-
-    this.testDelete();
   }
 
   public unSubscription() {
@@ -475,17 +473,50 @@ export class SuperListService {
   }
 
   public testDelete() {
-    console.log('Start delete');
-    this.db
-      .collection('super-list')
-      .doc(this.uid)
-      .collection('item-update')
-      .get({ source: 'default' })
-      .subscribe(data => {
-        data.docs.forEach(doc => {
-          console.log('ID', doc.id);
-        });
-      });
+    // const jsonHeaders = new HttpHeaders().set(
+    //   'Content-Type',
+    //   'application/json'
+    // );
+    // return this.httpClient
+    //   .post(
+    //     'https://us-central1-superlist-80690.cloudfunctions.net/testDelete',
+    //     {
+    //       uid: this.uid,
+    //       token: this.token
+    //     },
+    //     { headers: jsonHeaders }
+    //   )
+    //   .pipe(
+    //     map(data => {
+    //       return data;
+    //     })
+    //   )
+    //   .subscribe(data => {
+    //     console.log('Data: ', data);
+    //   });
+    // console.log('Start delete');
+    // this.db
+    //   .collection('super-list')
+    //   .doc(this.uid)
+    //   .collection('item-update')
+    //   .get({ source: 'default' })
+    //   .subscribe(data => {
+    //     data.docs.forEach(doc => {
+    //       console.log('ID', doc.id);
+    //     });
+    //     console.log('User list');
+    //     this.db
+    //       .collection('super-list')
+    //       .doc(this.uid)
+    //       .collection('user-list')
+    //       .get({ source: 'default' })
+    //       .subscribe(data1 => {
+    //         data1.docs.forEach(doc => {
+    //           console.log('ID', doc.id);
+    //         });
+    //       });
+    //   });
+    // ==============================================
     // .snapshotChanges()
     // .pipe(
     //   map(docArray => {
