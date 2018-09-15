@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.authService
       .loginUser(this.loginForm.value)
       .then(result => {
-        console.log('Login Result: ', result);
+        // console.log('Login Result: ', result);
         this.startLogin = false;
         // return true;
       })

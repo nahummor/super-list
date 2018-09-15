@@ -1,0 +1,16 @@
+<div class="main-container">
+  <div class="verification-message">
+    <h2>אמת את כתובת הדוא'ל שלך</h2>
+    <h3> ברגעים אלה נשלח דוא'ל אימות לכתובת</h3>
+    <h3>{{userEmail}}</h3>
+    <h3>בתוך דוא'ל זה יש ללחוץ על קישור כדי לסיים את תהליך פתיחת המשתמש </h3>
+    <div class="operation-button">
+      <button mat-raised-button
+              (click)="onGoLogin()"
+              color="primary">כניסה</button>
+      <button mat-raised-button
+              (click)="onSendVerificationEmail()"
+              color="accent">שלח שוב</button>
+    </div>
+  </div>
+</div>

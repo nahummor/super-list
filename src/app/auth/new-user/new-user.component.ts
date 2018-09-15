@@ -52,6 +52,7 @@ export class NewUserComponent implements OnInit {
     this.authService
       .addNewUser(newUser)
       .then(result => {
+        this.authService.setNewUser(true);
         this.isDoneAddingUser = true;
         // יצירת הודעה משתמש חדש נוצר בהצלחה
         const dialogRef = this.dialog.open(OkMsgComponent, {

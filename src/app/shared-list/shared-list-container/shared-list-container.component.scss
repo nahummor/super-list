@@ -3,9 +3,12 @@
 .main-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; // ציר ראשי
+  // justify-content: center; // ציר ראשי
+  justify-content: flex-start; // ציר ראשי
   align-items: flex-start; // ציר חוצה
-  @include admin-backgroung();
+  min-height: 100%;
+  height: auto;
+  @include admin-background();
 
   @media (min-width: $xs-screen-size) {
     align-items: center;
@@ -25,7 +28,7 @@
   }
 
   .main-header {
-    margin-top: 2px;
+    margin-top: 1rem;
     margin-bottom: 2px;
     align-self: center;
   }

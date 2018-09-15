@@ -3,7 +3,7 @@
     <!-- <mat-card-header> -->
     <!-- <mat-card-title> -->
     <div class="card-title">
-      <div>
+      <div *ngIf="opButton">
         <mat-checkbox color="primary"
                       (click)="doneItem()"
                       [(ngModel)]="checked"

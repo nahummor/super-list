@@ -3,10 +3,12 @@
 .main-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; // ציר ראשי
+  // justify-content: center; // ציר ראשי
+  justify-content: flex-start; // ציר ראשי
   align-items: center; // ציר חוצה
-  // direction: rtl;
-  @include admin-backgroung();
+  min-height: 100%;
+  height: auto;
+  @include admin-background();
 
   mat-card {
     margin-bottom: 0.5rem;
