@@ -25,7 +25,7 @@
     <li *ngIf="!isUserAuth()">
       <a routerLink="/auth/new-user">משתמש חדש</a>
     </li>
-    <li *ngIf="isUserAuth()">
+    <li *ngIf="isUserAuth() && userRole==='admin'">
       <a routerLink="/sharedList/main">רשימות משותפות</a>
     </li>
     <li *ngIf="isUserAuth()">

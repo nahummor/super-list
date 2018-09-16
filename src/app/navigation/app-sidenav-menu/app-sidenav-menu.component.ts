@@ -11,6 +11,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class AppSidenavMenuComponent implements OnInit {
   @Output()
   closeSideNav = new EventEmitter<void>();
+  public userRole: string;
 
   constructor(private router: Router, private authService: AuthService) {}
 

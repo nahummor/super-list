@@ -1,3 +1,4 @@
+import { AngularFirestore } from 'angularfire2/firestore';
 import { ErrorMsgComponent } from './../messages-box/error-msg/error-msg.component';
 import { User } from './user';
 import { Injectable, EventEmitter } from '@angular/core';
@@ -5,6 +6,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { OkMsgComponent } from '../messages-box/ok-msg/ok-msg.component';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +17,16 @@ export class AuthService {
   private authUser: boolean;
   private displayUserName: string;
   private userEmail: string;
+  public userRoleEvent = new EventEmitter<string>;
   public displayUserNameEvent = new EventEmitter<string>();
   private newUser: boolean; // newUser = false , user not verifide , newUser = true , user virefide
+  private userRoleSub: Subscription;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private db: AngularFirestore,
+    private router: Router
+  ) {
     this.authUser = false;
     this.displayUserName = 'no name';
     this.newUser = false;
@@ -67,6 +76,7 @@ export class AuthService {
   }
 
   public logout() {
+    this.userRoleSub.unsubscribe();
     return this.afAuth.auth.signOut();
   }
 
@@ -74,16 +84,38 @@ export class AuthService {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
+  public setUserRole(): Observable<any> {
+    return this.db
+      .collection('users')
+      .doc(this.getUserId())
+      .snapshotChanges()
+      .pipe(
+        map(docArray => {
+          return {
+            id: docArray.payload.id,
+            ...docArray.payload.data()
+          };
+        })
+      );
+  }
+
   public initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         if (user.emailVerified) {
+
+          this.userRoleSub = this.setUserRole().subscribe(data => {
+            this.userRoleEvent.emit(data.role);
+            // console.log('User role: ', data.role);
+          });
+
           this.userEmail = user.email;
           this.newUser = false;
           this.displayUserName = user.displayName
             ? user.displayName
             : user.email;
           this.displayUserNameEvent.emit(this.displayUserName + ' : שלום');
+
           this.afAuth.auth.currentUser.getIdToken().then(token => {
             this.token = token;
             this.authUser = true;

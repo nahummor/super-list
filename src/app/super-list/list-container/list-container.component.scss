@@ -5,13 +5,16 @@
   flex-direction: column;
   // justify-content: center; // ציר ראשי
   justify-content: flex-start; // ציר ראשי
-  align-items: flex-start; // ציר חוצה
+  // align-items: flex-start; // ציר חוצה
+  align-items: center; // ציר חוצה
   min-height: 100%;
   height: auto;
+  padding-bottom: 8rem;
   @include user-background();
 
   @media (min-width: $xs-screen-size) {
     align-items: center;
+    padding-bottom: 1rem;
   }
 
   .floating-button {

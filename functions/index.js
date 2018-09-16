@@ -426,9 +426,14 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate(user => {
     .collection('item-update')
     .add({ itemName: '', listName: '' })
     .then(docRef => {
-      const email = user.email; // The email of the user.
-      const displayName = user.displayName; // The display name of the user.
-      return sendWelcomeEmail(email, displayName);
+      db.collection('users')
+        .doc(user.uid)
+        .set({ role: 'user' })
+        .then(resulr => {
+          const email = user.email; // The email of the user.
+          const displayName = user.displayName; // The display name of the user.
+          return sendWelcomeEmail(email, displayName);
+        });
     });
 });
 
@@ -501,7 +506,12 @@ function deleteUserDb(uid) {
             snapshot.docs.forEach(doc => {
               batch.delete(doc.ref);
             });
-            batch.commit().then(() => {});
+            db.collection('users')
+              .doc(uid)
+              .delete()
+              .then(result => {
+                batch.commit().then(() => {});
+              });
           });
       },
       error => {
