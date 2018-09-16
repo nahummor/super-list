@@ -18,7 +18,8 @@
     </mat-card-actions>
   </mat-card>
 
-  <div *ngIf="!isDoneLoading">
+  <div class="spinner"
+       *ngIf="!isDoneLoading">
     <h3>טוען נתונים</h3>
     <mat-spinner [diameter]="40"></mat-spinner>
   </div>

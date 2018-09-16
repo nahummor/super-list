@@ -34,6 +34,12 @@
     }
   }
 
+  .sppiner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
   // mat-card:hover {
   //   background: #dedede;
   // }

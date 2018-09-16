@@ -1,4 +1,6 @@
-import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { ResetPasswordComponent } from './../reset-password/reset-password.component';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorMsgComponent } from './../../messages-box/error-msg/error-msg.component';
 import { AuthService } from './../auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -74,5 +77,9 @@ export class LoginComponent implements OnInit {
     this.authService.loginUserWithFacebook().then(() => {
       // this.router.navigate(['/super-list']);
     });
+  }
+
+  public onResetPassword() {
+    this.router.navigate(['auth/resetPassword']);
   }
 }

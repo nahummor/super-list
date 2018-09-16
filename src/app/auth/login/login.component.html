@@ -25,7 +25,8 @@
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions class="card-action">
-        <button *ngIf="!startLogin"
+        <button class="login-button"
+                *ngIf="!startLogin"
                 mat-raised-button
                 [disabled]="!loginForm.valid"
                 type="submit"
@@ -33,14 +34,18 @@
           <i class="fa fa-envelope"></i>
           כניסה
         </button>
-        <button *ngIf="!startLogin"
+        <button class="login-button"
+                *ngIf="!startLogin"
                 (click)="onLoginWithFacebook()"
                 mat-raised-button
                 type="button"
                 color="primary"><i class="fa fa-facebook-official"
              aria-hidden="true"></i> כניסה עם פייסבוק</button>
-        <button mat-button
-                color="primary">איפוס סיסמה</button>
+        <button type="button"
+                class="reset-password"
+                (click)="onResetPassword()"
+                mat-button
+                color="primary">שכחתי סיסמה</button>
         <div class="spinner-div"
              *ngIf="startLogin">
           <h3>מבצע אימות נתונים</h3>

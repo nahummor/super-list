@@ -70,8 +70,8 @@ export class AuthService {
     return this.afAuth.auth.signOut();
   }
 
-  public resetUserPasswordByEmail(userEmail: string): Promise<void> {
-    return this.afAuth.auth.sendPasswordResetEmail(userEmail);
+  public resetUserPasswordByEmail(email: string): Promise<void> {
+    return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
   public initAuthListener() {

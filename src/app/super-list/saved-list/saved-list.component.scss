@@ -37,6 +37,12 @@
   // mat-card:hover {
   //   background: #dedede;
   // }
+  .sppiner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
 
   @media (min-width: 900px) {
     mat-card {
