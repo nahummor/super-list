@@ -9,8 +9,9 @@
                       [(ngModel)]="checked"
                       labelPosition="before"></mat-checkbox>
       </div>
-      <div class="content">
+      <div class="title-content">
         <b>{{amount}} {{name}}</b>
+        <b>מחיר {{cost}}</b>
       </div>
       <div class="update-icon-hide"
            [ngClass]="{'update-icon-display': updateItemId === id}">
@@ -18,9 +19,9 @@
       </div>
     </div>
     <!-- </mat-card-title> -->
-    <mat-card-subtitle>מחיר {{cost}}</mat-card-subtitle>
+    <!-- <mat-card-subtitle>מחיר {{cost}}</mat-card-subtitle> -->
     <!-- </mat-card-header> -->
-    <mat-card-content>
+    <mat-card-content class="content">
       <p class="description">{{description}}</p>
     </mat-card-content>
     <mat-card-actions *ngIf="opButton">

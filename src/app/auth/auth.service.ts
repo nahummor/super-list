@@ -17,7 +17,7 @@ export class AuthService {
   private authUser: boolean;
   private displayUserName: string;
   private userEmail: string;
-  public userRoleEvent = new EventEmitter<string>;
+  public userRoleEvent = new EventEmitter<string>();
   public displayUserNameEvent = new EventEmitter<string>();
   private newUser: boolean; // newUser = false , user not verifide , newUser = true , user virefide
   private userRoleSub: Subscription;
@@ -103,7 +103,6 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         if (user.emailVerified) {
-
           this.userRoleSub = this.setUserRole().subscribe(data => {
             this.userRoleEvent.emit(data.role);
             // console.log('User role: ', data.role);

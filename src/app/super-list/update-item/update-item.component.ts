@@ -34,7 +34,15 @@ export class UpdateItemComponent implements OnInit {
   }
 
   public onUpdateItem() {
-    this.superListSrvs.updateItem(this.updateItemForm.value);
+    const item: Item = {
+      id: this.updateItemForm.value.id,
+      name: this.updateItemForm.value.name,
+      description: this.updateItemForm.value.description,
+      amount: this.updateItemForm.value.amount,
+      cost: Number.parseFloat(this.updateItemForm.value.cost)
+    };
+
+    this.superListSrvs.updateItem(item);
     this.dialogRef.close('update');
   }
   public onClickClose() {

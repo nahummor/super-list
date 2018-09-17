@@ -14,7 +14,7 @@
     <span class="nav-caption">ראשי</span>
   </a>
   <a mat-list-item
-     *ngIf="isUserAuth()"
+     *ngIf="isUserAuth() && userRole==='admin'"
      (click)="onToggleSidenav()"
      routerLink="/sharedList/main">
     <mat-icon>list</mat-icon>

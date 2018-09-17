@@ -4,5 +4,5 @@ export interface Item {
   amount: number;
   description: string;
   cost: number;
-  done: boolean;
+  done?: boolean;
 }

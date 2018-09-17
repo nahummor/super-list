@@ -19,6 +19,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
   private userUpdateItemChangeSub: Subscription;
   public updateItemId: number;
   public updateItemIdArray = new Array<number>();
+  public listSum: number;
 
   constructor(
     private dialog: MatDialog,
@@ -37,6 +38,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         data => {
+          this.listSum = 0;
           // console.log('*** My List ***');
           // console.log('data: ', data);
           this.superList = {
@@ -50,6 +52,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
           this.countNotSelectedItems();
           this.superList.items.forEach(item => {
             this.updateItemIdArray.push(-1);
+            this.listSum = this.listSum + item.cost;
           });
         },
         error => {

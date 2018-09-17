@@ -28,17 +28,40 @@
     bottom: 0;
     right: 0;
     margin-right: 0.5rem;
+
+    @media (min-width: $xs-screen-size) {
+      margin-right: 3rem;
+    }
+
+    @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .floating-sum {
+    z-index: 1000;
+    position: fixed;
+    bottom: 1rem;
+    border-radius: 16px;
+    box-shadow: 5px 6px 8px #888888;
+
+    mat-chip {
+      font-weight: bold;
+    }
+    @media (min-width: $xs-screen-size) {
+      right: 9rem;
+      bottom: 1rem;
+    }
+
+    /* Landscape */
+    @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      right: 5rem;
+    }
   }
 
   .main-header {
     margin-top: 1rem;
     margin-bottom: 2px;
     align-self: center;
-  }
-
-  @media (min-width: $xs-screen-size) {
-    .floating-button {
-      margin-right: 3rem;
-    }
   }
 }

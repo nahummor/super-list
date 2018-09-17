@@ -1,3 +1,5 @@
+@import '../../shared/varibales';
+
 .main-container {
   display: flex;
   flex-direction: row;
@@ -7,6 +9,9 @@
   direction: rtl;
 
   .card-title {
+    background-color: #5ba4e5;
+    padding: 0.8rem;
+    border-radius: 8px 8px 0 0;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -15,25 +20,38 @@
   }
 
   .content {
+    font-size: 1.2rem;
+    margin-top: 0.3rem;
+    margin-right: 0.3rem;
+  }
+
+  .title-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: flex-start; // ציר חוצה
+
+    padding-right: 0.5rem;
     width: 90%;
   }
 
-  // .update-icon-hide {
-  //   display: none;
-  // }
-
-  // .update-icon-display {
-  //   display: inline;
-  // }
-
   .item-card {
     width: 80vw;
+    border-radius: 8px;
+    background-color: #f3f6f8;
+    padding: 0 0 1.5rem 0;
   }
 
   .card-action-button {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    padding-left: 0.4rem;
+
+    @media (min-width: $xs-screen-size) {
+      padding-left: 0.8rem;
+    }
+
     button {
       margin-left: 10px;
     }

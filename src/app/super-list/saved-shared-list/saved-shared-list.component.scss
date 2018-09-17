@@ -13,13 +13,17 @@
   mat-card {
     margin-bottom: 0.5rem;
     width: 80vw;
+    border-radius: 8px;
+    background-color: #f3f6f8;
+    padding: 0 0 1.5rem 0;
 
     mat-card-content {
       direction: rtl;
-      padding: 5px;
+      padding: 6px 10px 5px 10px;
     }
 
     mat-card-content:hover {
+      border-radius: 8px;
       cursor: pointer;
       background: #dedede;
     }
@@ -28,6 +32,12 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
+      padding-left: 0.4rem;
+
+      @media (min-width: $xs-screen-size) {
+        padding-left: 0.8rem;
+      }
+
       button {
         margin-left: 10px;
       }
