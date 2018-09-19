@@ -424,7 +424,7 @@ exports.sendWelcomeEmail = functions.auth.user().onCreate(user => {
     .collection('super-list')
     .doc(user.uid)
     .collection('item-update')
-    .add({ itemName: '', listName: '' })
+    .add({ itemId: -1, itemName: '', listName: '', uid: '' })
     .then(docRef => {
       db.collection('users')
         .doc(user.uid)

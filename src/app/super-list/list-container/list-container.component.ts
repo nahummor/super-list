@@ -52,6 +52,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
           this.countNotSelectedItems();
           this.superList.items.forEach(item => {
             this.updateItemIdArray.push(-1);
+            // this.listSum = this.listSum + item.cost * item.amount;
             this.listSum = this.listSum + item.cost;
           });
         },

@@ -8,13 +8,14 @@ import { AuthService } from './../auth/auth.service';
 import { SuperList } from './super-list';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 export interface ItemUpdate {
   itemUpdateId: string;
   itemId: number;
   itemName: string;
   listName: string;
+  uid: string;
 }
 
 @Injectable({
@@ -64,7 +65,8 @@ export class SuperListService {
               itemUpdateId: doc.payload.doc.id,
               itemId: doc.payload.doc.data().itemId,
               itemName: doc.payload.doc.data().itemName,
-              listName: doc.payload.doc.data().listName
+              listName: doc.payload.doc.data().listName,
+              uid: doc.payload.doc.data().uid
             };
             return this.itemUpdate;
           });
@@ -87,7 +89,7 @@ export class SuperListService {
                 dialogRef.afterClosed().subscribe(result => {
                   console.log('ans: ', result);
                   this.setUserUpdateItem(false);
-                  this.setItemUpdate(-1, '', '');
+                  this.setItemUpdate(-1, '', '', '');
                 });
               }
             }
@@ -102,13 +104,23 @@ export class SuperListService {
   }
 
   // set the item was updated
-  private setItemUpdate(itemId: number, itemName: string, listName: string) {
+  private setItemUpdate(
+    itemId: number,
+    itemName: string,
+    listName: string,
+    uid: string
+  ) {
     this.db
       .collection('super-list')
       .doc(this.uid)
       .collection('item-update')
       .doc(this.itemUpdate.itemUpdateId)
-      .update({ itemId: itemId, itemName: itemName, listName: listName });
+      .update({
+        itemId: itemId,
+        itemName: itemName,
+        listName: listName,
+        uid: uid
+      });
   }
 
   public setSuperList(list: SuperList) {
@@ -448,7 +460,12 @@ export class SuperListService {
       .then(
         () => {
           // this.setItemUpdate(item.id, item.name, this.superList.name);
-          this.setItemUpdate(itemIndex, item.name, this.superList.name);
+          this.setItemUpdate(
+            itemIndex,
+            item.name,
+            this.superList.name,
+            this.uid
+          );
           this.userUpdateItem = true;
         },
         error => {

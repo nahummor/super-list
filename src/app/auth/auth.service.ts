@@ -1,8 +1,8 @@
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ErrorMsgComponent } from './../messages-box/error-msg/error-msg.component';
 import { User } from './user';
 import { Injectable, EventEmitter } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { OkMsgComponent } from '../messages-box/ok-msg/ok-msg.component';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';

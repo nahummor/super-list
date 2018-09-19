@@ -1,5 +1,5 @@
 import { Item } from './../super-list/item';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { SuperList } from './../super-list/super-list';
 import { AuthService } from './../auth/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
