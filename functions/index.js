@@ -26,6 +26,62 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+exports.shareUser = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const uid = request.body.uid;
+    const token = request.body.token;
+    const email = request.body.email;
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        admin
+          .auth()
+          .getUserByEmail(email)
+          .then(user => {
+            // בדיקה האם כבר בוצע שיתוף עם משתמש זה
+            isUserSaredList(uid, user.uid).then(querySnapshot => {
+              if (querySnapshot.docs.length == 0) {
+                db.collection('shared-user')
+                  .add({
+                    userId: uid,
+                    authorizedUserId: user.uid
+                  })
+                  .then(docRef => {
+                    response.status(200).json({
+                      message: 'שיתוף בוצע בהצלחה',
+                      messageNum: 1
+                    });
+                  })
+                  .catch(error => {
+                    response.status(403).json({
+                      errorMsg: 'Error Adding shared user data:',
+                      error: error
+                    });
+                  });
+              } else {
+                response.status(200).json({
+                  message: 'כבר קיים שיתוף',
+                  messageNum: 0
+                });
+              }
+            });
+          })
+          .catch(error => {
+            response
+              .status(403)
+              .json({ errorMsg: 'Error fetching user data:', error: error });
+          });
+      })
+      .catch(error => {
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
+      });
+  });
+});
+
 exports.deleteItem = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const uid = request.body.uid;
@@ -60,7 +116,9 @@ exports.deleteItem = functions.https.onRequest((request, response) => {
           );
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -95,7 +153,9 @@ exports.deleteSharedItem = functions.https.onRequest((request, response) => {
           );
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -122,7 +182,9 @@ exports.deleteSharedList = functions.https.onRequest((request, response) => {
           });
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -156,7 +218,9 @@ exports.deleteList = functions.https.onRequest((request, response) => {
           );
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -230,7 +294,9 @@ exports.addSharedListToMyList = functions.https.onRequest(
             );
         })
         .catch(error => {
-          response.status(403).json({ errorMsg: 'Unauthorized user' });
+          response
+            .status(403)
+            .json({ errorMsg: 'Unauthorized user', error: error });
         });
     });
   }
@@ -274,7 +340,9 @@ exports.addNewList = functions.https.onRequest((request, response) => {
           );
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -317,7 +385,9 @@ exports.addSharedItem = functions.https.onRequest((request, response) => {
           );
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -367,7 +437,9 @@ exports.addItem = functions.https.onRequest((request, response) => {
           );
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
@@ -413,11 +485,14 @@ exports.updateSharedItem = functions.https.onRequest((request, response) => {
           });
       })
       .catch(error => {
-        response.status(403).json({ errorMsg: 'Unauthorized user' });
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
       });
   });
 });
 // ===========================================================================================================
+
 // [START onCreateTrigger]
 exports.sendWelcomeEmail = functions.auth.user().onCreate(user => {
   return db
@@ -518,4 +593,13 @@ function deleteUserDb(uid) {
         console.log('Delete User DB Error: ', error);
       }
     );
+}
+
+// check if user already share his lists
+function isUserSaredList(userId, authorizedUserId) {
+  return db
+    .collection('shared-user')
+    .where('userId', '==', userId)
+    .where('authorizedUserId', '==', authorizedUserId)
+    .get();
 }

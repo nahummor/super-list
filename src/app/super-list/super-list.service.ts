@@ -489,6 +489,29 @@ export class SuperListService {
     this.userUpdateItem = ans;
   }
 
+  public shareMyList(email: string) {
+    const jsonHeaders = new HttpHeaders().set(
+      'Content-Type',
+      'application/json'
+    );
+
+    return this.httpClient
+      .post(
+        'https://us-central1-superlist-80690.cloudfunctions.net/shareUser',
+        {
+          uid: this.uid,
+          token: this.token,
+          email: email
+        },
+        { headers: jsonHeaders }
+      )
+      .pipe(
+        map(data => {
+          return data;
+        })
+      );
+  }
+
   public testDelete() {
     // const jsonHeaders = new HttpHeaders().set(
     //   'Content-Type',

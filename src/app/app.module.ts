@@ -24,6 +24,8 @@ import { SavedListComponent } from './super-list/saved-list/saved-list.component
 import { UpdateListDetailesComponent } from './super-list/update-list-detailes/update-list-detailes.component';
 import { SharedListContainerComponent } from './super-list/shared-list-container/shared-list-container.component';
 import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-shared-list.component';
+import { MainSharedUserListComponent } from './super-list/main-shared-user-list/main-shared-user-list.component';
+import { SharedMyListComponent } from './super-list/shared-my-list/shared-my-list.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-s
     SavedListComponent,
     UpdateListDetailesComponent,
     SharedListContainerComponent,
-    SavedSharedListComponent
+    SavedSharedListComponent,
+    MainSharedUserListComponent,
+    SharedMyListComponent
   ],
   imports: [
     AppRoutingModule,

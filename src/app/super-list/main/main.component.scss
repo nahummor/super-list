@@ -7,11 +7,23 @@
   .main-header {
     @include flex-column-center();
     height: 10%;
+    @media only screen and (min-device-width: $xs-screen-size) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      height: 16%;
+    }
   }
 
   .nav-button {
-    @include flex-column-center();
+    // @include flex-column-center();
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+    flex-wrap: wrap-reverse;
     height: 90%;
+    /* Landscape */
+    @media only screen and (min-device-width: $xs-screen-size) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      justify-content: flex-start; // ציר ראשי
+    }
   }
 
   button {
@@ -21,7 +33,7 @@
     font-size: 1.5rem;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: $xs-screen-size) {
     button {
       width: 40vw;
     }

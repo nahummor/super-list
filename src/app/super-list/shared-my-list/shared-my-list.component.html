@@ -1,0 +1,19 @@
+<div class="main-container">
+  <form [formGroup]="sharedMyListForm"
+        (ngSubmit)="onSharedMyList()"
+        class="share-list-form"
+        dir="rtl">
+    <h2>שיתוף הרשימות שלי</h2>
+    <mat-form-field>
+      <input matInput
+             formControlName="email"
+             placeholder="כתובת דוא'ל">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-hint>נא להקליד כתובת אימייל חוקית</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button
+            [disabled]="!sharedMyListForm.valid"
+            type="submit"
+            color="primary">שיתוף</button>
+  </form>
+</div>

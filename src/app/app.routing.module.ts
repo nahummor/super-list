@@ -1,3 +1,5 @@
+import { SharedMyListComponent } from './super-list/shared-my-list/shared-my-list.component';
+import { MainSharedUserListComponent } from './super-list/main-shared-user-list/main-shared-user-list.component';
 import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-shared-list.component';
 import { SharedListContainerComponent } from './super-list/shared-list-container/shared-list-container.component';
 import { SavedListComponent } from './super-list/saved-list/saved-list.component';
@@ -33,6 +35,16 @@ const routes: Routes = [
     path: 'sharedListContainer',
     canActivate: [AuthGuard],
     component: SharedListContainerComponent
+  },
+  {
+    path: 'mainSharedUserList',
+    canActivate: [AuthGuard],
+    component: MainSharedUserListComponent
+  },
+  {
+    path: 'sharedMyList',
+    canActivate: [AuthGuard],
+    component: SharedMyListComponent
   }
 
   // { path: 'path/:routeParam', component: MyComponent },

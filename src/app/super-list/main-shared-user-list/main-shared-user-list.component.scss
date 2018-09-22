@@ -1,0 +1,29 @@
+@import '../../shared/varibales';
+
+.main-container {
+  height: 100%;
+  @include user-background();
+
+  .main-header {
+    @include flex-column-center();
+    height: 10%;
+  }
+
+  .nav-button {
+    @include flex-column-center();
+    height: 90%;
+  }
+
+  button {
+    width: 80vw;
+    height: 50px;
+    margin: 10px;
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    button {
+      width: 40vw;
+    }
+  }
+}

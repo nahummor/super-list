@@ -1,0 +1,40 @@
+@import '../../shared/varibales';
+
+.main-container {
+  @include user-background();
+  @include flex-column-center();
+  height: 100%;
+
+  .share-list-form {
+    @include flex-column-center();
+    width: 80vw;
+    background-color: #f3e5f5;
+    padding: 1rem;
+    box-shadow: 1px 1px 5px #888888;
+
+    @media (min-width: 900px) {
+      width: 50vw;
+    }
+
+    @media (min-width: 1000px) {
+      width: 30vw;
+    }
+
+    // @media (min-width: 1112px) {
+    //   width: 60vw;
+    // }
+
+    /* Landscape */
+    @media only screen and (min-device-width: $xs-screen-size) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      width: 50vw;
+    }
+    mat-form-field {
+      width: 100%;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      align-self: flex-end;
+    }
+  }
+}
