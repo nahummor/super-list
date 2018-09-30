@@ -15,5 +15,11 @@ export class MainSharedUserListComponent implements OnInit {
     this.router.navigate(['sharedMyList']);
   }
 
-  public onGetSharedUsers() {}
+  public onGetSharedUsers() {
+    this.router.navigate(['sharedUsersList']);
+  }
+
+  public onGetSharedUsersList() {
+    this.router.navigate(['mySharedUsers']);
+  }
 }

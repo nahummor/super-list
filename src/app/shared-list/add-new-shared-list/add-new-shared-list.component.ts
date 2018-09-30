@@ -42,15 +42,17 @@ export class AddNewSharedListComponent implements OnInit {
         this.addNewListForm.value.name,
         this.addNewListForm.value.description
       )
-      .subscribe((data: SuperList) => {
-        this.isDoneAddingList = true;
-        this.dialogRef.close('add-new-shared-list');
-        console.log('add new shared list: ', data);
-        this.router.navigate([
-          'sharedList/listContainer',
-          data.name,
-          data.description
-        ]);
+      .then(payload => {
+        payload.subscribe((data: SuperList) => {
+          this.isDoneAddingList = true;
+          this.dialogRef.close('add-new-shared-list');
+          console.log('add new shared list: ', data);
+          this.router.navigate([
+            'sharedList/listContainer',
+            data.name,
+            data.description
+          ]);
+        });
       });
   }
 }

@@ -1,0 +1,20 @@
+<div class="main-container">
+  <div *ngIf="isDoneLoading"
+       class="list-container">
+    <p class="header">רשימות משותפות לפי משתמש</p>
+    <p *ngIf="usersList.length == 0"
+       class="header">אין רשימות משותפות</p>
+    <mat-list class="users-list"
+              *ngFor="let user of usersList">
+      <mat-list-item class="list-item"><button mat-stroked-button
+                (click)="onShowUserList(user.userEmail, user.userId)"
+                class="list-button"
+                color="primary"><span class="button-text">{{user.userEmail}}</span></button></mat-list-item>
+    </mat-list>
+  </div>
+  <div class="sppiner"
+       *ngIf="!isDoneLoading">
+    <h3>טוען נתונים</h3>
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+</div>

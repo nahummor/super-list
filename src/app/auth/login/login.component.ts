@@ -1,3 +1,4 @@
+import { MessagingService } from './../../shared/messaging.service';
 import { Router } from '@angular/router';
 import { ResetPasswordComponent } from './../reset-password/reset-password.component';
 import { MatSnackBar, MatDialog } from '@angular/material';
@@ -19,11 +20,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private msgService: MessagingService
   ) {}
 
   ngOnInit() {
     this.startLogin = false;
+    this.msgService.getPermission();
 
     this.loginForm = new FormGroup({
       userName: new FormControl('', Validators.required),

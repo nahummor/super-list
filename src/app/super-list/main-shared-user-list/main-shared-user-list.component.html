@@ -4,13 +4,20 @@
   </div>
   <div class="nav-button">
     <button mat-raised-button
-            matTooltip="שיתוף הרשימות שלי"
+            matTooltip="שיתוף הרשימות שלך"
             matTooltipPosition="above"
             (click)="onSharedList()"
             color="primary">שיתוף</button>
 
     <button mat-raised-button
+            matTooltip="הצגת משתמשים שיכולים לראות את הרשימות שלך"
+            matTooltipPosition="above"
             (click)="onGetSharedUsers()"
             color="primary">הצגת משתמשים</button>
+    <button mat-raised-button
+            matTooltip="הצגת רשימות של משתמשים אחרים"
+            matTooltipPosition="above"
+            (click)="onGetSharedUsersList()"
+            color="primary">רשימות משותפות</button>
   </div>
 </div>

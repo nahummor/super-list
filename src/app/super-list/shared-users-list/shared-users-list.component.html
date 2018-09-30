@@ -1,0 +1,25 @@
+<div class="main-container">
+  <div class="list-container"
+       *ngIf="isDoneLoading">
+    <p class="header">משתמשים שקיבלו גישה לרשימות שלי</p>
+    <p *ngIf="authUsers.length == 0"
+       class="header">אין רשימות משותפות</p>
+    <mat-list *ngFor="let user of authUsers">
+      <mat-list-item class="list-item">
+        <h3 class="item-title">{{user.authorizedUserEmail}}</h3><button mat-icon-button
+                (click)="onStopShareList(user.id)"
+                matTooltip="ביטול שיתוף"
+                matTooltipPosition="above"
+                color="primary">
+          <mat-icon class="del-icon">delete_forever</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div class="sppiner"
+       *ngIf="!isDoneLoading">
+    <h3>טוען נתונים</h3>
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+</div>

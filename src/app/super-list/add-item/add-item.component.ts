@@ -1,3 +1,4 @@
+import { User } from './../../auth/user';
 import { SuperListService } from './../super-list.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -31,12 +32,31 @@ export class AddItemComponent implements OnInit {
 
   public addItem() {
     this.isDoneAddingItem = false;
-    this.superListSrvs
-      .addItem(this.data.superList, this.addItemForm.value)
-      .subscribe(data => {
-        this.isDoneAddingItem = true;
-        this.dialogRef.close('add item');
-      });
+    if (!this.data.sharedUser) {
+      // מוסיף הפריט הוא הבעלים של הרשימה
+      this.superListSrvs
+        .addItem(this.data.superList, this.addItemForm.value)
+        .then(payload => {
+          payload.subscribe(data => {
+            this.isDoneAddingItem = true;
+            this.dialogRef.close('add item');
+          });
+        });
+    } else {
+      // מוסיף הפריט הוא משתמש שקיבל שיתוף לרשימה
+      // console.log(this.data.userId);
+      // console.log(this.data.list);
+      this.superListSrvs
+        .addItemToSharedList(
+          this.data.userId,
+          this.data.list,
+          this.addItemForm.value
+        )
+        .then(() => {
+          this.isDoneAddingItem = true;
+          this.dialogRef.close('add item');
+        });
+    }
   }
 
   public onClickClose() {

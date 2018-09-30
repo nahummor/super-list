@@ -16,7 +16,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
   public superList: SuperList;
   private listChangeSub: Subscription;
   public itemNotSelected: number;
-  private userUpdateItemChangeSub: Subscription;
+  // private userUpdateItemChangeSub: Subscription;
   public updateItemId: number;
   public updateItemIdArray = new Array<number>();
   public listSum: number;
@@ -61,26 +61,26 @@ export class ListContainerComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.userUpdateItemChangeSub = this.superListSrvs.userUpdateItemEvent.subscribe(
-      (data: ItemUpdate) => {
-        console.log('item ID: ', data.itemId);
-        console.log('item name: ', data.itemName);
-        console.log('list name: ', data.listName);
-        console.log('super list name: ', this.superList.name);
+    // this.userUpdateItemChangeSub = this.superListSrvs.userUpdateItemEvent.subscribe(
+    //   (data: ItemUpdate) => {
+    //     console.log('item ID: ', data.itemId);
+    //     console.log('item name: ', data.itemName);
+    //     console.log('list name: ', data.listName);
+    //     console.log('super list name: ', this.superList.name);
 
-        if (this.superList.name === data.listName) {
-          this.updateItemIdArray[data.itemId] = data.itemId;
-          this.updateItemId = data.itemId;
-        } else {
-          this.updateItemId = -1;
-        }
-      }
-    );
+    //     if (this.superList.name === data.listName) {
+    //       this.updateItemIdArray[data.itemId] = data.itemId;
+    //       this.updateItemId = data.itemId;
+    //     } else {
+    //       this.updateItemId = -1;
+    //     }
+    //   }
+    // );
   }
 
   ngOnDestroy() {
     this.listChangeSub.unsubscribe();
-    this.userUpdateItemChangeSub.unsubscribe();
+    // this.userUpdateItemChangeSub.unsubscribe();
   }
 
   private countNotSelectedItems() {
@@ -102,7 +102,8 @@ export class ListContainerComponent implements OnInit, OnDestroy {
   public addItem() {
     const dialogRef = this.dialog.open(AddItemComponent, {
       data: {
-        superList: this.superList
+        superList: this.superList,
+        sharedUser: false // האם מי שמוסיף את הפריט הוא משתמש שקיבל שיתוף או שהוא הבעלים של הרשימה
       },
       width: '25rem'
     });

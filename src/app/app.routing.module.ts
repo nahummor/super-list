@@ -1,13 +1,17 @@
+import { ShowSharedUserListComponent } from './super-list/show-shared-user-list/show-shared-user-list.component';
+import { SharedUsersListComponent } from './super-list/shared-users-list/shared-users-list.component';
 import { SharedMyListComponent } from './super-list/shared-my-list/shared-my-list.component';
 import { MainSharedUserListComponent } from './super-list/main-shared-user-list/main-shared-user-list.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-shared-list.component';
 import { SharedListContainerComponent } from './super-list/shared-list-container/shared-list-container.component';
-import { SavedListComponent } from './super-list/saved-list/saved-list.component';
-import { AuthGuard } from './auth/auth.guard';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { MainComponent } from './super-list/main/main.component';
 import { ListContainerComponent } from './super-list/list-container/list-container.component';
+import { MySharedUsersComponent } from './super-list/my-shared-users/my-shared-users.component';
+import { SavedListComponent } from './super-list/saved-list/saved-list.component';
+import { MainComponent } from './super-list/main/main.component';
+import { AuthGuard } from './auth/auth.guard';
+import { NgModule } from '@angular/core';
+import { ShowSharedUserListConComponent } from './super-list/show-shared-user-list-container/show-shared-user-list-con.component';
 
 const routes: Routes = [
   { path: 'main', canActivate: [AuthGuard], component: MainComponent },
@@ -45,6 +49,26 @@ const routes: Routes = [
     path: 'sharedMyList',
     canActivate: [AuthGuard],
     component: SharedMyListComponent
+  },
+  {
+    path: 'sharedUsersList',
+    canActivate: [AuthGuard],
+    component: SharedUsersListComponent
+  },
+  {
+    path: 'mySharedUsers',
+    canActivate: [AuthGuard],
+    component: MySharedUsersComponent
+  },
+  {
+    path: 'showSharedUserList/:userId/:userEmail',
+    canActivate: [AuthGuard],
+    component: ShowSharedUserListComponent
+  },
+  {
+    path: 'showSharedUserListCon/:userId/:listId/:userEmail',
+    canActivate: [AuthGuard],
+    component: ShowSharedUserListConComponent
   }
 
   // { path: 'path/:routeParam', component: MyComponent },

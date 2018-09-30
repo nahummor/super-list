@@ -1,14 +1,16 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { SppinerMsgBoxComponent } from './../messages-box/sppiner-msg-box/sppiner-msg-box.component';
 import { OkMsgComponent } from './../messages-box/ok-msg/ok-msg.component';
 import { Item } from './item';
 import { Observable, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { AuthService } from './../auth/auth.service';
 import { SuperList } from './super-list';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { log } from 'util';
 
 export interface ItemUpdate {
   itemUpdateId: string;
@@ -25,83 +27,88 @@ export class SuperListService {
   private superList: SuperList;
   private sharedList: SuperList;
   private uid: string;
-  private itemUpdate: ItemUpdate;
-  private userUpdateItem: boolean;
   private token: string;
-  public userUpdateItemEvent = new EventEmitter<ItemUpdate>();
-  private itemUpdateSub: Subscription;
+  private itemUpdate: ItemUpdate;
+  // private userUpdateItem: boolean;
+  // public userUpdateItemEvent = new EventEmitter<ItemUpdate>();
+  // private itemUpdateSub: Subscription;
 
   constructor(
     private httpClient: HttpClient,
     private db: AngularFirestore,
-    private authService: AuthService,
-    private dialog: MatDialog
+    // private authService: AuthService,
+    private dialog: MatDialog,
+    private afAuth: AngularFireAuth
   ) {
-    this.uid = this.authService.getUserId();
-    this.userUpdateItem = false;
-    this.getItemUpdate();
-    this.token = this.authService.getToken();
+    this.uid = this.afAuth.auth.currentUser.uid;
+    // this.userUpdateItem = false;
+    // this.getItemUpdate();
+    // this.token = this.authService.getToken();
+    this.afAuth.auth.currentUser.getIdToken(false).then(token => {
+      this.token = token;
+      // console.log('Token: ', token);
+    });
   }
 
   public unSubscription() {
-    this.itemUpdateSub.unsubscribe();
+    // this.itemUpdateSub.unsubscribe();
   }
 
   public setUserId() {
-    this.uid = this.authService.getUserId();
+    this.uid = this.afAuth.auth.currentUser.uid;
     this.superList = null; // איפוס רשימה לאחר החלפת משתמש
   }
 
-  public getItemUpdate() {
-    this.itemUpdateSub = this.db
-      .collection('super-list')
-      .doc(this.uid)
-      .collection('item-update')
-      .snapshotChanges()
-      .pipe(
-        map(docArray => {
-          return docArray.map(doc => {
-            this.itemUpdate = {
-              itemUpdateId: doc.payload.doc.id,
-              itemId: doc.payload.doc.data().itemId,
-              itemName: doc.payload.doc.data().itemName,
-              listName: doc.payload.doc.data().listName,
-              uid: doc.payload.doc.data().uid
-            };
-            return this.itemUpdate;
-          });
-        })
-      )
-      .subscribe(
-        data => {
-          if (!this.getUserUpdateItem()) {
-            if (data.length > 0) {
-              if (data[0].itemId > -1) {
-                this.userUpdateItemEvent.emit(data[0]);
-                const dialogRef = this.dialog.open(OkMsgComponent, {
-                  width: '25rem',
-                  data: {
-                    message: `ברשימה ${data[0].listName} עודכן הפריט ${
-                      data[0].itemName
-                    }`
-                  }
-                });
-                dialogRef.afterClosed().subscribe(result => {
-                  console.log('ans: ', result);
-                  this.setUserUpdateItem(false);
-                  this.setItemUpdate(-1, '', '', '');
-                });
-              }
-            }
-          } else {
-            this.setUserUpdateItem(false);
-          }
-        },
-        error => {
-          this.itemUpdateSub.unsubscribe();
-        }
-      );
-  }
+  // public getItemUpdate() {
+  //   this.itemUpdateSub = this.db
+  //     .collection('super-list')
+  //     .doc(this.uid)
+  //     .collection('item-update')
+  //     .snapshotChanges()
+  //     .pipe(
+  //       map(docArray => {
+  //         return docArray.map(doc => {
+  //           this.itemUpdate = {
+  //             itemUpdateId: doc.payload.doc.id,
+  //             itemId: doc.payload.doc.data().itemId,
+  //             itemName: doc.payload.doc.data().itemName,
+  //             listName: doc.payload.doc.data().listName,
+  //             uid: doc.payload.doc.data().uid
+  //           };
+  //           return this.itemUpdate;
+  //         });
+  //       })
+  //     )
+  //     .subscribe(
+  //       data => {
+  //         if (!this.getUserUpdateItem()) {
+  //           if (data.length > 0) {
+  //             if (data[0].itemId > -1) {
+  //               this.userUpdateItemEvent.emit(data[0]);
+  //               const dialogRef = this.dialog.open(OkMsgComponent, {
+  //                 width: '25rem',
+  //                 data: {
+  //                   message: `ברשימה ${data[0].listName} עודכן הפריט ${
+  //                     data[0].itemName
+  //                   }`
+  //                 }
+  //               });
+  //               dialogRef.afterClosed().subscribe(result => {
+  //                 console.log('ans: ', result);
+  //                 this.setUserUpdateItem(false);
+  //                 this.setItemUpdate(-1, '', '', '');
+  //               });
+  //             }
+  //           }
+  //         } else {
+  //           this.setUserUpdateItem(false);
+  //         }
+  //       },
+  //       error => {
+  //         this.itemUpdateSub.unsubscribe();
+  //       }
+  //     );
+  // }
 
   // set the item was updated
   private setItemUpdate(
@@ -149,62 +156,103 @@ export class SuperListService {
     // });
   }
 
-  public addSharedListToMyList(): Observable<SuperList> {
+  public addSharedListToMyList(): Promise<Observable<SuperList>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/addSharedListToMyList',
-        {
-          token: this.token,
-          uid: this.uid,
-          list: this.sharedList
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map((data: { message: string; superList: SuperList }) => {
-          return {
-            id: data.superList.id,
-            name: data.superList.name,
-            description: data.superList.description,
-            items: data.superList.items
-          };
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/addSharedListToMyList',
+            {
+              token: this.token,
+              uid: this.uid,
+              list: this.sharedList
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map((data: { message: string; superList: SuperList }) => {
+              return {
+                id: data.superList.id,
+                name: data.superList.name,
+                description: data.superList.description,
+                items: data.superList.items
+              };
+            })
+          );
+      });
   }
 
-  public addNewList(name: string, description: string): Observable<SuperList> {
+  public addNewList(
+    name: string,
+    description: string
+  ): Promise<Observable<SuperList>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/addNewList',
-        {
-          token: this.token,
-          uid: this.uid,
-          name: name,
-          description: description
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map((data: { message: string; superList: SuperList }) => {
-          console.log('new list add: ', data);
-          return {
-            id: data.superList.id,
-            name: data.superList.name,
-            description: data.superList.description,
-            items: data.superList.items
-          };
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/addNewList',
+            {
+              token: this.token,
+              uid: this.uid,
+              name: name,
+              description: description
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map((data: { message: string; superList: SuperList }) => {
+              // console.log('new list add: ', data);
+              return {
+                id: data.superList.id,
+                name: data.superList.name,
+                description: data.superList.description,
+                items: data.superList.items
+              };
+            })
+          );
+      });
+
+    // return this.httpClient
+    //   .post(
+    //     'https://us-central1-superlist-80690.cloudfunctions.net/addNewList',
+    //     {
+    //       token: this.token,
+    //       uid: this.uid,
+    //       name: name,
+    //       description: description
+    //     },
+    //     { headers: jsonHeaders }
+    //   )
+    //   .pipe(
+    //     map((data: { message: string; superList: SuperList }) => {
+    //       console.log('new list add: ', data);
+    //       return {
+    //         id: data.superList.id,
+    //         name: data.superList.name,
+    //         description: data.superList.description,
+    //         items: data.superList.items
+    //       };
+    //     })
+    //   );
+
     // return this.db
     //   .collection('super-list')
     //   .doc(this.uid)
@@ -222,13 +270,54 @@ export class SuperListService {
     //   });
   }
 
+  public getUserListsByUserId(userId: string) {
+    return this.db
+      .collection('super-list')
+      .doc(userId)
+      .collection('user-list', ref => {
+        return ref.orderBy('name');
+      })
+      .snapshotChanges()
+      .pipe(
+        map(docArray => {
+          return docArray.map(doc => {
+            return {
+              id: doc.payload.doc.id,
+              name: doc.payload.doc.data().name,
+              description: doc.payload.doc.data().description,
+              items: doc.payload.doc.data().items
+            };
+          });
+        })
+      );
+  }
+
+  public getUserList(uid: string, listId: string): Observable<any> {
+    return this.db
+      .collection('super-list')
+      .doc(uid)
+      .collection('user-list')
+      .doc(listId)
+      .snapshotChanges()
+      .pipe(
+        map(doc => {
+          return {
+            id: doc.payload.id,
+            ...doc.payload.data()
+          };
+        })
+      );
+  }
+
   public getUserLists() {
     // console.log('User ID: ', this.uid);
 
     return this.db
       .collection('super-list')
       .doc(this.uid)
-      .collection('user-list')
+      .collection('user-list', ref => {
+        return ref.orderBy('name');
+      })
       .snapshotChanges()
       .pipe(
         map(docArray => {
@@ -258,28 +347,54 @@ export class SuperListService {
       );
   }
 
-  public addItem(superList: SuperList, item: Item) {
+  public addItemToSharedList(userId: string, list: SuperList, newItem: Item) {
+    // set item id
+    if (list.items.length > 0) {
+      const index = list.items.length - 1;
+      newItem.id = list.items[index].id + 1;
+    } else {
+      newItem.id = 0;
+    }
+    list.items.push(newItem);
+
+    return this.db
+      .collection('super-list')
+      .doc(userId)
+      .collection('user-list')
+      .doc(list.id)
+      .update({ items: list.items });
+  }
+
+  public addItem(superList: SuperList, item: Item): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/addItem',
-        {
-          token: this.token,
-          uid: this.uid,
-          superList: superList,
-          newItem: item
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/addItem',
+            {
+              token: this.token,
+              uid: this.uid,
+              superList: superList,
+              newItem: item
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
+
     // item.id = superList.items.length;
     // superList.items.push(item);
     // this.db
@@ -338,52 +453,66 @@ export class SuperListService {
   }
 
   // delete list and all items
-  public deleteList(listId: string) {
+  public deleteList(listId: string): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/deleteList',
-        {
-          uid: this.uid,
-          token: this.token,
-          listId: listId
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/deleteList',
+            {
+              uid: this.uid,
+              token: this.token,
+              listId: listId
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
   }
 
-  public deleteItem(itemId: number) {
+  public deleteItem(itemId: number): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/deleteItem',
-        {
-          uid: this.uid,
-          token: this.token,
-          listId: this.superList.id,
-          superList: this.superList,
-          deleteItemId: itemId
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/deleteItem',
+            {
+              uid: this.uid,
+              token: this.token,
+              listId: this.superList.id,
+              superList: this.superList,
+              deleteItemId: itemId
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
   }
 
   public setItemDone(itemId: number) {
@@ -409,8 +538,25 @@ export class SuperListService {
       );
   }
 
+  public resetListItems(uid: string, listId: string, items: Item[]) {
+    this.db
+      .collection('super-list')
+      .doc(uid)
+      .collection('user-list')
+      .doc(listId)
+      .update({ items: items })
+      .then(
+        () => {
+          console.log('update reset user list Items done');
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
   public resetAllItems() {
-    console.log('Reset all item');
+    // console.log('Reset all item');
     this.superList.items.forEach(item => {
       item.done = false;
     });
@@ -422,7 +568,7 @@ export class SuperListService {
       .update({ items: this.superList.items })
       .then(
         () => {
-          console.log('update item done');
+          console.log('update reset All Items done');
         },
         error => {
           console.log(error);
@@ -459,14 +605,18 @@ export class SuperListService {
       .update({ items: this.superList.items })
       .then(
         () => {
-          // this.setItemUpdate(item.id, item.name, this.superList.name);
-          this.setItemUpdate(
-            itemIndex,
-            item.name,
-            this.superList.name,
-            this.uid
-          );
-          this.userUpdateItem = true;
+          // this.setItemUpdate(
+          //   itemIndex,
+          //   item.name,
+          //   this.superList.name,
+          //   this.uid
+          // );
+          this.sendMessage(item).then(payload => {
+            payload.subscribe(data => {
+              console.log(data);
+            });
+          });
+          // this.userUpdateItem = true;
         },
         error => {
           console.log(error);
@@ -481,37 +631,128 @@ export class SuperListService {
     return itemIndex;
   }
 
-  public getUserUpdateItem(): boolean {
-    return this.userUpdateItem;
-  }
+  // public getUserUpdateItem(): boolean {
+  //   return this.userUpdateItem;
+  // }
 
-  public setUserUpdateItem(ans: boolean) {
-    this.userUpdateItem = ans;
-  }
+  // public setUserUpdateItem(ans: boolean) {
+  //   this.userUpdateItem = ans;
+  // }
 
-  public shareMyList(email: string) {
+  public shareMyList(email: string): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/shareUser',
-        {
-          uid: this.uid,
-          token: this.token,
-          email: email
-        },
-        { headers: jsonHeaders }
-      )
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/shareUser',
+            {
+              uid: this.uid,
+              token: this.token,
+              email: email,
+              userEmail: this.afAuth.auth.currentUser.email
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
+  }
+
+  private sendMessage(item: Item): Promise<Observable<any>> {
+    const jsonHeaders = new HttpHeaders().set(
+      'Content-Type',
+      'application/json'
+    );
+
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/sendMessage',
+            {
+              uid: this.uid,
+              token: this.token,
+              title: this.superList.name,
+              message: 'הפריט ' + item.name + ' עודכן'
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
+  }
+
+  public getMySharedUsers(): Observable<
+    { id: string; authorizedUserId: string; authorizedUserEmail: string }[]
+  > {
+    return this.db
+      .collection('shared-user', ref => {
+        return ref.where('userId', '==', this.uid);
+      })
+      .get()
       .pipe(
-        map(data => {
-          return data;
+        map(snapshot => {
+          return snapshot.docs.map(doc => {
+            return {
+              id: doc.id,
+              authorizedUserId: doc.data().authorizedUserId,
+              authorizedUserEmail: doc.data().authorizedUserEmail
+            };
+          });
         })
       );
   }
 
+  // מחזיר רשימת משתמשים שמשתפים איתי את הרשימות שלהם
+  public getUsersSharedWithMe(): Observable<
+    { userId: string; userEmail: string }[]
+  > {
+    return this.db
+      .collection('shared-user', ref => {
+        return ref.where('authorizedUserId', '==', this.uid);
+      })
+      .get()
+      .pipe(
+        map(snapshot => {
+          return snapshot.docs.map(doc => {
+            return {
+              userId: doc.data().userId,
+              userEmail: doc.data().userEmail
+            };
+          });
+        })
+      );
+  }
+
+  public delSharedUser(id: string) {
+    // console.log('stop share list with: ', id);
+    return this.db
+      .collection('shared-user')
+      .doc(id)
+      .delete()
+      .then(() => {
+        return 'done';
+      });
+  }
   public testDelete() {
     // const jsonHeaders = new HttpHeaders().set(
     //   'Content-Type',

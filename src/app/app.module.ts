@@ -26,6 +26,10 @@ import { SharedListContainerComponent } from './super-list/shared-list-container
 import { SavedSharedListComponent } from './super-list/saved-shared-list/saved-shared-list.component';
 import { MainSharedUserListComponent } from './super-list/main-shared-user-list/main-shared-user-list.component';
 import { SharedMyListComponent } from './super-list/shared-my-list/shared-my-list.component';
+import { SharedUsersListComponent } from './super-list/shared-users-list/shared-users-list.component';
+import { MySharedUsersComponent } from './super-list/my-shared-users/my-shared-users.component';
+import { ShowSharedUserListComponent } from './super-list/show-shared-user-list/show-shared-user-list.component';
+import { ShowSharedUserListConComponent } from './super-list/show-shared-user-list-container/show-shared-user-list-con.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,11 @@ import { SharedMyListComponent } from './super-list/shared-my-list/shared-my-lis
     SharedListContainerComponent,
     SavedSharedListComponent,
     MainSharedUserListComponent,
-    SharedMyListComponent
+    SharedMyListComponent,
+    SharedUsersListComponent,
+    MySharedUsersComponent,
+    ShowSharedUserListComponent,
+    ShowSharedUserListConComponent
   ],
   imports: [
     AppRoutingModule,

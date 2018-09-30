@@ -1,0 +1,71 @@
+@import '../../shared/_varibales.scss';
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center; // ציר ראשי
+  justify-content: flex-start; // ציר ראשי
+  // align-items: flex-start; // ציר חוצה
+  align-items: center; // ציר חוצה
+  min-height: 100%;
+  height: auto;
+  padding-bottom: 8rem;
+  @include user-background();
+
+  @media (min-width: $xs-screen-size) {
+    align-items: center;
+    padding-bottom: 1rem;
+  }
+
+  .floating-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 16rem;
+    z-index: 1000;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 0.5rem;
+
+    @media (min-width: $xs-screen-size) {
+      margin-right: 3rem;
+    }
+
+    @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .floating-sum {
+    z-index: 1000;
+    position: fixed;
+    bottom: 1rem;
+    border-radius: 16px;
+    box-shadow: 5px 6px 8px #888888;
+
+    mat-chip {
+      font-weight: bold;
+    }
+    @media (min-width: $xs-screen-size) {
+      right: 9rem;
+      bottom: 1rem;
+    }
+
+    /* Landscape */
+    @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      right: 5rem;
+    }
+  }
+
+  .main-header {
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    align-self: center;
+  }
+
+  h3.main-header {
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,54 @@
+@import '../../shared/varibales';
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; // ציר ראשי
+  align-items: center; // ציר חוצה
+  @include user-background();
+  height: 100%;
+
+  .list-container {
+    margin-top: 2rem;
+    text-align: center;
+    background-color: #f3e5f5;
+    padding: 1rem;
+    box-shadow: 1px 1px 5px #888888;
+
+    .header {
+      font-weight: bold;
+    }
+
+    .list-item:hover {
+      background: #dedede;
+    }
+
+    .item-title {
+      text-align: left;
+      width: 60vw;
+
+      @media (min-width: 768px) {
+        width: 40vw;
+      }
+
+      @media (min-width: 1000px) {
+        width: 25vw;
+      }
+
+      /* Landscape */
+      @media only screen and (min-device-width: $xs-screen-size) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+        width: 40vw;
+      }
+    }
+    .del-icon {
+      font-size: 1.7rem;
+    }
+  }
+
+  .sppiner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+}

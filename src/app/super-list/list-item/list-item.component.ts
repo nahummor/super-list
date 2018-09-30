@@ -56,16 +56,18 @@ export class ListItemComponent implements OnInit {
           }
         });
 
-        this.superListSrvc.deleteItem(this.id).subscribe(data => {
-          dialogRef1.close();
-          console.log('delete Item data: ', data);
-          const snakBarRef = this.snackBar.openFromComponent(
-            SnackBarMsgComponent,
-            {
-              duration: 2000,
-              data: { msg: 'פריט נמחק בהצלחה' }
-            }
-          );
+        this.superListSrvc.deleteItem(this.id).then(payload => {
+          payload.subscribe(data => {
+            dialogRef1.close();
+            console.log('delete Item data: ', data);
+            const snakBarRef = this.snackBar.openFromComponent(
+              SnackBarMsgComponent,
+              {
+                duration: 2000,
+                data: { msg: 'פריט נמחק בהצלחה' }
+              }
+            );
+          });
         });
       }
     });

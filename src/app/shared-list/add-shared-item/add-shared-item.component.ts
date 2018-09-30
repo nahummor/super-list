@@ -34,9 +34,11 @@ export class AddSharedItemComponent implements OnInit {
     this.isDoneAddingItem = false;
     this.sharedListService
       .addItem(this.data.superList, this.addItemForm.value)
-      .subscribe(data => {
-        this.isDoneAddingItem = true;
-        this.dialogRef.close('add item');
+      .then(payload => {
+        payload.subscribe(data => {
+          this.isDoneAddingItem = true;
+          this.dialogRef.close('add item');
+        });
       });
   }
 

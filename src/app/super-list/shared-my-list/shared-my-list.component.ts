@@ -1,3 +1,4 @@
+import { MessagingService } from './../../shared/messaging.service';
 import { SnackBarMsgComponent } from './../../messages-box/snack-bar-msg/snack-bar-msg.component';
 import { ErrorMsgComponent } from './../../messages-box/error-msg/error-msg.component';
 import { SppinerMsgBoxComponent } from './../../messages-box/sppiner-msg-box/sppiner-msg-box.component';
@@ -44,55 +45,60 @@ export class SharedMyListComponent implements OnInit {
 
         this.superListService
           .shareMyList(this.sharedMyListForm.value.email)
-          .subscribe(
-            data => {
-              // console.log('Share user list: ', data);
-              dialogRef1.close();
-              // שיתוף בוצע בהצלחה
-              if (data['messageNum'] === 1) {
-                const snackBarRef1 = this.snackBar.openFromComponent(
-                  SnackBarMsgComponent,
-                  {
-                    data: { msg: data['message'] },
-                    duration: 4000,
-                    verticalPosition: 'bottom',
-                    horizontalPosition: 'center',
-                    direction: 'rtl'
-                  }
-                );
+          .then(payload => {
+            payload.subscribe(
+              data => {
+                // console.log('Share user list: ', data);
+                dialogRef1.close();
+                // שיתוף בוצע בהצלחה
+                if (data['messageNum'] === 1) {
+                  const snackBarRef1 = this.snackBar.openFromComponent(
+                    SnackBarMsgComponent,
+                    {
+                      data: { msg: data['message'] },
+                      duration: 4000,
+                      verticalPosition: 'bottom',
+                      horizontalPosition: 'center',
+                      direction: 'rtl'
+                    }
+                  );
+                }
+                // שיתוף כבר קיים
+                if (data['messageNum'] === 0) {
+                  const snackBarRef2 = this.snackBar.openFromComponent(
+                    ErrorMsgComponent,
+                    {
+                      data: { message: data['message'] },
+                      duration: 4000,
+                      verticalPosition: 'bottom',
+                      horizontalPosition: 'center',
+                      direction: 'rtl',
+                      panelClass: ['my-snack-bar']
+                    }
+                  );
+                }
+              },
+              errorObj => {
+                dialogRef1.close();
+                if (errorObj.error.error.code === 'auth/user-not-found') {
+                  const snackBarRef3 = this.snackBar.openFromComponent(
+                    ErrorMsgComponent,
+                    {
+                      data: { message: 'לא ניתן לאתר את המשתמש' },
+                      duration: 4000,
+                      verticalPosition: 'bottom',
+                      horizontalPosition: 'center',
+                      direction: 'rtl',
+                      panelClass: ['my-snack-bar']
+                    }
+                  );
+                }
               }
-              // שיתוף כבר קיים
-              if (data['messageNum'] === 0) {
-                const snackBarRef2 = this.snackBar.openFromComponent(
-                  ErrorMsgComponent,
-                  {
-                    data: { message: data['message'] },
-                    duration: 4000,
-                    verticalPosition: 'bottom',
-                    horizontalPosition: 'center',
-                    direction: 'rtl',
-                    panelClass: ['my-snack-bar']
-                  }
-                );
-              }
-            },
-            errorObj => {
-              dialogRef1.close();
-              if (errorObj.error.error.code === 'auth/user-not-found') {
-                const snackBarRef3 = this.snackBar.openFromComponent(
-                  ErrorMsgComponent,
-                  {
-                    data: { message: 'לא ניתן לאתר את המשתמש' },
-                    duration: 4000,
-                    verticalPosition: 'bottom',
-                    horizontalPosition: 'center',
-                    direction: 'rtl',
-                    panelClass: ['my-snack-bar']
-                  }
-                );
-              }
-            }
-          );
+            );
+          })
+          .catch(error => {
+            console.log('Error: ', error);
+          });
       }
     });
   }

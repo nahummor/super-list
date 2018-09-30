@@ -52,7 +52,7 @@ export class UpdateSharedItemComponent implements OnInit {
     const newItem: Item = {
       id: this.updateItemForm.value.id,
       amount: Number.parseInt(this.updateItemForm.value.amount),
-      cost: Number.parseInt(this.updateItemForm.value.cost),
+      cost: Number.parseFloat(this.updateItemForm.value.cost),
       description: this.updateItemForm.value.description,
       done: this.updateItemForm.value.done,
       name: this.updateItemForm.value.name
@@ -60,10 +60,12 @@ export class UpdateSharedItemComponent implements OnInit {
 
     this.sharedListSrvs
       .updateItem(this.listId, newItem, oldItem)
-      .subscribe(data => {
-        console.log('Update shared item: ', data);
-        this.isDoneUpdateItem = true;
-        this.dialogRef.close('update');
+      .then(payload => {
+        payload.subscribe(data => {
+          console.log('Update shared item: ', data);
+          this.isDoneUpdateItem = true;
+          this.dialogRef.close('update');
+        });
       });
   }
 

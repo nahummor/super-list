@@ -1,0 +1,22 @@
+<div class="main-container">
+  <h2 *ngIf="userLists.length > 0"
+      style="margin-bottom: 0.5rem"><span>רשימות של</span></h2>
+  <h2 *ngIf="userLists.length > 0"
+      style="margin-top: 0.5rem"><span>{{userEmail}}</span></h2>
+  <h2 *ngIf="userLists.length === 0"> <span>אין רשימות</span> <span> {{userEmail}} </span> <span>ל</span></h2>
+
+  <mat-card class="list-card"
+            *ngFor="let list of userLists">
+    <mat-card-content (click)="showList(list)">
+      <h2>{{list.name}}</h2>
+      <h3>{{list.description}}</h3>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="sppiner"
+       *ngIf="!isDoneLoading">
+    <h3>טוען נתונים</h3>
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+
+</div>

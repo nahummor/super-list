@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Item } from './../super-list/item';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SuperList } from './../super-list/super-list';
@@ -17,65 +18,81 @@ export class SharedListService {
   constructor(
     private db: AngularFirestore,
     private httpClient: HttpClient,
-    private authService: AuthService
+    private afAuth: AngularFireAuth
   ) {
-    this.uid = this.authService.getUserId();
-    this.token = this.authService.getToken();
+    this.uid = this.afAuth.auth.currentUser.uid;
+    this.afAuth.auth.currentUser.getIdToken(false).then(token => {
+      this.token = token;
+    });
   }
 
   public addNewSharedList(
     name: string,
     description: string
-  ): Observable<SuperList> {
+  ): Promise<Observable<SuperList>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/addNewSharedList',
-        {
-          token: this.token,
-          uid: this.uid,
-          name: name,
-          description: description
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map((data: { message: string; superList: SuperList }) => {
-          return {
-            id: data.superList.id,
-            name: data.superList.name,
-            description: data.superList.description,
-            items: data.superList.items
-          };
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/addNewSharedList',
+            {
+              token: this.token,
+              uid: this.uid,
+              name: name,
+              description: description
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map((data: { message: string; superList: SuperList }) => {
+              return {
+                id: data.superList.id,
+                name: data.superList.name,
+                description: data.superList.description,
+                items: data.superList.items
+              };
+            })
+          );
+      });
   }
 
-  public addItem(sharedList: SuperList, item: Item) {
+  public addItem(sharedList: SuperList, item: Item): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/addSharedItem',
-        {
-          token: this.token,
-          sharedList: sharedList,
-          newItem: item
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/addSharedItem',
+            {
+              token: this.token,
+              sharedList: sharedList,
+              newItem: item
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
   }
 
   public getItemsSharedList(
@@ -118,50 +135,64 @@ export class SharedListService {
   }
 
   // delete shared list and all items
-  public deleteList(listId: string) {
+  public deleteList(listId: string): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/deleteSharedList',
-        {
-          uid: this.uid,
-          token: this.token,
-          listId: listId
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/deleteSharedList',
+            {
+              uid: this.uid,
+              token: this.token,
+              listId: listId
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
   }
 
-  public deleteItem(listId: string, item: Item) {
+  public deleteItem(listId: string, item: Item): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/deleteSharedItem',
-        {
-          token: this.token,
-          listId: listId,
-          deleteItem: item
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/deleteSharedItem',
+            {
+              token: this.token,
+              listId: listId,
+              deleteItem: item
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
   }
 
   public updateListDetailes(listId: string, name: string, description: string) {
@@ -171,27 +202,38 @@ export class SharedListService {
       .update({ name: name, description: description });
   }
 
-  public updateItem(listId: string, newItem: Item, oldItem: Item) {
+  public updateItem(
+    listId: string,
+    newItem: Item,
+    oldItem: Item
+  ): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
       'application/json'
     );
 
-    return this.httpClient
-      .post(
-        'https://us-central1-superlist-80690.cloudfunctions.net/updateSharedItem',
-        {
-          token: this.token,
-          listId: listId,
-          newItem: newItem,
-          oldItem: oldItem
-        },
-        { headers: jsonHeaders }
-      )
-      .pipe(
-        map(data => {
-          return data;
-        })
-      );
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/updateSharedItem',
+            {
+              token: this.token,
+              listId: listId,
+              newItem: newItem,
+              oldItem: oldItem
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
   }
 }

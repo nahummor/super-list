@@ -1,0 +1,49 @@
+<div class="main-container">
+  <h3 class="main-header">{{superList.name}}</h3>
+  <h4 class="main-header">{{superList.description}}</h4>
+  <h4 class="main-header">📧 {{userEmail}}</h4>
+
+  <nm-list-item *ngFor="let item of superList.items"
+                [opButton]="true"
+                [id]="item.id"
+                [updateItemId]="updateItemIdArray[item.id]"
+                [name]="item.name"
+                [amount]="item.amount"
+                [description]="item.description"
+                [done]="item.done"
+                [cost]="item.cost"></nm-list-item>
+
+  <div class="floating-button">
+    <button mat-fab
+            matTooltip="פריט חדש"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="addItem()"
+            [matBadge]="itemNotSelected"
+            matBadgePosition="before"
+            matBadgeSize="medium"
+            matBadgeColor="accent">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-fab
+            matTooltip="איפוס כל הפריטים"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="resetListItems()">
+      <mat-icon>check_box_outline_blank</mat-icon>
+    </button>
+    <button mat-fab
+            matTooltip="רשימת פריטים"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="goToList()">
+      <mat-icon>list</mat-icon>
+    </button>
+  </div>
+  <div class="floating-sum">
+    <mat-chip-list>
+      <mat-chip color="accent"
+                selected> <span style="margin-right: 0.2rem">ש"ח</span>{{listSum}}<span style="margin-left: 0.2rem">סה"כ</span></mat-chip>
+    </mat-chip-list>
+  </div>
+</div>

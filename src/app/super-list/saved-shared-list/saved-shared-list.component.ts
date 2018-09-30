@@ -59,9 +59,9 @@ export class SavedSharedListComponent implements OnInit, OnDestroy {
             message: `מוסיף רשימה`
           }
         });
-        this.superListService
-          .addSharedListToMyList()
-          .subscribe((superList: SuperList) => {
+
+        this.superListService.addSharedListToMyList().then(payload => {
+          payload.subscribe((superList: SuperList) => {
             dialogRef2.close();
             const snakBarRef = this.snackBar.openFromComponent(
               SnackBarMsgComponent,
@@ -71,6 +71,7 @@ export class SavedSharedListComponent implements OnInit, OnDestroy {
               }
             );
           });
+        });
       }
     });
   }

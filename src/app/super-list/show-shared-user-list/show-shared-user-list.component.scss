@@ -1,0 +1,41 @@
+@import '../../shared/varibales';
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; // ציר ראשי
+  align-items: center; // ציר חוצה
+  min-height: 100%;
+  height: auto;
+  @include user-background();
+
+  mat-card {
+    margin-bottom: 0.5rem;
+    width: 80vw;
+    border-radius: 8px;
+    background-color: #f3f6f8;
+    padding: 0 0 1.5rem 0;
+
+    @media (min-width: 900px) {
+      width: 50vw;
+    }
+
+    mat-card-content {
+      direction: rtl;
+      padding: 6px 10px 5px 10px;
+    }
+  }
+
+  mat-card:hover {
+    cursor: pointer;
+    border-radius: 8px;
+    background: #dedede;
+  }
+
+  .sppiner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+}

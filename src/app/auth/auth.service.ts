@@ -1,3 +1,4 @@
+import { MessagingService } from './../shared/messaging.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ErrorMsgComponent } from './../messages-box/error-msg/error-msg.component';
 import { User } from './user';
@@ -23,6 +24,7 @@ export class AuthService {
   private userRoleSub: Subscription;
 
   constructor(
+    private msgService: MessagingService,
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
     private router: Router
@@ -76,6 +78,7 @@ export class AuthService {
   }
 
   public logout() {
+    this.msgService.messageSub.unsubscribe();
     this.userRoleSub.unsubscribe();
     return this.afAuth.auth.signOut();
   }
@@ -120,6 +123,7 @@ export class AuthService {
             this.authUser = true;
             this.router.navigate(['/main']); // navigate to application
           });
+          this.msgService.receiveMessage();
         } else {
           this.newUser = true;
           this.sendVerificationEmail().then(() => {

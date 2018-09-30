@@ -43,16 +43,18 @@ export class SharedListItemComponent implements OnInit {
 
         this.sharedSuperListSrvc
           .deleteItem(this.listId, this.item)
-          .subscribe(data => {
-            dialogRef1.close();
-            console.log('delete Item data: ', data);
-            const snakBarRef = this.snackBar.openFromComponent(
-              SnackBarMsgComponent,
-              {
-                duration: 2000,
-                data: { msg: 'פריט נמחק בהצלחה' }
-              }
-            );
+          .then(payload => {
+            payload.subscribe(data => {
+              dialogRef1.close();
+              console.log('delete Item data: ', data);
+              const snakBarRef = this.snackBar.openFromComponent(
+                SnackBarMsgComponent,
+                {
+                  duration: 2000,
+                  data: { msg: 'פריט נמחק בהצלחה' }
+                }
+              );
+            });
           });
       }
     });

@@ -47,14 +47,16 @@ export class AddNewListComponent implements OnInit {
               this.addNewListForm.value.name,
               this.addNewListForm.value.description
             )
-            .subscribe((data: SuperList) => {
-              this.isDoneAddingList = true;
-              this.dialogRef.close('add-new-list');
-              this.router.navigate([
-                `/listContainer/${this.addNewListForm.value.name}/${
-                  this.addNewListForm.value.description
-                }/${data.id}`
-              ]);
+            .then(dataObs => {
+              dataObs.subscribe((data: SuperList) => {
+                this.isDoneAddingList = true;
+                this.dialogRef.close('add-new-list');
+                this.router.navigate([
+                  `/listContainer/${this.addNewListForm.value.name}/${
+                    this.addNewListForm.value.description
+                  }/${data.id}`
+                ]);
+              });
             });
         } else {
           // the list name exist

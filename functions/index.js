@@ -26,11 +26,62 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+exports.sendMessage = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const uid = request.body.uid;
+    const token = request.body.token;
+    const title = request.body.title;
+    const message = request.body.message;
+
+    const payload = {
+      notification: {
+        title: title,
+        body: message,
+        icon:
+          'https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/superList.PNG?alt=media&token=d8adf246-198b-4602-af06-8efdc92807e5'
+      }
+    };
+
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then(decodedIdToken => {
+        db.collection('shared-user')
+          .where('userId', '==', uid)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.docs.forEach(doc => {
+              if (doc.data().sendToken) {
+                admin.messaging().sendToDevice(doc.data().sendToken, payload);
+              }
+              // console.log('Doc id: ', doc.id);
+              // console.log('Doc data : ', doc.data());
+            });
+            response.status(200).json({
+              message: 'הודעה נשלחה למשתמשים'
+            });
+          })
+          .catch(error => {
+            response.status(403).json({
+              errorMsg: 'Error Sending user message:',
+              error: error
+            });
+          });
+      })
+      .catch(error => {
+        response
+          .status(403)
+          .json({ errorMsg: 'Unauthorized user', error: error });
+      });
+  });
+});
+
 exports.shareUser = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const uid = request.body.uid;
     const token = request.body.token;
-    const email = request.body.email;
+    const authorizedUserEmail = request.body.email;
+    const userEmail = request.body.userEmail;
 
     admin
       .auth()
@@ -38,7 +89,7 @@ exports.shareUser = functions.https.onRequest((request, response) => {
       .then(decodedIdToken => {
         admin
           .auth()
-          .getUserByEmail(email)
+          .getUserByEmail(authorizedUserEmail)
           .then(user => {
             // בדיקה האם כבר בוצע שיתוף עם משתמש זה
             isUserSaredList(uid, user.uid).then(querySnapshot => {
@@ -46,7 +97,10 @@ exports.shareUser = functions.https.onRequest((request, response) => {
                 db.collection('shared-user')
                   .add({
                     userId: uid,
-                    authorizedUserId: user.uid
+                    userEmail: userEmail,
+                    authorizedUserId: user.uid,
+                    authorizedUserEmail: authorizedUserEmail,
+                    sendToken: ''
                   })
                   .then(docRef => {
                     response.status(200).json({
@@ -491,6 +545,7 @@ exports.updateSharedItem = functions.https.onRequest((request, response) => {
       });
   });
 });
+
 // ===========================================================================================================
 
 // [START onCreateTrigger]

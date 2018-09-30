@@ -63,16 +63,18 @@ export class SharedSavedListComponent implements OnInit, OnDestroy {
           }
         });
 
-        this.sharedListService.deleteList(list.id).subscribe(data => {
-          dialogRef1.close();
-          const snakBarRef = this.snackBar.openFromComponent(
-            SnackBarMsgComponent,
-            {
-              duration: 2000,
-              data: { msg: 'הרשימה נמחקה בהצלחה' }
-            }
-          );
-          // console.log('delete list data: ', data);
+        this.sharedListService.deleteList(list.id).then(payload => {
+          payload.subscribe(data => {
+            dialogRef1.close();
+            const snakBarRef = this.snackBar.openFromComponent(
+              SnackBarMsgComponent,
+              {
+                duration: 2000,
+                data: { msg: 'הרשימה נמחקה בהצלחה' }
+              }
+            );
+            // console.log('delete list data: ', data);
+          });
         });
       }
     });

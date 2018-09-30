@@ -1,0 +1,57 @@
+@import '../../shared/varibales';
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; // ציר ראשי
+  align-items: center; // ציר חוצה
+
+  min-height: 100%;
+  height: auto;
+  @include user-background();
+
+  .list-container {
+    margin-top: 2rem;
+    @include flex-column-center();
+    background-color: #f3e5f5;
+    padding: 1rem;
+    box-shadow: 1px 1px 5px #888888;
+
+    .header {
+      font-weight: bold;
+    }
+
+    .users-list {
+      width: 100%;
+    }
+    .list-item {
+      width: 100%;
+
+      .list-button {
+        font-weight: bold;
+        font-size: 1.2rem;
+        width: 100%;
+        max-width: 75vw;
+
+        .button-text {
+          width: 70vw;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          display: inline-block;
+
+          @media (min-width: $xs-screen-size) {
+            width: 20vw;
+          }
+        }
+      }
+    }
+  }
+
+  .sppiner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+}
