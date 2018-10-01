@@ -1,6 +1,6 @@
 import { SnackBarMsgComponent } from './../messages-box/snack-bar-msg/snack-bar-msg.component';
 import { MatSnackBar } from '@angular/material';
-import { take, mergeMapTo } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
@@ -31,6 +31,7 @@ export class MessagingService {
       if (!user) {
         return;
       }
+
       this.db
         .collection('shared-user', ref => {
           return ref.where('authorizedUserId', '==', user.uid);
@@ -45,13 +46,27 @@ export class MessagingService {
               .update({ sendToken: token, authorizedUserEmail: user.email });
           });
         });
+
+      this.db
+        .collection('shared-user', ref => {
+          return ref.where('userId', '==', user.uid);
+        })
+        .get()
+        .subscribe(ref => {
+          ref.docs.forEach(doc => {
+            this.db
+              .collection('shared-user')
+              .doc(doc.id)
+              .update({ userToken: token });
+          });
+        });
     });
   }
 
   public getPermission() {
     this.afMessaging.requestToken.subscribe(
       token => {
-        // console.log('Permission granted! Save to the server!', token);
+        console.log('Request token', token);
         this.updateToken(token);
       },
       error => {
