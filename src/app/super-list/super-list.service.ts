@@ -483,6 +483,43 @@ export class SuperListService {
       });
   }
 
+  public deleteItemBySharedUser(
+    itemId: number,
+    userId: string,
+    listId: string
+  ): Observable<Promise<SuperList>> {
+    return this.db
+      .collection('super-list')
+      .doc(userId)
+      .collection('user-list')
+      .doc(listId)
+      .get()
+      .pipe(
+        map(snapshot => {
+          const itemIndex = snapshot.data().items.findIndex(item => {
+            return item.id === itemId;
+          });
+          const items = [...snapshot.data().items];
+          items.splice(itemIndex, 1);
+
+          return this.db
+            .collection('super-list')
+            .doc(userId)
+            .collection('user-list')
+            .doc(listId)
+            .update({ items: items })
+            .then(() => {
+              return {
+                id: snapshot.id,
+                name: snapshot.data().name,
+                description: snapshot.data().description,
+                items: items
+              };
+            });
+        })
+      );
+  }
+
   public deleteItem(itemId: number): Promise<Observable<any>> {
     const jsonHeaders = new HttpHeaders().set(
       'Content-Type',
@@ -511,6 +548,47 @@ export class SuperListService {
             map(data => {
               return data;
             })
+          );
+      });
+  }
+
+  public setItemDoneBySharedUser(
+    itemId: number,
+    userId: string,
+    listId: string
+  ) {
+    this.db
+      .collection('super-list')
+      .doc(userId)
+      .collection('user-list')
+      .doc(listId)
+      .get()
+      .pipe(
+        map(snapshot => {
+          return {
+            id: snapshot.id,
+            ...snapshot.data()
+          };
+        })
+      )
+      .subscribe((list: SuperList) => {
+        const itemIndex = list.items.findIndex(item => {
+          return item.id === itemId;
+        });
+        list.items[itemIndex].done = !list.items[itemIndex].done;
+        this.db
+          .collection('super-list')
+          .doc(userId)
+          .collection('user-list')
+          .doc(listId)
+          .update({ items: list.items })
+          .then(
+            () => {
+              console.log('update item done');
+            },
+            error => {
+              console.log(error);
+            }
           );
       });
   }
@@ -589,6 +667,36 @@ export class SuperListService {
       })
       .doc(listId)
       .update({ name: name, description: description });
+  }
+
+  public updateItemBySharedUser(userId: string, listId: string, item: Item) {
+    this.db
+      .collection('super-list')
+      .doc(userId)
+      .collection('user-list')
+      .doc(listId)
+      .get()
+      .pipe(
+        map(snapshot => {
+          return {
+            id: snapshot.id,
+            ...snapshot.data()
+          };
+        })
+      )
+      .subscribe((list: SuperList) => {
+        const itemIndex = list.items.findIndex(lItem => {
+          return lItem.id === item.id;
+        });
+        list.items[itemIndex] = item;
+        this.db
+          .collection('super-list')
+          .doc(userId)
+          .collection('user-list')
+          .doc(listId)
+          .update({ items: list.items });
+        // לשלוח הודעה לבעלים של הרשימה
+      });
   }
 
   public updateItem(item: Item) {

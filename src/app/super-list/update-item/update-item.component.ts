@@ -42,9 +42,20 @@ export class UpdateItemComponent implements OnInit {
       cost: Number.parseFloat(this.updateItemForm.value.cost)
     };
 
-    this.superListSrvs.updateItem(item);
+    if (!this.data.sharedUser) {
+      this.superListSrvs.updateItem(item);
+    } else {
+      // עדכון פריט ברשימה משותפת
+      this.superListSrvs.updateItemBySharedUser(
+        this.data.userId,
+        this.data.listId,
+        item
+      );
+    }
+
     this.dialogRef.close('update');
   }
+
   public onClickClose() {
     this.dialogRef.close('close');
   }

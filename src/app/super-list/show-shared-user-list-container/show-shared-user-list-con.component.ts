@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./show-shared-user-list-con.component.scss']
 })
 export class ShowSharedUserListConComponent implements OnInit, OnDestroy {
-  private userId: string;
+  public userId: string;
   public userEmail: string;
-  private listId: string;
+  public listId: string;
   public itemNotSelected: number;
   public listSum: number;
   public superList: SuperList;
@@ -44,6 +44,7 @@ export class ShowSharedUserListConComponent implements OnInit, OnDestroy {
         .subscribe(list => {
           this.superList = list;
           this.itemNotSelected = 0;
+          this.listSum = 0;
           this.countNotSelectedItems();
         });
     });

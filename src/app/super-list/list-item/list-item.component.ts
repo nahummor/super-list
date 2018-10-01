@@ -29,6 +29,12 @@ export class ListItemComponent implements OnInit {
   done: boolean;
   @Input()
   opButton: boolean;
+  @Input()
+  sharedUser: boolean;
+  @Input()
+  userId: string;
+  @Input()
+  listId: string;
   public checked: boolean;
 
   constructor(
@@ -56,26 +62,56 @@ export class ListItemComponent implements OnInit {
           }
         });
 
-        this.superListSrvc.deleteItem(this.id).then(payload => {
-          payload.subscribe(data => {
-            dialogRef1.close();
-            console.log('delete Item data: ', data);
-            const snakBarRef = this.snackBar.openFromComponent(
-              SnackBarMsgComponent,
-              {
-                duration: 2000,
-                data: { msg: 'פריט נמחק בהצלחה' }
-              }
-            );
+        if (!this.sharedUser) {
+          this.superListSrvc.deleteItem(this.id).then(payload => {
+            payload.subscribe(data => {
+              dialogRef1.close();
+              console.log('delete Item data: ', data);
+              const snakBarRef = this.snackBar.openFromComponent(
+                SnackBarMsgComponent,
+                {
+                  duration: 2000,
+                  data: { msg: 'פריט נמחק בהצלחה' }
+                }
+              );
+            });
           });
-        });
+        } else {
+          this.superListSrvc
+            .deleteItemBySharedUser(this.id, this.userId, this.listId)
+            .subscribe(payload => {
+              payload.then(list => {
+                dialogRef1.close();
+                console.log('List after delete item by shared user: ', list);
+                const snakBarRef = this.snackBar.openFromComponent(
+                  SnackBarMsgComponent,
+                  {
+                    duration: 2000,
+                    data: { msg: 'פריט נמחק בהצלחה' }
+                  }
+                );
+              });
+            });
+        }
       }
     });
   }
 
   public doneItem() {
-    console.log('done item!...', this.id);
-    this.superListSrvc.setItemDone(this.id);
+    if (!this.sharedUser) {
+      this.superListSrvc.setItemDone(this.id);
+    } else {
+      // סימון הפריט ברשימה משותפת
+      // console.log('Shared User: ', this.sharedUser);
+      // console.log('Item Number: ', this.id);
+      // console.log('User ID: ', this.userId);
+      // console.log('List ID: ', this.listId);
+      this.superListSrvc.setItemDoneBySharedUser(
+        this.id,
+        this.userId,
+        this.listId
+      );
+    }
   }
 
   public updateItem() {
@@ -90,7 +126,12 @@ export class ListItemComponent implements OnInit {
 
     const dialogRef = this.dialog.open(UpdateItemComponent, {
       width: '25rem',
-      data: { item: updateItem }
+      data: {
+        item: updateItem,
+        sharedUser: this.sharedUser,
+        userId: this.userId,
+        listId: this.listId
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
