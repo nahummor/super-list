@@ -58,7 +58,7 @@ exports.sendMessageBySharedUser = functions.https.onRequest(
             .then(querySnapshot => {
               querySnapshot.docs.forEach(doc => {
                 if (doc.data().sendToken) {
-                  admin.messaging().sendToDevice(doc.data().sendToken, payload);
+                  admin.messaging().sendToDevice(doc.data().userToken, payload);
                 }
               });
             })
