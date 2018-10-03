@@ -684,19 +684,31 @@ export class SuperListService {
           };
         })
       )
-      .subscribe((list: SuperList) => {
-        const itemIndex = list.items.findIndex(lItem => {
-          return lItem.id === item.id;
-        });
-        list.items[itemIndex] = item;
-        this.db
-          .collection('super-list')
-          .doc(userId)
-          .collection('user-list')
-          .doc(listId)
-          .update({ items: list.items });
-        // לשלוח הודעה לבעלים של הרשימה
-      });
+      .subscribe(
+        (list: SuperList) => {
+          const itemIndex = list.items.findIndex(lItem => {
+            return lItem.id === item.id;
+          });
+          list.items[itemIndex] = item;
+          this.db
+            .collection('super-list')
+            .doc(userId)
+            .collection('user-list')
+            .doc(listId)
+            .update({ items: list.items });
+          // לשלוח הודעה לבעלים של הרשימה
+          this.sendMessageBySharedUser(list.name, item, userId).then(
+            payload => {
+              payload.subscribe(data => {
+                console.log(data);
+              });
+            }
+          );
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   public updateItem(item: Item) {
@@ -767,6 +779,42 @@ export class SuperListService {
               token: this.token,
               email: email,
               userEmail: this.afAuth.auth.currentUser.email
+            },
+            { headers: jsonHeaders }
+          )
+          .pipe(
+            map(data => {
+              return data;
+            })
+          );
+      });
+  }
+
+  private sendMessageBySharedUser(
+    listName: string,
+    item: Item,
+    userId: string
+  ) {
+    const jsonHeaders = new HttpHeaders().set(
+      'Content-Type',
+      'application/json'
+    );
+
+    return this.afAuth.auth.currentUser
+      .getIdToken(false)
+      .then(token => {
+        this.token = token;
+      })
+      .then(() => {
+        return this.httpClient
+          .post(
+            'https://us-central1-superlist-80690.cloudfunctions.net/sendMessageBySharedUser',
+            {
+              userId: userId,
+              authorizedUserId: this.uid,
+              token: this.token,
+              title: listName,
+              message: 'הפריט ' + item.name + ' עודכן'
             },
             { headers: jsonHeaders }
           )
