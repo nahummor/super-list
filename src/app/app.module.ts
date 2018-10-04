@@ -30,6 +30,7 @@ import { SharedUsersListComponent } from './super-list/shared-users-list/shared-
 import { MySharedUsersComponent } from './super-list/my-shared-users/my-shared-users.component';
 import { ShowSharedUserListComponent } from './super-list/show-shared-user-list/show-shared-user-list.component';
 import { ShowSharedUserListConComponent } from './super-list/show-shared-user-list-container/show-shared-user-list-con.component';
+import { CameraComponent } from './carera/camera.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ShowSharedUserListConComponent } from './super-list/show-shared-user-li
     SharedUsersListComponent,
     MySharedUsersComponent,
     ShowSharedUserListComponent,
-    ShowSharedUserListConComponent
+    ShowSharedUserListConComponent,
+    CameraComponent
   ],
   imports: [
     AppRoutingModule,

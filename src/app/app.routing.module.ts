@@ -1,3 +1,4 @@
+import { CameraComponent } from './carera/camera.component';
 import { ShowSharedUserListComponent } from './super-list/show-shared-user-list/show-shared-user-list.component';
 import { SharedUsersListComponent } from './super-list/shared-users-list/shared-users-list.component';
 import { SharedMyListComponent } from './super-list/shared-my-list/shared-my-list.component';
@@ -69,7 +70,8 @@ const routes: Routes = [
     path: 'showSharedUserListCon/:userId/:listId/:userEmail',
     canActivate: [AuthGuard],
     component: ShowSharedUserListConComponent
-  }
+  },
+  { path: 'camera', canActivate: [AuthGuard], component: CameraComponent }
 
   // { path: 'path/:routeParam', component: MyComponent },
   // { path: 'staticPath', component: ... },
