@@ -7,6 +7,11 @@ const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 const serviceAccount = require('./serviceAccountKey.json');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const UUID = require('uuid-v4');
+const os = require('os');
+const Busboy = require('busboy');
+const path = require('path');
 
 // ======= Configure Gmail ================================================
 const gmailEmail = functions.config().gmail.email;
@@ -25,6 +30,12 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://superlist-80690.firebaseio.com'
 });
+
+const gcconfig = {
+  projectId: 'superlist-80690',
+  keyFilename: 'serviceAccountKey.json'
+};
+const gcs = admin.storage();
 
 const db = admin.firestore();
 const msgIconPath =
@@ -597,6 +608,75 @@ exports.updateSharedItem = functions.https.onRequest((request, response) => {
       });
   });
 });
+
+// exports.sendPicture = functions.https.onRequest((request, response) => {
+//   cors(request, response, () => {
+//     const uuid = UUID();
+//     const busboy = new Busboy({ headers: request.headers });
+
+//     // These objects will store the values (file + fields) extracted from busboy
+//     let upload;
+//     const fields = {};
+
+//     // This callback will be invoked for each file uploaded
+//     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+//       console.log(
+//         `File [${fieldname}] filename: ${filename}, encoding: ${encoding}, mimetype: ${mimetype}`
+//       );
+
+//       const filepath = path.join(os.tmpdir(), filename);
+//       upload = { file: filepath, type: mimetype };
+//       file.pipe(fs.createWriteStream(filepath));
+//     });
+
+//     // This will invoked on every field detected
+//     busboy.on(
+//       'field',
+//       (
+//         fieldname,
+//         val,
+//         fieldnameTruncated,
+//         valTruncated,
+//         encoding,
+//         mimetype
+//       ) => {
+//         fields[fieldname] = val;
+//       }
+//     );
+
+//     // This callback will be invoked after all uploaded files are saved.
+//     busboy.on('finish', () => {
+//       const bucket = gcs.bucket('superlist-80690.appspot.com/users-pictures');
+
+//       bucket.upload(
+//         upload.file,
+//         {
+//           uploadType: 'media',
+//           metadata: {
+//             metadata: {
+//               contentType: upload.type,
+//               firebaseStorageDownloadTokens: uuid
+//             }
+//           }
+//         },
+//         (error, uploadedFile) => {
+//           if (!error) {
+//             console.log('Fields: ', fields);
+//             response.status(200).json({
+//               message: 'תמונה נטענה בהצלחה',
+//               fields: fields
+//             });
+//           } else {
+//             console.log('Send Picture Error: ', error);
+//             response
+//               .status(403)
+//               .json({ errorMsg: 'Error upload pictute: ', error: error });
+//           }
+//         }
+//       );
+//     });
+//   });
+// });
 
 // ===========================================================================================================
 
