@@ -1,19 +1,41 @@
 <div class="main-container">
-  <video id="player"
-         [style.disply]="displayVideo"
-         #videoElement
-         autoplay></video>
-  <canvas id="canvas"
-          width="320px"
-          height="240px"></canvas>
-  <button mat-raised-button
-          color="primary"
-          id="capture-btn">צילום</button>
-  <div [style.display]="picImageDisplay"
-       #pickImage>
-    <h6>בחירת צילום</h6>
-    <input type="file"
-           accept="image/*"
-           id="image-picker">
+  <div class="camera-container">
+    <video class="video-window"
+           id="player"
+           [style.display]="displayVideo"
+           #videoElement
+           autoplay></video>
+    <canvas class="video-window"
+            id="canvas"
+            #canvasElement
+            [style.display]="displayCanvas"></canvas>
+    <h3 *ngIf="startLoadingPic">מעלה תמונה</h3>
+    <h3 *ngIf="doneLoadingPic">תמונה נטענה</h3>
+    <mat-progress-bar class="picture-progress-bar"
+                      mode="determinate"
+                      [value]="progressBarValue"></mat-progress-bar>
+    <button mat-raised-button
+            [style.display]="displayVideo"
+            (click)="onTakePicture()"
+            color="primary"
+            id="capture-btn">צילום</button>
+    <button mat-raised-button
+            *ngIf="doneLoadingPic"
+            (click)="onGoBack()"
+            color="primary"
+            id="capture-btn">חזרה</button>
+    <div class="pick-image"
+         [style.display]="picImageDisplay"
+         #pickImage>
+      <h3>בחירת צילום</h3>
+      <input type="file"
+             style="display: none"
+             text="צלם"
+             accept="image/*"
+             id="image-picker">
+      <button mat-raised-button
+              color="primary"
+              onclick="document.getElementById('image-picker').click()">צילום</button>
+    </div>
   </div>
 </div>

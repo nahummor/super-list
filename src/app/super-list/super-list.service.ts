@@ -1,4 +1,5 @@
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { SppinerMsgBoxComponent } from './../messages-box/sppiner-msg-box/sppiner-msg-box.component';
 import { OkMsgComponent } from './../messages-box/ok-msg/ok-msg.component';
 import { Item } from './item';
@@ -9,7 +10,6 @@ import { AuthService } from './../auth/auth.service';
 import { SuperList } from './super-list';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { log } from 'util';
 
 export interface ItemUpdate {
@@ -36,7 +36,6 @@ export class SuperListService {
   constructor(
     private httpClient: HttpClient,
     private db: AngularFirestore,
-    // private authService: AuthService,
     private dialog: MatDialog,
     private afAuth: AngularFireAuth
   ) {
@@ -909,6 +908,33 @@ export class SuperListService {
         return 'done';
       });
   }
+
+  // public sendPictureToServer(picture: Blob) {
+  //   const id = new Date().toISOString();
+  //   const postData = new FormData();
+  //   postData.append('id', id);
+  //   postData.append('uid', this.uid);
+  //   postData.append('token', this.token);
+  //   postData.append('picture', picture);
+
+  //   return this.afAuth.auth.currentUser
+  //     .getIdToken(false)
+  //     .then(token => {
+  //       this.token = token;
+  //     })
+  //     .then(() => {
+  //       return this.httpClient
+  //         .post(
+  //           'https://us-central1-superlist-80690.cloudfunctions.net/sendPicture',
+  //           postData
+  //         )
+  //         .pipe(
+  //           map(data => {
+  //             return data;
+  //           })
+  //         );
+  //     });
+  // }
   public testDelete() {
     // const jsonHeaders = new HttpHeaders().set(
     //   'Content-Type',
