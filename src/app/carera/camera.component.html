@@ -6,11 +6,13 @@
            #videoElement
            autoplay></video>
     <canvas class="video-window"
+            width="320"
+            height="240"
             id="canvas"
             #canvasElement
             [style.display]="displayCanvas"></canvas>
-    <h3 *ngIf="startLoadingPic">מעלה תמונה</h3>
-    <h3 *ngIf="doneLoadingPic">תמונה נטענה</h3>
+    <p *ngIf="startLoadingPic">מעלה תמונה</p>
+    <p *ngIf="doneLoadingPic">תמונה נטענה</p>
     <mat-progress-bar class="picture-progress-bar"
                       mode="determinate"
                       [value]="progressBarValue"></mat-progress-bar>
@@ -27,8 +29,9 @@
     <div class="pick-image"
          [style.display]="picImageDisplay"
          #pickImage>
-      <h3>בחירת צילום</h3>
+      <p>בחירת צילום</p>
       <input type="file"
+             (change)="onSelectPicture($event)"
              style="display: none"
              text="צלם"
              accept="image/*"

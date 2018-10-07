@@ -20,7 +20,6 @@ export class CameraComponent implements OnInit, OnDestroy {
   public picImageDisplay: string;
   public displayVideo: string;
   public displayCanvas: string;
-  // public captureButton: string;
   private picture: Blob;
   private haveCamera: boolean;
   public progressBarValue: number;
@@ -40,7 +39,6 @@ export class CameraComponent implements OnInit, OnDestroy {
     this.picImageDisplay = 'none';
     this.displayVideo = 'none';
     this.displayCanvas = 'none';
-    // this.captureButton = 'block';
     this.cameraPolyfills();
     this.video = this.videoElement.nativeElement;
     this.canvasElement = document.querySelector('#canvas');
@@ -63,11 +61,30 @@ export class CameraComponent implements OnInit, OnDestroy {
     this.router.navigate(['main']);
   }
 
+  public onSelectPicture(event) {
+    this.picImageDisplay = 'none';
+    this.displayCanvas = 'block';
+
+    const img = new Image();
+    img.src = URL.createObjectURL(event.target.files[0]);
+    const context = this.canvasElement.getContext('2d');
+    img.onload = () => {
+      context.drawImage(
+        img,
+        0,
+        0,
+        this.canvasElement.width,
+        this.canvasElement.height
+      );
+    };
+
+    this.savePictureToServer(event.target.files[0]);
+  }
+
   public onTakePicture() {
     this.startLoadingPic = true;
     this.displayCanvas = 'block';
     this.displayVideo = 'none';
-    // this.captureButton = 'none';
 
     const context = this.canvasElement.getContext('2d');
     context.drawImage(
@@ -75,16 +92,16 @@ export class CameraComponent implements OnInit, OnDestroy {
       0,
       0,
       this.canvasElement.width,
-      this.video.videoHeight /
-        (this.video.videoWidth / this.canvasElement.width)
+      this.canvasElement.height
     );
-
-    console.log('Width: ', this.canvasElement.width);
-    console.log(
-      'Height: ',
-      this.video.videoHeight /
-        (this.video.videoWidth / this.canvasElement.width)
-    );
+    // context.drawImage(
+    //   this.video,
+    //   0,
+    //   0,
+    //   this.canvasElement.width,
+    //   this.video.videoHeight /
+    //     (this.video.videoWidth / this.canvasElement.width)
+    // );
     // close all camera tracks
     this.video.srcObject.getVideoTracks().forEach(track => {
       track.stop();

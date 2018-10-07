@@ -1,0 +1,16 @@
+[debug] [2018-10-07T11:01:07.563Z] ----------------------------------------------------------------------
+[debug] [2018-10-07T11:01:07.566Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\nahumm\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-10-07T11:01:07.566Z] CLI Version:   4.2.1
+[debug] [2018-10-07T11:01:07.566Z] Platform:      win32
+[debug] [2018-10-07T11:01:07.566Z] Node Version:  v10.9.0
+[debug] [2018-10-07T11:01:07.567Z] Time:          Sun Oct 07 2018 14:01:07 GMT+0300 (GMT+03:00)
+[debug] [2018-10-07T11:01:07.567Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-07T11:01:07.580Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-07T11:01:07.581Z] > authorizing via signed-in user
+[debug] [2018-10-07T11:01:07.583Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/superlist-80690  
+ 
+[debug] [2018-10-07T11:01:49.624Z] Error: connect ETIMEDOUT 104.197.85.31:443
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1161:14)
+[error] 
+[error] Error: Server Error. connect ETIMEDOUT 104.197.85.31:443
