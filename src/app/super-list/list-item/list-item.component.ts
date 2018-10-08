@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { SppinerMsgBoxComponent } from './../../messages-box/sppiner-msg-box/sppiner-msg-box.component';
 import { UpdateItemComponent } from './../update-item/update-item.component';
 import { YesNoMsgComponent } from './../../messages-box/yes-no-msg/yes-no-msg.component';
@@ -36,14 +37,17 @@ export class ListItemComponent implements OnInit {
   @Input()
   listId: string;
   public checked: boolean;
+  public imgUrl: string;
 
   constructor(
+    private router: Router,
     private superListSrvc: SuperListService,
     private dialog: MatDialog,
     public snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
+    this.imgUrl = `https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/users-pictures%2Fpic-2018-10-07T17%3A39%3A27.090Z.jpg?alt=media&token=29af9f45-3d08-4ae2-b50f-6e181060209d`;
     this.checked = this.done;
   }
 
@@ -145,5 +149,10 @@ export class ListItemComponent implements OnInit {
         );
       }
     });
+  }
+
+  public takePicture() {
+    console.log('Take Picture 📷');
+    this.router.navigate(['camera']);
   }
 }

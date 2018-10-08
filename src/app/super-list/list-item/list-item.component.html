@@ -42,7 +42,7 @@
 
 <div class="main-container">
   <div class="picture">
-    <img src="https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/users-pictures%2Fpic-2018-10-07T17%3A39%3A27.090Z.jpg?alt=media&token=29af9f45-3d08-4ae2-b50f-6e181060209d"
+    <img [src]="imgUrl"
          alt="no pic"
          width="106"
          height="120">
@@ -91,6 +91,13 @@
                 (click)="updateItem()"
                 color="primary">
           <mat-icon>create</mat-icon>
+        </button>
+        <button mat-mini-fab
+                matTooltip="צילום"
+                matTooltipPosition="above"
+                (click)="takePicture()"
+                color="primary">
+          📷
         </button>
       </div>
     </div>

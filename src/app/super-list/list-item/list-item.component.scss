@@ -81,7 +81,7 @@ $card-color: #f1f4fd;
 //   }
 // }
 .main-container {
-  width: 90vw;
+  width: 89vw;
   @media (min-width: 860px) {
     width: 60vw;
   }
@@ -98,7 +98,7 @@ $card-color: #f1f4fd;
 
   display: grid;
   grid-template-columns: 106px auto;
-  grid-template-rows: 2.5rem 2.5rem 2.5rem 2.8rem;
+  grid-template-rows: 2.8rem 2.5rem 2.5rem 2.8rem;
   box-shadow: 7px 6px 13px 0px #a56262;
 
   .picture {
@@ -108,7 +108,7 @@ $card-color: #f1f4fd;
     border-radius: 8px 0 8px 0;
 
     img {
-      border-radius: 8px 0 0 0;
+      border-radius: 8px 0 8px 0;
     }
   }
 

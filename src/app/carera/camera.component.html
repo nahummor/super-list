@@ -35,10 +35,11 @@
              style="display: none"
              text="צלם"
              accept="image/*"
-             id="image-picker">
+             id="image-picker"
+             #imagePicker>
       <button mat-raised-button
               color="primary"
-              onclick="document.getElementById('image-picker').click()">צילום</button>
+              (click)="imagePicker.click()">צילום</button>
     </div>
   </div>
 </div>
