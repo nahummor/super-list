@@ -71,7 +71,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: ShowSharedUserListConComponent
   },
-  { path: 'camera', canActivate: [AuthGuard], component: CameraComponent }
+  {
+    path: 'camera/:itemId/:userId/:listId',
+    canActivate: [AuthGuard],
+    component: CameraComponent
+  }
 
   // { path: 'path/:routeParam', component: MyComponent },
   // { path: 'staticPath', component: ... },

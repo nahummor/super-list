@@ -26,7 +26,8 @@ export class AddItemComponent implements OnInit {
       name: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       amount: new FormControl('', Validators.required),
-      cost: new FormControl(0)
+      cost: new FormControl(0),
+      pictureUrl: new FormControl('')
     });
   }
 

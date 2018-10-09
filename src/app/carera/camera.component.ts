@@ -1,7 +1,7 @@
 import { SuperListService } from './../super-list/super-list.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'nm-camera',
@@ -26,7 +26,12 @@ export class CameraComponent implements OnInit, OnDestroy {
   public doneLoadingPic: boolean;
   public startLoadingPic: boolean;
 
+  private itemId: number;
+  private userId: string;
+  private listId: string;
+
   constructor(
+    private route: ActivatedRoute,
     private superListService: SuperListService,
     private storage: AngularFireStorage,
     private router: Router
@@ -43,6 +48,12 @@ export class CameraComponent implements OnInit, OnDestroy {
     this.video = this.videoElement.nativeElement;
     this.canvasElement = document.querySelector('#canvas');
     this.haveCamera = true;
+
+    this.route.params.subscribe((params: Params) => {
+      this.itemId = params['itemId'];
+      this.userId = params['userId'];
+      this.listId = params['listId'];
+    });
   }
 
   ngOnDestroy() {
@@ -114,15 +125,28 @@ export class CameraComponent implements OnInit, OnDestroy {
   public savePictureToServer(picture: Blob) {
     console.log('Start uploading picture.....');
     // const file = event.target.files[0];
-    const filePath = 'users-pictures/pic-' + new Date().toISOString() + '.jpg';
+    const filePath = `users-pictures/${
+      this.userId
+    }/pic-${new Date().toISOString()}.jpg`;
     const ref = this.storage.ref(filePath);
     const task = ref.put(picture);
+
     task.then(data => {
       console.log(data);
       ref.getDownloadURL().subscribe(url => {
-        console.log('Pic Url: ', url);
-        this.startLoadingPic = false;
-        this.doneLoadingPic = true;
+        // console.log('Pic Url: ', url);
+        this.superListService
+          .updateItemPictureUrl(url, this.itemId, this.userId, this.listId)
+          .then(
+            () => {
+              this.startLoadingPic = false;
+              this.doneLoadingPic = true;
+              console.log('Update Item pic url....');
+            },
+            error => {
+              console.log('Error: ', error);
+            }
+          );
       });
     });
 

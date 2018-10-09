@@ -5,4 +5,5 @@ export interface Item {
   description: string;
   cost: number;
   done?: boolean;
+  pictureUrl?: string;
 }

@@ -152,7 +152,26 @@ export class ListItemComponent implements OnInit {
   }
 
   public takePicture() {
-    console.log('Take Picture 📷');
-    this.router.navigate(['camera']);
+    console.log('Take Picture');
+    console.log('Is Shared User: ', this.sharedUser);
+
+    if (this.sharedUser) {
+      console.log('Item ID: ', this.id);
+      console.log('User ID: ', this.userId);
+      console.log('List ID: ', this.listId);
+
+      this.router.navigate(['camera', this.id, this.userId, this.listId]);
+    } else {
+      console.log('Item ID: ', this.id);
+      console.log('User ID: ', this.superListSrvc.getUserID());
+      console.log('List ID: ', this.superListSrvc.getCurentListID());
+
+      this.router.navigate([
+        'camera',
+        this.id,
+        this.superListSrvc.getUserID(),
+        this.superListSrvc.getCurentListID()
+      ]);
+    }
   }
 }
