@@ -8,9 +8,9 @@ const functions = require('firebase-functions');
 const serviceAccount = require('./serviceAccountKey.json');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
-const UUID = require('uuid-v4');
+// const UUID = require('uuid-v4');
 const os = require('os');
-const Busboy = require('busboy');
+// const Busboy = require('busboy');
 const path = require('path');
 
 // ======= Configure Gmail ================================================

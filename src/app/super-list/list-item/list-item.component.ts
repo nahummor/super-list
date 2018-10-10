@@ -52,7 +52,7 @@ export class ListItemComponent implements OnInit {
     if (this.pictureUrl) {
       this.imgUrl = this.pictureUrl;
     } else {
-      this.imgUrl = `https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/users-pictures%2Fpic-2018-10-07T17%3A39%3A27.090Z.jpg?alt=media&token=29af9f45-3d08-4ae2-b50f-6e181060209d`;
+      this.imgUrl = '/src/assets/img/superList.PNG';
     }
     this.checked = this.done;
   }
