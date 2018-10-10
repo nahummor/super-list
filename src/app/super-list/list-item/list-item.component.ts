@@ -36,6 +36,8 @@ export class ListItemComponent implements OnInit {
   userId: string;
   @Input()
   listId: string;
+  @Input()
+  pictureUrl: string;
   public checked: boolean;
   public imgUrl: string;
 
@@ -47,7 +49,11 @@ export class ListItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.imgUrl = `https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/users-pictures%2Fpic-2018-10-07T17%3A39%3A27.090Z.jpg?alt=media&token=29af9f45-3d08-4ae2-b50f-6e181060209d`;
+    if (this.pictureUrl) {
+      this.imgUrl = this.pictureUrl;
+    } else {
+      this.imgUrl = `https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/users-pictures%2Fpic-2018-10-07T17%3A39%3A27.090Z.jpg?alt=media&token=29af9f45-3d08-4ae2-b50f-6e181060209d`;
+    }
     this.checked = this.done;
   }
 
@@ -156,15 +162,15 @@ export class ListItemComponent implements OnInit {
     console.log('Is Shared User: ', this.sharedUser);
 
     if (this.sharedUser) {
-      console.log('Item ID: ', this.id);
-      console.log('User ID: ', this.userId);
-      console.log('List ID: ', this.listId);
+      // console.log('Item ID: ', this.id);
+      // console.log('User ID: ', this.userId);
+      // console.log('List ID: ', this.listId);
 
       this.router.navigate(['camera', this.id, this.userId, this.listId]);
     } else {
-      console.log('Item ID: ', this.id);
-      console.log('User ID: ', this.superListSrvc.getUserID());
-      console.log('List ID: ', this.superListSrvc.getCurentListID());
+      // console.log('Item ID: ', this.id);
+      // console.log('User ID: ', this.superListSrvc.getUserID());
+      // console.log('List ID: ', this.superListSrvc.getCurentListID());
 
       this.router.navigate([
         'camera',

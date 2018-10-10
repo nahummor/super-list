@@ -742,8 +742,6 @@ export class SuperListService {
         )
         .subscribe((list: SuperList) => {
           const itemIndex = list.items.findIndex(item => {
-            console.log('Item ID: ', item.id);
-            console.log('itemId: ', itemId);
             return item.id === itemId;
           });
 

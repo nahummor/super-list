@@ -50,7 +50,7 @@ export class CameraComponent implements OnInit, OnDestroy {
     this.haveCamera = true;
 
     this.route.params.subscribe((params: Params) => {
-      this.itemId = params['itemId'];
+      this.itemId = Number.parseInt(params['itemId']);
       this.userId = params['userId'];
       this.listId = params['listId'];
     });
