@@ -52,7 +52,7 @@ export class ListItemComponent implements OnInit {
     if (this.pictureUrl) {
       this.imgUrl = this.pictureUrl;
     } else {
-      this.imgUrl = '/src/assets/img/superList.PNG';
+      this.imgUrl = 'assets/img/superList.PNG';
     }
     this.checked = this.done;
   }
@@ -179,5 +179,9 @@ export class ListItemComponent implements OnInit {
         this.superListSrvc.getCurentListID()
       ]);
     }
+  }
+
+  public onShowBigPictuer() {
+    console.log('Show big picture');
   }
 }

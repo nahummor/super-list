@@ -31,6 +31,7 @@ import { MySharedUsersComponent } from './super-list/my-shared-users/my-shared-u
 import { ShowSharedUserListComponent } from './super-list/show-shared-user-list/show-shared-user-list.component';
 import { ShowSharedUserListConComponent } from './super-list/show-shared-user-list-container/show-shared-user-list-con.component';
 import { CameraComponent } from './carera/camera.component';
+import { ShowBigPictureComponent } from './show-big-picture/show-big-picture.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { CameraComponent } from './carera/camera.component';
     MySharedUsersComponent,
     ShowSharedUserListComponent,
     ShowSharedUserListConComponent,
-    CameraComponent
+    CameraComponent,
+    ShowBigPictureComponent
   ],
   imports: [
     AppRoutingModule,
@@ -77,7 +79,8 @@ import { CameraComponent } from './carera/camera.component';
     SppinerMsgBoxComponent,
     UpdateItemComponent,
     UpdateListDetailesComponent,
-    YesNoMsgComponent
+    YesNoMsgComponent,
+    ShowBigPictureComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
