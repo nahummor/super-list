@@ -1,7 +1,8 @@
 import { SuperListService } from './../super-list/super-list.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'nm-camera',
@@ -31,10 +32,10 @@ export class CameraComponent implements OnInit, OnDestroy {
   private listId: string;
 
   constructor(
+    private _location: Location,
     private route: ActivatedRoute,
     private superListService: SuperListService,
-    private storage: AngularFireStorage,
-    private router: Router
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit() {
@@ -69,7 +70,7 @@ export class CameraComponent implements OnInit, OnDestroy {
   }
 
   public onGoBack() {
-    this.router.navigate(['main']);
+    this._location.back();
   }
 
   public onSelectPicture(event) {

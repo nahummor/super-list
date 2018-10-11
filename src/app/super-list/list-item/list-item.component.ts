@@ -1,3 +1,4 @@
+import { ShowBigPictureComponent } from './../../show-big-picture/show-big-picture.component';
 import { Router } from '@angular/router';
 import { SppinerMsgBoxComponent } from './../../messages-box/sppiner-msg-box/sppiner-msg-box.component';
 import { UpdateItemComponent } from './../update-item/update-item.component';
@@ -38,8 +39,11 @@ export class ListItemComponent implements OnInit {
   listId: string;
   @Input()
   pictureUrl: string;
+
   public checked: boolean;
   public imgUrl: string;
+  public loadingGifUrl: string;
+  public doneLoadingPicture: boolean;
 
   constructor(
     private router: Router,
@@ -49,12 +53,18 @@ export class ListItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.doneLoadingPicture = false;
+    this.loadingGifUrl = 'assets/img/loading.gif';
     if (this.pictureUrl) {
       this.imgUrl = this.pictureUrl;
     } else {
       this.imgUrl = 'assets/img/superList.PNG';
     }
     this.checked = this.done;
+  }
+
+  public onDoneLoadingPicture() {
+    this.doneLoadingPicture = true;
   }
 
   public deleteItem() {
@@ -182,6 +192,12 @@ export class ListItemComponent implements OnInit {
   }
 
   public onShowBigPictuer() {
-    console.log('Show big picture');
+    const dealogRef = this.dialog.open(ShowBigPictureComponent, {
+      width: '30rem',
+      data: {
+        imgUrl: this.imgUrl,
+        itemName: this.name
+      }
+    });
   }
 }

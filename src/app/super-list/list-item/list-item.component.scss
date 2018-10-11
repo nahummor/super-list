@@ -102,6 +102,7 @@ $card-color: #f1f4fd;
   box-shadow: 7px 6px 13px 0px #a56262;
 
   .picture {
+    height: 100%;
     background-color: $card-color;
     grid-row-start: 1;
     grid-row-end: 4;
@@ -109,6 +110,20 @@ $card-color: #f1f4fd;
 
     img {
       border-radius: 8px 0 8px 0;
+      cursor: pointer;
+    }
+
+    .loading-gif {
+      height: 100%;
+      width: 100%;
+    }
+
+    .item-image-hide {
+      display: none;
+    }
+
+    .item-image-show {
+      display: inline;
     }
   }
 

@@ -55,8 +55,4 @@ export class MainComponent implements OnInit {
   public onGetSharedList() {
     this.router.navigate(['savedSharedList']);
   }
-
-  public onGetCamera() {
-    this.router.navigate(['camera']);
-  }
 }

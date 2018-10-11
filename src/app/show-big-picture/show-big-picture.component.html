@@ -1,3 +1,11 @@
-<p>
-  show-big-picture works!
-</p>
+<div class="main-container">
+  <h3>
+    {{itemName}}
+  </h3>
+  <img [src]="imgUrl"
+       alt="no pic">
+  <button mat-raised-button
+          class="close-button"
+          color="primary"
+          (click)="onClose()">סגירה</button>
+</div>

@@ -43,10 +43,17 @@
 <div class="main-container">
   <div class="picture">
     <img [src]="imgUrl"
+         class="item-image-hide"
+         [ngClass]="{'item-image-show': doneLoadingPicture}"
          (click)="onShowBigPictuer()"
+         (load)="onDoneLoadingPicture()"
          alt="no pic"
          width="106"
          height="120">
+    <img class="loading-gif"
+         *ngIf="!doneLoadingPicture"
+         [src]="loadingGifUrl"
+         alt="no pic">
   </div>
   <div dir="rtl"
        class="name">
