@@ -168,8 +168,8 @@ export class ListItemComponent implements OnInit {
   }
 
   public takePicture() {
-    console.log('Take Picture');
-    console.log('Is Shared User: ', this.sharedUser);
+    // console.log('Take Picture');
+    // console.log('Is Shared User: ', this.sharedUser);
 
     if (this.sharedUser) {
       // console.log('Item ID: ', this.id);
@@ -199,5 +199,9 @@ export class ListItemComponent implements OnInit {
         itemName: this.name
       }
     });
+  }
+
+  public selectPicture() {
+    this.router.navigate(['pictureList']);
   }
 }

@@ -149,6 +149,24 @@ export class SuperListService {
     return this.sharedList;
   }
 
+  public getUserItemsPictureList(): Observable<any> {
+    return this.db
+      .collection('super-list')
+      .doc(this.uid)
+      .collection('items-picture')
+      .get()
+      .pipe(
+        map(querySnapshot => {
+          return querySnapshot.docs.map(item => {
+            return {
+              id: item.id,
+              ...item.data()
+            };
+          });
+        })
+      );
+  }
+
   public listExists(name: string) {
     return this.db
       .collection('super-list')
@@ -746,6 +764,8 @@ export class SuperListService {
           });
 
           list.items[itemIndex].pictureUrl = picUrl;
+          const itemName = list.items[itemIndex].name;
+
           // update items
           this.db
             .collection('super-list')
@@ -755,7 +775,20 @@ export class SuperListService {
             .update({ items: list.items })
             .then(
               () => {
-                resolve();
+                // הוספת מיקום התמונה לרשימת התמונות של המשתמש
+                this.db
+                  .collection('super-list')
+                  .doc(userId)
+                  .collection('items-picture')
+                  .add({ itemName: itemName, picUrl: picUrl })
+                  .then(
+                    () => {
+                      resolve();
+                    },
+                    error => {
+                      reject(error);
+                    }
+                  );
               },
               error => {
                 reject(error);

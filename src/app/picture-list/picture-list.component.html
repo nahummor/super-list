@@ -1,0 +1,18 @@
+<div class="main-container">
+  <div *ngFor="let pic of userPictureList">
+
+    <img [src]="pic.picUrl"
+         (click)="onPicSelect()"
+         alt="no pic">
+  </div>
+
+  <div class="floating-button">
+    <button mat-fab
+            matTooltip="רשימת פריטים"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="onGoBack()">
+      <mat-icon>list</mat-icon>
+    </button>
+  </div>
+</div>

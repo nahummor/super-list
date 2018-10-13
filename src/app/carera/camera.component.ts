@@ -124,7 +124,7 @@ export class CameraComponent implements OnInit, OnDestroy {
   }
 
   public savePictureToServer(picture: Blob) {
-    console.log('Start uploading picture.....');
+    // console.log('Start uploading picture.....');
     // const file = event.target.files[0];
     const filePath = `users-pictures/${
       this.userId
@@ -133,7 +133,7 @@ export class CameraComponent implements OnInit, OnDestroy {
     const task = ref.put(picture);
 
     task.then(data => {
-      console.log(data);
+      // console.log(data);
       ref.getDownloadURL().subscribe(url => {
         // console.log('Pic Url: ', url);
         this.superListService
@@ -142,7 +142,7 @@ export class CameraComponent implements OnInit, OnDestroy {
             () => {
               this.startLoadingPic = false;
               this.doneLoadingPic = true;
-              console.log('Update Item pic url....');
+              // console.log('Update Item pic url....');
             },
             error => {
               console.log('Error: ', error);

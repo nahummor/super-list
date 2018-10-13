@@ -101,6 +101,13 @@
           <mat-icon>create</mat-icon>
         </button>
         <button mat-mini-fab
+                matTooltip="בחירת תמונה"
+                matTooltipPosition="above"
+                (click)="selectPicture()"
+                color="primary">
+          <mat-icon> photo_library</mat-icon>
+        </button>
+        <button mat-mini-fab
                 matTooltip="צילום"
                 matTooltipPosition="above"
                 (click)="takePicture()"
