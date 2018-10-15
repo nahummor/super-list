@@ -202,6 +202,15 @@ export class ListItemComponent implements OnInit {
   }
 
   public selectPicture() {
+    if (this.sharedUser) {
+      console.log('👨‍💼 User ID: ', this.userId);
+      console.log('List ID: ', this.listId);
+      console.log('Item ID: ', this.id);
+    } else {
+      console.log('👨‍💼 User ID: ', this.superListSrvc.getUserID());
+      console.log('📜 List ID: ', this.superListSrvc.getCurentListID());
+      console.log('📇 Item ID: ', this.id);
+    }
     this.router.navigate(['pictureList']);
   }
 }
