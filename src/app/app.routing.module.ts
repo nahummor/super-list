@@ -78,7 +78,7 @@ const routes: Routes = [
     component: CameraComponent
   },
   {
-    path: 'pictureList',
+    path: 'pictureList/:itemId/:userId/:listId',
     canActivate: [AuthGuard],
     component: PictureListComponent
   }

@@ -736,13 +736,62 @@ export class SuperListService {
       );
   }
 
+  public updateItemPictureUrlFromPictureList(
+    picUrl: string,
+    itemId: number,
+    userId: string,
+    listId: string
+  ) {
+    // get Items list
+    const updatePromise = new Promise((resolve, reject) => {
+      this.db
+        .collection('super-list')
+        .doc(userId)
+        .collection('user-list')
+        .doc(listId)
+        .get()
+        .pipe(
+          map(snapshot => {
+            return {
+              id: snapshot.id,
+              ...snapshot.data()
+            };
+          })
+        )
+        .subscribe((list: SuperList) => {
+          const itemIndex = list.items.findIndex(item => {
+            return item.id === itemId;
+          });
+
+          list.items[itemIndex].pictureUrl = picUrl;
+          // update item
+          this.db
+            .collection('super-list')
+            .doc(userId)
+            .collection('user-list')
+            .doc(listId)
+            .update({ items: list.items })
+            .then(
+              () => {
+                resolve();
+              },
+              error => {
+                reject(error);
+              }
+            );
+        });
+    });
+
+    return updatePromise;
+  }
+
   public updateItemPictureUrl(
     picUrl: string,
     itemId: number,
     userId: string,
     listId: string
   ) {
-    // get list items
+    // get Items list
     const updatePromise = new Promise((resolve, reject) => {
       this.db
         .collection('super-list')

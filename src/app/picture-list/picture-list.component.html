@@ -2,7 +2,9 @@
   <div *ngFor="let pic of userPictureList">
 
     <img [src]="pic.picUrl"
-         (click)="onPicSelect()"
+         width="320"
+         height="240"
+         (click)="onPicSelect(pic.picUrl)"
          alt="no pic">
   </div>
 
