@@ -1,19 +1,28 @@
 <div class="main-container">
-  <div class="picture-card"
-       *ngFor="let pic of userPictureList">
-    <h3 class="picture-title">{{pic.itemName}}</h3>
-    <img [src]="pic.picUrl"
-         (click)="onPicSelect(pic.picUrl)"
-         alt="no pic">
-  </div>
+  <h3>תמונות לבחירה</h3>
+  <div class="picture-container">
+    <div class="picture-card"
+         *ngFor="let pic of userPictureList ; index as i">
+      <h3 class="picture-title">{{pic.itemName}}</h3>
+      <img [src]="pic.picUrl"
+           class="item-image-hide"
+           [ngClass]="{'item-image-show': doneLoadingPictureArr[i]}"
+           (load)="onDoneLoadingPicture(i)"
+           (click)="onPicSelect(pic.picUrl)"
+           alt="no pic">
+      <img *ngIf="!doneLoadingPictureArr[i]"
+           [src]="loadingGifUrl"
+           alt="no pic">
+    </div>
 
-  <div class="floating-button">
-    <button mat-fab
-            matTooltip="רשימת פריטים"
-            matTooltipPosition="above"
-            color="primary"
-            (click)="onGoBack()">
-      <mat-icon>list</mat-icon>
-    </button>
+    <div class="floating-button">
+      <button mat-fab
+              matTooltip="רשימת פריטים"
+              matTooltipPosition="above"
+              color="primary"
+              (click)="onGoBack()">
+        <mat-icon>list</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

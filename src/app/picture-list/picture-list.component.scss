@@ -1,56 +1,75 @@
 @import '../shared/varibales';
 
+$card-color: #f1f4fd;
+
 .main-container {
   height: 100%;
   @include user-background();
   padding-top: 5rem;
 
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-around; // ציר ראשי
-  align-items: flex-start; // ציר חוצה
-  flex-wrap: wrap; // במקרה ואין מקום לכל האלמנטים בשורה
-  align-content: flex-start; // מיישר את האלמנטים על הציר החוצה כאשר יש יותר מ שורה אחת
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 
-  .picture-card {
-    box-shadow: 7px 6px 13px 0px #a56262;
-    background-color: white;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    padding: 0 0.2rem 0 0.2rem;
-
-    .picture-title {
-      text-align: center;
-      margin-top: 0.6rem;
-      margin-bottom: 0.6rem;
-    }
-  }
-
-  img {
-    cursor: pointer;
-    width: 160px;
-    height: 120px;
-    border-radius: 8px;
-  }
-
-  .floating-button {
+  .picture-container {
+    height: 100%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row-reverse;
+    justify-content: space-around; // ציר ראשי
+    align-items: flex-start; // ציר חוצה
+    flex-wrap: wrap; // במקרה ואין מקום לכל האלמנטים בשורה
+    align-content: flex-start; // מיישר את האלמנטים על הציר החוצה כאשר יש יותר מ שורה אחת
 
-    height: 6rem;
-    z-index: 1000;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    margin-right: 0.5rem;
+    .picture-card {
+      box-shadow: 7px 6px 13px 0px #a56262;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      padding: 0 0.2rem 0 0.2rem;
+      background-color: $card-color;
 
-    @media (min-width: $xs-screen-size) {
-      margin-right: 3rem;
+      .picture-title {
+        text-align: center;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .item-image-hide {
+        display: none;
+      }
+
+      .item-image-show {
+        display: inline;
+      }
     }
 
-    @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+    img {
+      cursor: pointer;
+      width: 160px;
+      height: 120px;
+      border-radius: 8px;
+    }
+
+    .floating-button {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      height: 6rem;
+      z-index: 1000;
+      position: fixed;
+      bottom: 0;
+      right: 0;
       margin-right: 0.5rem;
+
+      @media (min-width: $xs-screen-size) {
+        margin-right: 3rem;
+      }
+
+      @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+        margin-right: 0.5rem;
+      }
     }
   }
 }

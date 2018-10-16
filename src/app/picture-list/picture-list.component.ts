@@ -21,6 +21,9 @@ export class PictureListComponent implements OnInit {
   private itemId: number;
   private userId: string;
   private listId: string;
+  // public doneLoadingPicture: boolean;
+  public loadingGifUrl: string;
+  public doneLoadingPictureArr: boolean[];
 
   constructor(
     private dialog: MatDialog,
@@ -30,6 +33,9 @@ export class PictureListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.doneLoadingPicture = false;
+    this.loadingGifUrl = 'assets/img/loading.gif';
+
     this.route.params.subscribe((params: Params) => {
       this.itemId = Number.parseInt(params['itemId']);
       this.userId = params['userId'];
@@ -50,8 +56,15 @@ export class PictureListComponent implements OnInit {
           return 0;
         });
         this.userPictureList = list;
-        console.log(this.userPictureList);
+        this.doneLoadingPictureArr = new Array(this.userPictureList.length);
+        this.doneLoadingPictureArr.fill(false);
+        // console.log(this.userPictureList);
       });
+  }
+
+  public onDoneLoadingPicture(i: number) {
+    // this.doneLoadingPicture = true;
+    this.doneLoadingPictureArr[i] = true;
   }
 
   public onPicSelect(picUrl: string) {
