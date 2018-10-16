@@ -39,6 +39,16 @@ export class PictureListComponent implements OnInit {
     this.superListSrvise
       .getUserItemsPictureList()
       .subscribe((list: ItemPicture[]) => {
+        list.sort((item1, item2) => {
+          if (item1.itemName < item2.itemName) {
+            return -1;
+          }
+          if (item1.itemName > item2.itemName) {
+            return 1;
+          }
+          // names must be equal
+          return 0;
+        });
         this.userPictureList = list;
         console.log(this.userPictureList);
       });

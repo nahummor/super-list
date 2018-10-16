@@ -1,9 +1,8 @@
 <div class="main-container">
-  <div *ngFor="let pic of userPictureList">
-
+  <div class="picture-card"
+       *ngFor="let pic of userPictureList">
+    <h3 class="picture-title">{{pic.itemName}}</h3>
     <img [src]="pic.picUrl"
-         width="320"
-         height="240"
          (click)="onPicSelect(pic.picUrl)"
          alt="no pic">
   </div>

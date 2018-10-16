@@ -2,14 +2,35 @@
 
 .main-container {
   height: 100%;
-  margin-top: 5rem;
+  @include user-background();
+  padding-top: 5rem;
+
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: space-around; // ציר ראשי
+  align-items: flex-start; // ציר חוצה
+  flex-wrap: wrap; // במקרה ואין מקום לכל האלמנטים בשורה
+  align-content: flex-start; // מיישר את האלמנטים על הציר החוצה כאשר יש יותר מ שורה אחת
+
+  .picture-card {
+    box-shadow: 7px 6px 13px 0px #a56262;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 0 0.2rem 0 0.2rem;
+
+    .picture-title {
+      text-align: center;
+      margin-top: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+  }
 
   img {
     cursor: pointer;
+    width: 160px;
+    height: 120px;
+    border-radius: 8px;
   }
 
   .floating-button {
