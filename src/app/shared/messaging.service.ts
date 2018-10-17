@@ -66,7 +66,7 @@ export class MessagingService {
   public getPermission() {
     this.afMessaging.requestToken.subscribe(
       token => {
-        console.log('Request token', token);
+        // console.log('Request token', token);
         this.updateToken(token);
       },
       error => {

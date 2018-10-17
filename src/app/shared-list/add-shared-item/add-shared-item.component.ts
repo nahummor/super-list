@@ -11,6 +11,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class AddSharedItemComponent implements OnInit {
   public addItemForm: FormGroup;
   public isDoneAddingItem: boolean;
+  public measureList: { id: string; name: string }[];
 
   constructor(
     public dialogRef: MatDialogRef<AddSharedItemComponent>,
@@ -26,7 +27,13 @@ export class AddSharedItemComponent implements OnInit {
       description: new FormControl('', Validators.required),
       amount: new FormControl('', Validators.required),
       cost: new FormControl(0),
-      done: new FormControl(false)
+      done: new FormControl(false),
+      measure: new FormControl('', Validators.required)
+    });
+
+    this.sharedListService.getMeasureList().subscribe(list => {
+      this.measureList = list;
+      // console.log('Measure list: ', this.measureList);
     });
   }
 

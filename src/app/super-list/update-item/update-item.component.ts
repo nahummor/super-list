@@ -12,6 +12,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class UpdateItemComponent implements OnInit {
   public updateItem: Item;
   public updateItemForm: FormGroup;
+  public measureList: { id: string; name: string }[];
 
   constructor(
     public dialogRef: MatDialogRef<UpdateItemComponent>,
@@ -21,6 +22,7 @@ export class UpdateItemComponent implements OnInit {
 
   ngOnInit() {
     this.updateItem = this.data.item;
+    // console.log('Item: ', this.updateItem);
     this.updateItemForm = new FormGroup({
       id: new FormControl(this.updateItem.id),
       name: new FormControl(this.updateItem.name, Validators.required),
@@ -29,7 +31,13 @@ export class UpdateItemComponent implements OnInit {
         Validators.required
       ),
       amount: new FormControl(this.updateItem.amount, Validators.required),
+      measure: new FormControl(this.updateItem.measure, Validators.required),
       cost: new FormControl(this.updateItem.cost, Validators.required)
+    });
+
+    this.superListSrvs.getMeasureList().subscribe(list => {
+      this.measureList = list;
+      // console.log('Measure list: ', this.measureList);
     });
   }
 
@@ -39,6 +47,7 @@ export class UpdateItemComponent implements OnInit {
       name: this.updateItemForm.value.name,
       description: this.updateItemForm.value.description,
       amount: this.updateItemForm.value.amount,
+      measure: this.updateItemForm.value.measure,
       cost: Number.parseFloat(this.updateItemForm.value.cost)
     };
 

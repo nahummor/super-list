@@ -28,6 +28,8 @@ export class ListItemComponent implements OnInit {
   @Input()
   cost: number;
   @Input()
+  measure: string;
+  @Input()
   done: boolean;
   @Input()
   opButton: boolean;
@@ -141,7 +143,8 @@ export class ListItemComponent implements OnInit {
       amount: this.amount,
       description: this.description,
       cost: this.cost,
-      done: this.done
+      done: this.done,
+      measure: this.measure
     };
 
     const dialogRef = this.dialog.open(UpdateItemComponent, {

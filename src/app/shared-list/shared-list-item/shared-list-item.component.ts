@@ -46,7 +46,7 @@ export class SharedListItemComponent implements OnInit {
           .then(payload => {
             payload.subscribe(data => {
               dialogRef1.close();
-              console.log('delete Item data: ', data);
+              // console.log('delete Item data: ', data);
               const snakBarRef = this.snackBar.openFromComponent(
                 SnackBarMsgComponent,
                 {
@@ -67,6 +67,7 @@ export class SharedListItemComponent implements OnInit {
       amount: this.item.amount,
       description: this.item.description,
       cost: this.item.cost,
+      measure: this.item.measure,
       done: false
     };
 

@@ -35,7 +35,7 @@ export class AddNewSharedListComponent implements OnInit {
   }
 
   public onAddNewList() {
-    console.log('add new list: ');
+    // console.log('add new list: ');
     this.isDoneAddingList = false;
     this.sharedListService
       .addNewSharedList(
@@ -46,7 +46,7 @@ export class AddNewSharedListComponent implements OnInit {
         payload.subscribe((data: SuperList) => {
           this.isDoneAddingList = true;
           this.dialogRef.close('add-new-shared-list');
-          console.log('add new shared list: ', data);
+          // console.log('add new shared list: ', data);
           this.router.navigate([
             'sharedList/listContainer',
             data.name,

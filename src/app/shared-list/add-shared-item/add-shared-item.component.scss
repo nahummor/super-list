@@ -16,6 +16,13 @@
     justify-content: center; // ציר ראשי
     align-items: center; // ציר חוצה
   }
+
+  .measure-amount {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
   // @media (min-width:900px) {
   //   width: 300px;
   // }

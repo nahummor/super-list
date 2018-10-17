@@ -42,7 +42,7 @@ export class UpdateSharedListDetailesComponent implements OnInit {
           this.dialogRef.close('update');
         },
         error => {
-          console.log(error);
+          console.error(error);
         }
       );
   }

@@ -14,6 +14,7 @@ export class UpdateSharedItemComponent implements OnInit {
   public updateItemForm: FormGroup;
   private listId: string;
   public isDoneUpdateItem: boolean;
+  public measureList: { id: string; name: string }[];
 
   constructor(
     public dialogRef: MatDialogRef<UpdateSharedItemComponent>,
@@ -34,8 +35,14 @@ export class UpdateSharedItemComponent implements OnInit {
         Validators.required
       ),
       amount: new FormControl(this.updateItem.amount, Validators.required),
+      measure: new FormControl(this.updateItem.measure, Validators.required),
       cost: new FormControl(this.updateItem.cost, Validators.required),
       done: new FormControl(false)
+    });
+
+    this.sharedListSrvs.getMeasureList().subscribe(list => {
+      this.measureList = list;
+      // console.log('Measure list: ', this.measureList);
     });
   }
 
@@ -43,17 +50,19 @@ export class UpdateSharedItemComponent implements OnInit {
     this.isDoneUpdateItem = false;
     const oldItem: Item = {
       id: this.data.item.id,
-      amount: Number.parseInt(this.data.item.amount),
-      cost: Number.parseInt(this.data.item.cost),
+      amount: Number.parseFloat(this.data.item.amount),
+      cost: Number.parseFloat(this.data.item.cost),
       description: this.data.item.description,
+      measure: this.updateItemForm.value.measure,
       done: false,
       name: this.data.item.name
     };
     const newItem: Item = {
       id: this.updateItemForm.value.id,
-      amount: Number.parseInt(this.updateItemForm.value.amount),
+      amount: Number.parseFloat(this.updateItemForm.value.amount),
       cost: Number.parseFloat(this.updateItemForm.value.cost),
       description: this.updateItemForm.value.description,
+      measure: this.updateItemForm.value.measure,
       done: this.updateItemForm.value.done,
       name: this.updateItemForm.value.name
     };
@@ -62,7 +71,7 @@ export class UpdateSharedItemComponent implements OnInit {
       .updateItem(this.listId, newItem, oldItem)
       .then(payload => {
         payload.subscribe(data => {
-          console.log('Update shared item: ', data);
+          // console.log('Update shared item: ', data);
           this.isDoneUpdateItem = true;
           this.dialogRef.close('update');
         });

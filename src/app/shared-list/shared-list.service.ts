@@ -26,6 +26,22 @@ export class SharedListService {
     });
   }
 
+  public getMeasureList(): Observable<{ id: string; name: string }[]> {
+    return this.db
+      .collection('measurements')
+      .get()
+      .pipe(
+        map(snapshot => {
+          return snapshot.docs.map(doc => {
+            return {
+              id: doc.id,
+              name: doc.data().name
+            };
+          });
+        })
+      );
+  }
+
   public addNewSharedList(
     name: string,
     description: string

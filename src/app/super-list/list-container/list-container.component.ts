@@ -53,7 +53,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
           this.superList.items.forEach(item => {
             this.updateItemIdArray.push(-1);
             // this.listSum = this.listSum + item.cost * item.amount;
-            this.listSum = this.listSum + item.cost;
+            this.listSum = this.listSum + item.cost * item.amount;
           });
         },
         error => {

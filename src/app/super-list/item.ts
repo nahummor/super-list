@@ -6,4 +6,5 @@ export interface Item {
   cost: number;
   done?: boolean;
   pictureUrl?: string;
+  measure?: string; // מידה
 }
