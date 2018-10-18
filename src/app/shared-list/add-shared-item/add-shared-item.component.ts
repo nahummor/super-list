@@ -1,7 +1,8 @@
 import { SharedListService } from './../shared-list.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
+import { ErrorMsgComponent } from '../../messages-box/error-msg/error-msg.component';
 
 @Component({
   selector: 'nm-add-shared-item',
@@ -14,6 +15,7 @@ export class AddSharedItemComponent implements OnInit {
   public measureList: { id: string; name: string }[];
 
   constructor(
+    private errSnackBar: MatSnackBar,
     public dialogRef: MatDialogRef<AddSharedItemComponent>,
     private sharedListService: SharedListService,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -42,10 +44,26 @@ export class AddSharedItemComponent implements OnInit {
     this.sharedListService
       .addItem(this.data.superList, this.addItemForm.value)
       .then(payload => {
-        payload.subscribe(data => {
-          this.isDoneAddingItem = true;
-          this.dialogRef.close('add item');
-        });
+        payload.subscribe(
+          data => {
+            this.isDoneAddingItem = true;
+            this.dialogRef.close('add item');
+          },
+          error => {
+            this.isDoneAddingItem = true;
+            const snackBarRef = this.errSnackBar.openFromComponent(
+              ErrorMsgComponent,
+              {
+                data: { message: 'פריט לא נקלט יש לקלוט שוב' },
+                duration: 4000,
+                verticalPosition: 'bottom',
+                horizontalPosition: 'center',
+                direction: 'rtl',
+                panelClass: ['my-snack-bar']
+              }
+            );
+          }
+        );
       });
   }
 
