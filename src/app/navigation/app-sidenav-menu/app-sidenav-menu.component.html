@@ -20,6 +20,12 @@
     <mat-icon>list</mat-icon>
     <span class="nav-caption">ניהול מאגר</span>
   </a>
+  <a mat-list-item
+     (click)="onToggleSidenav()"
+     routerLink="/about">
+    <mat-icon>contact_mail</mat-icon>
+    <span class="nav-caption">אודות</span>
+  </a>
   <mat-list-item>
     <button mat-icon-button
             *ngIf="isUserAuth()"

@@ -1,0 +1,32 @@
+@import '../shared/varibales';
+$card-color: #f1f4fd;
+
+.main-container {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; // ציר ראשי
+  align-items: center; // ציר חוצה
+
+  @include user-background();
+
+  .about-card {
+    margin-top: 2rem;
+    text-align: center;
+    background-color: $card-color;
+
+    h2 {
+      text-align: left;
+      text-decoration: underline;
+    }
+
+    .superlist-logo {
+      border-radius: 21px;
+      float: left;
+      margin-right: 0.8em;
+      margin-bottom: 0.5em;
+      shape-outside: circle();
+    }
+  }
+}

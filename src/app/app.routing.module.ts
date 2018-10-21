@@ -1,3 +1,4 @@
+import { AboutComponent } from './about/about.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
 import { CameraComponent } from './carera/camera.component';
 import { ShowSharedUserListComponent } from './super-list/show-shared-user-list/show-shared-user-list.component';
@@ -81,6 +82,11 @@ const routes: Routes = [
     path: 'pictureList/:itemId/:userId/:listId',
     canActivate: [AuthGuard],
     component: PictureListComponent
+  },
+  {
+    path: 'about',
+    canActivate: [AuthGuard],
+    component: AboutComponent
   }
 
   // { path: 'path/:routeParam', component: MyComponent },

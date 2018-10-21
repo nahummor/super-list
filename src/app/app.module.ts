@@ -33,6 +33,7 @@ import { ShowSharedUserListConComponent } from './super-list/show-shared-user-li
 import { CameraComponent } from './carera/camera.component';
 import { ShowBigPictureComponent } from './show-big-picture/show-big-picture.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { PictureListComponent } from './picture-list/picture-list.component';
     ShowSharedUserListConComponent,
     CameraComponent,
     ShowBigPictureComponent,
-    PictureListComponent
+    PictureListComponent,
+    AboutComponent
   ],
   imports: [
     AppRoutingModule,
