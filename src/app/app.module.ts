@@ -34,6 +34,7 @@ import { CameraComponent } from './carera/camera.component';
 import { ShowBigPictureComponent } from './show-big-picture/show-big-picture.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
 import { AboutComponent } from './about/about.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AboutComponent } from './about/about.component';
     CameraComponent,
     ShowBigPictureComponent,
     PictureListComponent,
-    AboutComponent
+    AboutComponent,
+    PrivacyComponent
   ],
   imports: [
     AppRoutingModule,

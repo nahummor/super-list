@@ -1,0 +1,11 @@
+@import '../shared/varibales';
+$card-color: #f1f4fd;
+
+.main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; // ציר ראשי
+    align-items: center; // ציר חוצה
+    @include user-background();
+}

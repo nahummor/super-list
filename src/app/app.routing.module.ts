@@ -1,3 +1,4 @@
+import { PrivacyComponent } from './privacy/privacy.component';
 import { AboutComponent } from './about/about.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
 import { CameraComponent } from './carera/camera.component';
@@ -87,6 +88,10 @@ const routes: Routes = [
     path: 'about',
     canActivate: [AuthGuard],
     component: AboutComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
   }
 
   // { path: 'path/:routeParam', component: MyComponent },
