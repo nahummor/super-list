@@ -8,6 +8,9 @@
     // margin-bottom: 30vh;
     @include flex-column-center();
     height: 10%;
+    h2 {
+      text-shadow: 2px 2px 7px rgb(185, 180, 180);
+    }
   }
 
   .nav-button {

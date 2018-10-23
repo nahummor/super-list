@@ -19,6 +19,7 @@ $card-color: #f1f4fd;
     h2 {
       text-align: left;
       text-decoration: underline;
+      text-shadow: 2px 2px 7px rgb(185, 180, 180);
     }
 
     .superlist-logo {
@@ -27,6 +28,10 @@ $card-color: #f1f4fd;
       margin-right: 0.8em;
       margin-bottom: 0.5em;
       shape-outside: circle();
+    }
+
+    .privacy-link {
+      font-size: 0.6rem;
     }
   }
 }

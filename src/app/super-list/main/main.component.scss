@@ -5,6 +5,9 @@
   @include user-background();
 
   .main-header {
+    h2 {
+      text-shadow: 2px 2px 7px rgb(185, 180, 180);
+    }
     @include flex-column-center();
     height: 10%;
     @media only screen and (min-device-width: $xs-screen-size) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
