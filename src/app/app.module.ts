@@ -35,6 +35,8 @@ import { ShowBigPictureComponent } from './show-big-picture/show-big-picture.com
 import { PictureListComponent } from './picture-list/picture-list.component';
 import { AboutComponent } from './about/about.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { AddItemFromListComponent } from './super-list/add-item-from-list/add-item-from-list.component';
+import { ItemFilterPipe } from './super-list/add-item-from-list/item-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { PrivacyComponent } from './privacy/privacy.component';
     ShowBigPictureComponent,
     PictureListComponent,
     AboutComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    AddItemFromListComponent,
+    ItemFilterPipe
   ],
   imports: [
     AppRoutingModule,

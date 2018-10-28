@@ -24,6 +24,8 @@ export class SharedListService {
     this.afAuth.auth.currentUser.getIdToken(false).then(token => {
       this.token = token;
     });
+
+    this.getAllSharedItems();
   }
 
   public getMeasureList(): Observable<{ id: string; name: string }[]> {
@@ -130,6 +132,35 @@ export class SharedListService {
               ...list.payload.doc.data()
             };
           });
+        })
+      );
+  }
+
+  // return items list from all shared lists
+  public getAllSharedItems(): Observable<Item[]> {
+    const sharedItems: Item[] = [];
+
+    return this.db
+      .collection('shared-list')
+      .get()
+      .pipe(
+        map(listArray => {
+          return listArray.docs.map(doc => {
+            return {
+              id: doc.id,
+              name: doc.data().name,
+              description: doc.data().description,
+              items: doc.data().items
+            };
+          });
+        }),
+        map(lists => {
+          lists.forEach(list => {
+            list.items.forEach(item => {
+              sharedItems.push(item);
+            });
+          });
+          return sharedItems;
         })
       );
   }

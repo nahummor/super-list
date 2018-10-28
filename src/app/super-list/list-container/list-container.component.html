@@ -17,7 +17,7 @@
 
   <div class="floating-button">
     <button mat-fab
-            matTooltip="פריט חדש"
+            matTooltip="הוספת פריט חדש"
             matTooltipPosition="above"
             color="primary"
             (click)="addItem()"
@@ -26,6 +26,13 @@
             matBadgeSize="medium"
             matBadgeColor="accent">
       <mat-icon>add</mat-icon>
+    </button>
+    <button mat-fab
+            matTooltip="הוספת פריט מרשימה"
+            matTooltipPosition="above"
+            color="primary"
+            (click)="addItemFromList()">
+      <mat-icon>playlist_add</mat-icon>
     </button>
     <button mat-fab
             matTooltip="איפוס כל הפריטים"

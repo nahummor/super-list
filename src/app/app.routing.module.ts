@@ -1,3 +1,4 @@
+import { AddItemFromListComponent } from './super-list/add-item-from-list/add-item-from-list.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { AboutComponent } from './about/about.component';
 import { PictureListComponent } from './picture-list/picture-list.component';
@@ -92,6 +93,11 @@ const routes: Routes = [
   {
     path: 'privacy',
     component: PrivacyComponent
+  },
+  {
+    path: 'addItemFromList',
+    canActivate: [AuthGuard],
+    component: AddItemFromListComponent
   }
 
   // { path: 'path/:routeParam', component: MyComponent },

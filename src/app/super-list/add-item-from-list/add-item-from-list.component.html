@@ -1,0 +1,37 @@
+<div class="main-container">
+  <mat-card class="serch-card">
+    <mat-form-field class="serch-field">
+      <input matInput
+             [(ngModel)]="filterTxt"
+             placeholder="חיפוש">
+    </mat-form-field>
+  </mat-card>
+
+  <cdk-virtual-scroll-viewport itemSize="50"
+                               class="example-viewport">
+
+    <mat-card class="item-card"
+              *cdkVirtualFor="let item of items | itemFilter:filterTxt">
+      <div class="card-title">
+        <div class="title-content">
+          <b> {{item.name}}</b>
+        </div>
+      </div>
+      <mat-card-content class="content">
+        <p class="description">{{item.description}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="card-action-button">
+          <button mat-mini-fab
+                  matTooltip="שינוי פריט"
+                  matTooltipPosition="above"
+                  (click)="addItem()"
+                  color="primary">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+  </cdk-virtual-scroll-viewport>
+</div>

@@ -121,4 +121,8 @@ export class ListContainerComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  public addItemFromList() {
+    this.router.navigate(['addItemFromList']);
+  }
 }

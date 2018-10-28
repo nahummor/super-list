@@ -17,6 +17,7 @@ import {
   MatChipsModule,
   MatProgressBarModule
 } from '@angular/material';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import {
     MatSnackBarModule,
     MatBadgeModule,
     MatChipsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ScrollDispatchModule
   ],
   exports: [
     MatButtonModule,
@@ -53,7 +55,8 @@ import {
     MatSnackBarModule,
     MatBadgeModule,
     MatChipsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ScrollDispatchModule
   ]
 })
 export class MaterialModule {}

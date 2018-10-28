@@ -1,0 +1,94 @@
+@import '../../shared/varibales';
+
+.main-container {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; // ציר ראשי
+  align-items: center; // ציר חוצה
+
+  @include user-background();
+
+  .serch-card {
+    margin-top: 2rem;
+    text-align: right;
+    width: 85vw;
+
+    @media (min-width: 700px) {
+      width: 60vw;
+    }
+    @media (min-width: 1000px) {
+      width: 40vw;
+    }
+
+    .serch-field {
+      width: 100%;
+      text-align: right;
+    }
+  }
+
+  .item-card {
+    width: 85vw;
+
+    @media (min-width: 700px) {
+      width: 58vw;
+    }
+    @media (min-width: 1000px) {
+      width: 38vw;
+    }
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background-color: #f3f6f8;
+    padding: 0 0 1.5rem 0;
+
+    .card-title {
+      // background-color: #5ba4e5;
+      padding: 0.8rem;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end; // ציר ראשי
+      align-items: flex-start; // ציר חוצה
+      width: 100%;
+    }
+
+    .content {
+      font-size: 1.2rem;
+      margin-right: 0.8rem;
+    }
+  }
+
+  .example-viewport {
+    margin-top: 0.5rem;
+    text-align: right;
+    height: 80vh;
+    width: 85vw;
+
+    @media (min-width: 700px) {
+      width: 60vw;
+    }
+    @media (min-width: 1000px) {
+      width: 40vw;
+    }
+  }
+
+  .example-item {
+    height: 50px;
+  }
+
+  .card-action-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 0.4rem;
+
+    @media (min-width: $xs-screen-size) {
+      padding-left: 0.8rem;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  }
+}
