@@ -10,6 +10,13 @@
 
   @include user-background();
 
+  .load-items-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
+  }
+
   .serch-card {
     margin-top: 2rem;
     text-align: right;
@@ -25,6 +32,12 @@
     .serch-field {
       width: 100%;
       text-align: right;
+    }
+  }
+
+  .item-card-no-scrol {
+    @media (min-width: 1000px) {
+      width: 40vw !important;
     }
   }
 

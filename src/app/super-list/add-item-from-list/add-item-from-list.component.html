@@ -7,11 +7,19 @@
     </mat-form-field>
   </mat-card>
 
+  <div class="load-items-spinner"
+       *ngIf="!isDoneLoadingItems">
+    <h3>טוען נתונים ...</h3>
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+
   <cdk-virtual-scroll-viewport itemSize="50"
+                               *ngIf="isDoneLoadingItems"
                                class="example-viewport">
 
     <mat-card class="item-card"
-              *cdkVirtualFor="let item of items | itemFilter:filterTxt">
+              [ngClass]="{'item-card-no-scrol' : count < 5}"
+              *cdkVirtualFor="let item of items | itemFilter:filterTxt ; let count = count">
       <div class="card-title">
         <div class="title-content">
           <b> {{item.name}}</b>

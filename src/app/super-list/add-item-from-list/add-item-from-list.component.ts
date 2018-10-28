@@ -10,10 +10,12 @@ import { Item } from '../item';
 export class AddItemFromListComponent implements OnInit {
   public items: Item[];
   public filterTxt: string;
+  public isDoneLoadingItems: boolean;
 
   constructor(private sharedListService: SharedListService) {}
 
   ngOnInit() {
+    this.isDoneLoadingItems = false;
     this.sharedListService.getAllSharedItems().subscribe(items => {
       this.items = items;
       this.items.sort((i1: Item, i2: Item) => {
@@ -22,6 +24,8 @@ export class AddItemFromListComponent implements OnInit {
         }
         return -1;
       });
+      this.isDoneLoadingItems = true;
+      this.filterTxt = '';
     });
   }
 
