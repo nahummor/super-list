@@ -511,55 +511,110 @@ exports.addSharedItem = functions.https.onRequest((request, response) => {
 
 exports.addItem = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    const uid = request.body.uid;
-    const superList = request.body.superList;
-    const newItem = request.body.newItem;
     const token = request.body.token;
+    const uid = request.body.uid;
+    const superListId = request.body.superListId;
+    const newItem = request.body.newItem;
+    let listItems = new Array();
 
     admin
       .auth()
       .verifyIdToken(token)
       .then(decodedIdToken => {
-        // set item id
-        if (superList.items.length > 0) {
-          let index = superList.items.length - 1;
-          newItem.id = superList.items[index].id + 1;
-        } else {
-          newItem.id = 0;
-        }
-        // newItem.id = superList.items.length;
-        superList.items.push(newItem);
-
+        // get list items
         db.collection('super-list')
           .doc(uid)
-          .collection('user-list', ref => {
-            return ref.where('name', '==', superList.name);
-          })
-          .doc(superList.id)
-          .update({ items: superList.items })
-          .then(
-            () => {
-              response.status(200).json({
-                message: 'פריט חדש נקלט בהצלחה',
-                superList: superList
-              });
-            },
-            error => {
-              response.status(401).json({
-                title: 'Error',
-                message: 'Error Add new Item',
-                error: error
-              });
+          .collection('user-list')
+          .doc(superListId)
+          .get()
+          .then(doc => {
+            listItems = doc.data().items;
+            // set new item id
+            if (listItems.length > 0) {
+              let index = listItems.length - 1;
+              newItem.id = listItems[index].id + 1;
+            } else {
+              newItem.id = 0;
             }
-          );
-      })
-      .catch(error => {
-        response
-          .status(403)
-          .json({ errorMsg: 'Unauthorized user', error: error });
+            // add new item to items array
+            db.collection('super-list')
+              .doc(uid)
+              .collection('user-list')
+              .doc(superListId)
+              .update({
+                items: admin.firestore.FieldValue.arrayUnion(newItem)
+              })
+              .then(
+                () => {
+                  response.status(200).json({
+                    message: 'פריט חדש נקלט בהצלחה',
+                    newItem: newItem
+                  });
+                },
+                error => {
+                  response.status(401).json({
+                    title: 'Error',
+                    message: 'Error Add new Item',
+                    error: error
+                  });
+                }
+              );
+          });
       });
   });
 });
+
+// exports.addItem_old = functions.https.onRequest((request, response) => {
+//   cors(request, response, () => {
+//     const uid = request.body.uid;
+//     const superList = request.body.superList;
+//     const newItem = request.body.newItem;
+//     const token = request.body.token;
+
+//     admin
+//       .auth()
+//       .verifyIdToken(token)
+//       .then(decodedIdToken => {
+//         // set new item id
+//         if (superList.items.length > 0) {
+//           let index = superList.items.length - 1;
+//           newItem.id = superList.items[index].id + 1;
+//         } else {
+//           newItem.id = 0;
+//         }
+//         // newItem.id = superList.items.length;
+//         superList.items.push(newItem);
+
+//         db.collection('super-list')
+//           .doc(uid)
+//           .collection('user-list', ref => {
+//             return ref.where('name', '==', superList.name);
+//           })
+//           .doc(superList.id)
+//           .update({ items: superList.items })
+//           .then(
+//             () => {
+//               response.status(200).json({
+//                 message: 'פריט חדש נקלט בהצלחה',
+//                 superList: superList
+//               });
+//             },
+//             error => {
+//               response.status(401).json({
+//                 title: 'Error',
+//                 message: 'Error Add new Item',
+//                 error: error
+//               });
+//             }
+//           );
+//       })
+//       .catch(error => {
+//         response
+//           .status(403)
+//           .json({ errorMsg: 'Unauthorized user', error: error });
+//       });
+//   });
+// });
 
 exports.updateSharedItem = functions.https.onRequest((request, response) => {
   cors(request, response, () => {

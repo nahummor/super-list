@@ -104,4 +104,25 @@
       margin-left: 10px;
     }
   }
+
+  .floating-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 6.5rem;
+    z-index: 1000;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 0.5rem;
+
+    @media (min-width: $xs-screen-size) {
+      margin-right: 3rem;
+    }
+
+    @media only screen and (min-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      margin-right: 0.5rem;
+    }
+  }
 }

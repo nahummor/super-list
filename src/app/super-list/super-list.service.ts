@@ -412,7 +412,7 @@ export class SuperListService {
             {
               token: this.token,
               uid: this.uid,
-              superList: superList,
+              superListId: superList.id,
               newItem: item
             },
             { headers: jsonHeaders }
@@ -423,25 +423,6 @@ export class SuperListService {
             })
           );
       });
-
-    // item.id = superList.items.length;
-    // superList.items.push(item);
-    // this.db
-    //   .collection('super-list')
-    //   .doc(this.uid)
-    //   .collection('user-list', ref => {
-    //     return ref.where('name', '==', superList.name);
-    //   })
-    //   .doc(superList.id)
-    //   .update({ items: superList.items })
-    //   .then(
-    //     () => {
-    //       console.log('Add new item ');
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     }
-    //   );
   }
 
   public getItemsList(listName: string, listId: string): Observable<any> {
