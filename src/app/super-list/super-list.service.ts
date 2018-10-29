@@ -141,6 +141,10 @@ export class SuperListService {
     this.superList = list;
   }
 
+  public getSuperList(): SuperList {
+    return this.superList;
+  }
+
   public setSharedList(list: SuperList) {
     this.sharedList = list;
   }

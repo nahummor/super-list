@@ -1,3 +1,4 @@
+import { SuperListService } from './../super-list.service';
 import { SharedListService } from './../../shared-list/shared-list.service';
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../item';
@@ -12,7 +13,10 @@ export class AddItemFromListComponent implements OnInit {
   public filterTxt: string;
   public isDoneLoadingItems: boolean;
 
-  constructor(private sharedListService: SharedListService) {}
+  constructor(
+    private sharedListService: SharedListService,
+    private superListService: SuperListService
+  ) {}
 
   ngOnInit() {
     this.isDoneLoadingItems = false;
@@ -29,7 +33,13 @@ export class AddItemFromListComponent implements OnInit {
     });
   }
 
-  public addItem() {
-    console.log('Add item');
+  public addItem(item: Item) {
+    this.superListService
+      .addItem(this.superListService.getSuperList(), item)
+      .then(payload => {
+        payload.subscribe(data => {
+          console.log('Add item: ', item);
+        });
+      });
   }
 }
