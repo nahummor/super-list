@@ -16,38 +16,47 @@
                 [pictureUrl]="item.pictureUrl"></nm-list-item>
 
   <div class="floating-button">
+
     <button mat-fab
-            matTooltip="הוספת פריט חדש"
-            matTooltipPosition="above"
-            color="primary"
-            (click)="addItem()"
             [matBadge]="itemNotSelected"
             matBadgePosition="before"
             matBadgeSize="medium"
-            matBadgeColor="accent">
-      <mat-icon>add</mat-icon>
-    </button>
-    <button mat-fab
-            matTooltip="הוספת פריט מרשימה"
-            matTooltipPosition="above"
+            matBadgeColor="accent"
             color="primary"
-            (click)="addItemFromList()">
-      <mat-icon>playlist_add</mat-icon>
+            [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button mat-fab
-            matTooltip="איפוס כל הפריטים"
-            matTooltipPosition="above"
-            color="primary"
-            (click)="resetAllItems()">
-      <mat-icon>check_box_outline_blank</mat-icon>
-    </button>
-    <button mat-fab
-            matTooltip="רשימת פריטים"
-            matTooltipPosition="above"
-            color="primary"
-            (click)="goToList()">
-      <mat-icon>list</mat-icon>
-    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+              matTooltip="הוספת פריט חדש"
+              matTooltipPosition="above"
+              (click)="addItem()">
+        <mat-icon>add</mat-icon>
+        <span>הוספה</span>
+      </button>
+      <button mat-menu-item
+              matTooltip="הוספת פריט מרשימה"
+              matTooltipPosition="above"
+              (click)="addItemFromList()">
+        <mat-icon>playlist_add</mat-icon>
+        <span>בחירה</span>
+      </button>
+      <button mat-menu-item
+              matTooltip="איפוס כל הפריטים"
+              matTooltipPosition="above"
+              (click)="resetAllItems()">
+        <mat-icon>check_box_outline_blank</mat-icon>
+        <span>איפוס</span>
+      </button>
+      <button mat-menu-item
+              matTooltip="חזרה"
+              matTooltipPosition="above"
+              (click)="goToList()">
+        <mat-icon>arrow_back</mat-icon>
+        <span>חזרה</span>
+      </button>
+    </mat-menu>
+
   </div>
   <div class="floating-sum">
     <mat-chip-list>

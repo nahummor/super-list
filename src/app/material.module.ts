@@ -15,7 +15,8 @@ import {
   MatSnackBarModule,
   MatBadgeModule,
   MatChipsModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatMenuModule
 } from '@angular/material';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
@@ -37,7 +38,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     MatBadgeModule,
     MatChipsModule,
     MatProgressBarModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    MatMenuModule
   ],
   exports: [
     MatButtonModule,
@@ -56,7 +58,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     MatBadgeModule,
     MatChipsModule,
     MatProgressBarModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule {}

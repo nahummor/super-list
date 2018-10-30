@@ -19,6 +19,39 @@
 
   <div class="floating-button">
     <button mat-fab
+            [matBadge]="itemNotSelected"
+            matBadgePosition="before"
+            matBadgeSize="medium"
+            matBadgeColor="accent"
+            color="primary"
+            [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+              matTooltip="הוספת פריט חדש"
+              matTooltipPosition="above"
+              (click)="addItem()">
+        <mat-icon>add</mat-icon>
+        <span>הוספה</span>
+      </button>
+      <button mat-menu-item
+              matTooltip="איפוס כל הפריטים"
+              matTooltipPosition="above"
+              (click)="resetListItems()">
+        <mat-icon>check_box_outline_blank</mat-icon>
+        <span>איפוס</span>
+      </button>
+      <button mat-menu-item
+              matTooltip="חזרה"
+              matTooltipPosition="above"
+              (click)="goToList()">
+        <mat-icon>arrow_back</mat-icon>
+        <span>חזרה</span>
+      </button>
+    </mat-menu>
+
+    <!-- <button mat-fab
             matTooltip="פריט חדש"
             matTooltipPosition="above"
             color="primary"
@@ -28,21 +61,21 @@
             matBadgeSize="medium"
             matBadgeColor="accent">
       <mat-icon>add</mat-icon>
-    </button>
-    <button mat-fab
+    </button> -->
+    <!-- <button mat-fab
             matTooltip="איפוס כל הפריטים"
             matTooltipPosition="above"
             color="primary"
             (click)="resetListItems()">
       <mat-icon>check_box_outline_blank</mat-icon>
-    </button>
-    <button mat-fab
+    </button> -->
+    <!-- <button mat-fab
             matTooltip="רשימת פריטים"
             matTooltipPosition="above"
             color="primary"
             (click)="goToList()">
       <mat-icon>list</mat-icon>
-    </button>
+    </button> -->
   </div>
   <div class="floating-sum">
     <mat-chip-list>
