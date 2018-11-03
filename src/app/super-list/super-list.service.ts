@@ -1,16 +1,12 @@
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { SppinerMsgBoxComponent } from './../messages-box/sppiner-msg-box/sppiner-msg-box.component';
-import { OkMsgComponent } from './../messages-box/ok-msg/ok-msg.component';
-import { Item } from './item';
+import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, take, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
-import { AuthService } from './../auth/auth.service';
-import { SuperList } from './super-list';
-import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { log } from 'util';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+import { Item } from './item';
+import { SuperList } from './super-list';
 
 export interface ItemUpdate {
   itemUpdateId: string;
@@ -24,6 +20,7 @@ export interface ItemUpdate {
   providedIn: 'root'
 })
 export class SuperListService {
+  public showAdminMessages: boolean;
   private superList: SuperList;
   private sharedList: SuperList;
   private uid: string;
@@ -36,9 +33,9 @@ export class SuperListService {
   constructor(
     private httpClient: HttpClient,
     private db: AngularFirestore,
-    private dialog: MatDialog,
     private afAuth: AngularFireAuth
   ) {
+    this.showAdminMessages = true;
     this.uid = this.afAuth.auth.currentUser.uid;
     // this.userUpdateItem = false;
     // this.getItemUpdate();
@@ -65,57 +62,6 @@ export class SuperListService {
     this.uid = this.afAuth.auth.currentUser.uid;
     this.superList = null; // איפוס רשימה לאחר החלפת משתמש
   }
-
-  // public getItemUpdate() {
-  //   this.itemUpdateSub = this.db
-  //     .collection('super-list')
-  //     .doc(this.uid)
-  //     .collection('item-update')
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map(docArray => {
-  //         return docArray.map(doc => {
-  //           this.itemUpdate = {
-  //             itemUpdateId: doc.payload.doc.id,
-  //             itemId: doc.payload.doc.data().itemId,
-  //             itemName: doc.payload.doc.data().itemName,
-  //             listName: doc.payload.doc.data().listName,
-  //             uid: doc.payload.doc.data().uid
-  //           };
-  //           return this.itemUpdate;
-  //         });
-  //       })
-  //     )
-  //     .subscribe(
-  //       data => {
-  //         if (!this.getUserUpdateItem()) {
-  //           if (data.length > 0) {
-  //             if (data[0].itemId > -1) {
-  //               this.userUpdateItemEvent.emit(data[0]);
-  //               const dialogRef = this.dialog.open(OkMsgComponent, {
-  //                 width: '25rem',
-  //                 data: {
-  //                   message: `ברשימה ${data[0].listName} עודכן הפריט ${
-  //                     data[0].itemName
-  //                   }`
-  //                 }
-  //               });
-  //               dialogRef.afterClosed().subscribe(result => {
-  //                 console.log('ans: ', result);
-  //                 this.setUserUpdateItem(false);
-  //                 this.setItemUpdate(-1, '', '', '');
-  //               });
-  //             }
-  //           }
-  //         } else {
-  //           this.setUserUpdateItem(false);
-  //         }
-  //       },
-  //       error => {
-  //         this.itemUpdateSub.unsubscribe();
-  //       }
-  //     );
-  // }
 
   // set the item was updated
   private setItemUpdate(
@@ -258,45 +204,6 @@ export class SuperListService {
             })
           );
       });
-
-    // return this.httpClient
-    //   .post(
-    //     'https://us-central1-superlist-80690.cloudfunctions.net/addNewList',
-    //     {
-    //       token: this.token,
-    //       uid: this.uid,
-    //       name: name,
-    //       description: description
-    //     },
-    //     { headers: jsonHeaders }
-    //   )
-    //   .pipe(
-    //     map((data: { message: string; superList: SuperList }) => {
-    //       console.log('new list add: ', data);
-    //       return {
-    //         id: data.superList.id,
-    //         name: data.superList.name,
-    //         description: data.superList.description,
-    //         items: data.superList.items
-    //       };
-    //     })
-    //   );
-
-    // return this.db
-    //   .collection('super-list')
-    //   .doc(this.uid)
-    //   .collection('user-list')
-    //   .add({ name: name, description: description, items: [] })
-    //   .then(data => {
-    //     if (!this.superList) {
-    //       this.db
-    //         .collection('super-list')
-    //         .doc(this.uid)
-    //         .collection('item-update')
-    //         .add({ itemName: '', listName: '' });
-    //     }
-    //     return { name: name, description: description, items: [] };
-    //   });
   }
 
   public getUserListsByUserId(userId: string) {

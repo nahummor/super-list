@@ -1,8 +1,14 @@
+import { MessageComponent } from './../../admin-messages/message/message.component';
 import { SnackBarMsgComponent } from './../../messages-box/snack-bar-msg/snack-bar-msg.component';
 import { AddNewListComponent } from './../add-new-list/add-new-list.component';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  AfterViewChecked
+} from '@angular/core';
 import { SuperListService } from '../super-list.service';
 
 @Component({
@@ -20,6 +26,15 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.superListSrvice.setUserId();
+
+    if (this.superListSrvice.showAdminMessages) {
+      setTimeout(() => {
+        const dialogRef1 = this.dialog.open(MessageComponent, {
+          width: '25rem'
+        });
+        this.superListSrvice.showAdminMessages = false;
+      }, 10);
+    }
   }
 
   public onAddNewList() {

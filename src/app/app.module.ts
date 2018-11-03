@@ -37,6 +37,7 @@ import { AboutComponent } from './about/about.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { AddItemFromListComponent } from './super-list/add-item-from-list/add-item-from-list.component';
 import { ItemFilterPipe } from './super-list/add-item-from-list/item-filter.pipe';
+import { MessageComponent } from './admin-messages/message/message.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { ItemFilterPipe } from './super-list/add-item-from-list/item-filter.pipe
     AboutComponent,
     PrivacyComponent,
     AddItemFromListComponent,
-    ItemFilterPipe
+    ItemFilterPipe,
+    MessageComponent
   ],
   imports: [
     AppRoutingModule,
@@ -90,7 +92,8 @@ import { ItemFilterPipe } from './super-list/add-item-from-list/item-filter.pipe
     UpdateItemComponent,
     UpdateListDetailesComponent,
     YesNoMsgComponent,
-    ShowBigPictureComponent
+    ShowBigPictureComponent,
+    MessageComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
