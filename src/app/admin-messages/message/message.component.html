@@ -1,7 +1,20 @@
 <div class="main-container">
-  <h3 class="title">הודעות מערכת</h3>
-  <div class="list-messages"
-       *ngFor="let message of messages">
-    <p>{{ message.message }}</p>
+  <div *ngIf="isDoneLoadingMessages">
+    <h3 class="title">הודעות מערכת</h3>
+    <div class="list-messages"
+         *ngFor="let message of messages">
+      <p>{{ message.message }}</p>
+    </div>
+    <div class="op-button">
+      <button mat-raised-button
+              (click)="onClose()"
+              color="primary">סגירה</button>
+    </div>
+  </div>
+
+  <div class="loading-messages-spinner"
+       *ngIf="!isDoneLoadingMessages">
+    <h3>טוען הודעות</h3>
+    <mat-spinner [diameter]="50"></mat-spinner>
   </div>
 </div>

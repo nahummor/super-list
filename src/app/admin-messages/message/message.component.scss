@@ -3,8 +3,20 @@
 
   .title {
     text-align: center;
+    text-shadow: 2px 2px 7px rgb(185, 180, 180);
   }
   .list-messages {
     text-align: right;
+  }
+
+  .op-button {
+    text-align: left;
+  }
+
+  .loading-messages-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // ציר ראשי
+    align-items: center; // ציר חוצה
   }
 }
