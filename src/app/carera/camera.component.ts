@@ -152,7 +152,7 @@ export class CameraComponent implements OnInit, OnDestroy {
     });
 
     task.percentageChanges().subscribe(p => {
-      console.log('Uploading: ', p);
+      // console.log('Uploading: ', p);
       this.progressBarValue = p;
     });
   }

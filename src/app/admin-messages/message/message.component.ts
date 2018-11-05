@@ -19,7 +19,7 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
     this.isDoneLoadingMessages = false;
     this.msgService.getMessagesList().subscribe(messages => {
-      console.log(messages);
+      // console.log(messages);
       this.messages = messages;
       this.isDoneLoadingMessages = true;
     });

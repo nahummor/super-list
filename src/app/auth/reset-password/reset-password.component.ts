@@ -19,13 +19,13 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   public onResetPassword() {
-    console.log('User Email: ', this.resetPasswordForm.value);
+    // console.log('User Email: ', this.resetPasswordForm.value);
 
     this.authService
       .resetUserPasswordByEmail(this.resetPasswordForm.value.userName)
       .then(
         () => {
-          console.log('Send Password reset email....');
+          // console.log('Send Password reset email....');
         },
         error => {
           console.log('Error Reset Password: ', error);

@@ -26,18 +26,16 @@
     <mat-icon>contact_mail</mat-icon>
     <span class="nav-caption">אודות</span>
   </a>
-  <mat-list-item>
-    <button mat-icon-button
-            *ngIf="isUserAuth()"
-            (click)="onExit()">
-      <mat-icon>eject</mat-icon>
-      <span class="nav-caption">יציאה</span>
-    </button>
-    <button mat-icon-button
-            *ngIf="!isUserAuth()"
-            (click)="onLogin()">
-      <mat-icon>eject</mat-icon>
-      <span class="nav-caption">כניסה</span>
-    </button>
-  </mat-list-item>
+  <button mat-button
+          *ngIf="isUserAuth()"
+          (click)="onExit()">
+    <mat-icon>eject</mat-icon>
+    <span class="nav-caption">יציאה</span>
+  </button>
+  <button mat-button
+          *ngIf="!isUserAuth()"
+          (click)="onLogin()">
+    <mat-icon>eject</mat-icon>
+    <span class="nav-caption">כניסה</span>
+  </button>
 </mat-nav-list>

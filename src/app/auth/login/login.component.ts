@@ -63,11 +63,11 @@ export class LoginComponent implements OnInit {
           );
 
           snackBarRef.afterDismissed().subscribe(() => {
-            console.log('snack bar close');
+            // console.log('snack bar close');
           });
 
           snackBarRef.onAction().subscribe(() => {
-            console.log('snack bar close with action');
+            // console.log('snack bar close with action');
           });
         } else {
           console.log(error);

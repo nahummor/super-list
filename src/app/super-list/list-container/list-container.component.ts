@@ -57,7 +57,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
           });
         },
         error => {
-          console.log(error);
+          console.log('list-container: ', error);
         }
       );
 
@@ -109,7 +109,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('resuls: ', result);
+      // console.log('resuls: ', result);
       if (result === 'add item') {
         const snakBarRef = this.snackBar.openFromComponent(
           SnackBarMsgComponent,
