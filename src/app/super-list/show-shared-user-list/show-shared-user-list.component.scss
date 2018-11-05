@@ -12,13 +12,16 @@
   mat-card {
     margin-bottom: 0.5rem;
     width: 80vw;
+    @media (min-width: 900px) {
+      width: 40vw;
+    }
+    @media (min-width: 1200px) {
+      width: 30vw;
+    }
+
     border-radius: 8px;
     background-color: #f3f6f8;
     padding: 0 0 1.5rem 0;
-
-    @media (min-width: 900px) {
-      width: 50vw;
-    }
 
     mat-card-content {
       direction: rtl;
