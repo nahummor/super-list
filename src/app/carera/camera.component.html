@@ -11,8 +11,10 @@
             id="canvas"
             #canvasElement
             [style.display]="displayCanvas"></canvas>
-    <p *ngIf="startLoadingPic">מעלה תמונה</p>
-    <p *ngIf="doneLoadingPic">תמונה נטענה</p>
+    <p *ngIf="startLoadingPic"
+       class="upload-msg">מעלה תמונה</p>
+    <p *ngIf="doneLoadingPic"
+       class="upload-msg">תמונה נטענה</p>
     <mat-progress-bar class="picture-progress-bar"
                       mode="determinate"
                       [value]="progressBarValue"></mat-progress-bar>
