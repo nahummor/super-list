@@ -26,10 +26,7 @@ export class UpdateItemComponent implements OnInit {
     this.updateItemForm = new FormGroup({
       id: new FormControl(this.updateItem.id),
       name: new FormControl(this.updateItem.name, Validators.required),
-      description: new FormControl(
-        this.updateItem.description,
-        Validators.required
-      ),
+      description: new FormControl(this.updateItem.description),
       amount: new FormControl(this.updateItem.amount, Validators.required),
       measure: new FormControl(this.updateItem.measure, Validators.required),
       cost: new FormControl(this.updateItem.cost, Validators.required)
