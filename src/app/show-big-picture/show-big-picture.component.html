@@ -3,6 +3,13 @@
     {{itemName}}
   </h3>
   <img [src]="imgUrl"
+       class="item-image-hide"
+       [ngClass]="{'item-image-show': doneLoadingPicture}"
+       (load)="onDoneLoadingPicture()"
+       alt="no pic">
+  <img class="loading-gif"
+       *ngIf="!doneLoadingPicture"
+       [src]="loadingGifUrl"
        alt="no pic">
   <button mat-raised-button
           class="close-button"

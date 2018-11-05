@@ -37,7 +37,7 @@ export class PictureListComponent implements OnInit {
     this.loadingGifUrl = 'assets/img/loading.gif';
 
     this.route.params.subscribe((params: Params) => {
-      this.itemId = Number.parseInt(params['itemId']);
+      this.itemId = Number.parseInt(params['itemId'], 10);
       this.userId = params['userId'];
       this.listId = params['listId'];
     });

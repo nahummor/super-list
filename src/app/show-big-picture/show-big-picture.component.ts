@@ -9,6 +9,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class ShowBigPictureComponent implements OnInit {
   public imgUrl: string;
   public itemName: string;
+  public loadingGifUrl: string;
+  public doneLoadingPicture: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -16,8 +18,14 @@ export class ShowBigPictureComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.doneLoadingPicture = false;
+    this.loadingGifUrl = 'assets/img/loading.gif';
     this.imgUrl = this.data.imgUrl;
     this.itemName = this.data.itemName;
+  }
+
+  public onDoneLoadingPicture() {
+    this.doneLoadingPicture = true;
   }
 
   public onClose() {

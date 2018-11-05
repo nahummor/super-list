@@ -11,4 +11,17 @@
   .close-button {
     margin-top: 0.5rem;
   }
+
+  .loading-gif {
+    height: 100%;
+    width: 100%;
+  }
+
+  .item-image-hide {
+    display: none;
+  }
+
+  .item-image-show {
+    display: inline;
+  }
 }
