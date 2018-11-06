@@ -15,12 +15,17 @@
              placeholder="תיאור">
     </mat-form-field>
     <div class="measure-amount">
-      <mat-form-field style="width: 50%; margin-left: 0.2rem">
+      <mat-form-field style="width: 33%; margin-left: 0.2rem">
         <input matInput
                formControlName="amount"
                placeholder="כמות">
       </mat-form-field>
-      <mat-form-field style="width: 50%; margin-right: 0.2rem">
+      <mat-form-field style="width: 33%; margin-left: 0.2rem">
+        <input matInput
+               placeholder="מחיר"
+               formControlName="cost">
+      </mat-form-field>
+      <mat-form-field style="width: 33%; margin-right: 0.2rem">
         <mat-select placeholder="יחידת מידה"
                     formControlName="measure">
           <mat-option *ngFor="let measure of measureList"
@@ -30,11 +35,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <mat-form-field>
-      <input matInput
-             placeholder="מחיר"
-             formControlName="cost">
-    </mat-form-field>
+
     <div class="update-item-btn">
       <button (click)="onClickClose()"
               mat-raised-button

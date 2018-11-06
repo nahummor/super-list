@@ -762,7 +762,7 @@ export class SuperListService {
           // );
           this.sendMessage(item).then(payload => {
             payload.subscribe(data => {
-              console.log(data);
+              // console.log(data);
             });
           });
           // this.userUpdateItem = true;

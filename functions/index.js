@@ -39,7 +39,7 @@ const gcs = admin.storage();
 
 const db = admin.firestore();
 const msgIconPath =
-  'https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/superList.PNG?alt=media&token=d8adf246-198b-4602-af06-8efdc92807e5';
+  'https://firebasestorage.googleapis.com/v0/b/superlist-80690.appspot.com/o/superList.PNG?alt=media&token=0eba9a34-0913-408f-90bc-ca4805f6a4b0';
 
 exports.sendMessageBySharedUser = functions.https.onRequest(
   (request, response) => {
