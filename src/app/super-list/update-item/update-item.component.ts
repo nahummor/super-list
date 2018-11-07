@@ -45,7 +45,8 @@ export class UpdateItemComponent implements OnInit {
       description: this.updateItemForm.value.description,
       amount: this.updateItemForm.value.amount,
       measure: this.updateItemForm.value.measure,
-      cost: Number.parseFloat(this.updateItemForm.value.cost)
+      cost: Number.parseFloat(this.updateItemForm.value.cost),
+      pictureUrl: this.updateItem.pictureUrl
     };
 
     if (!this.data.sharedUser) {

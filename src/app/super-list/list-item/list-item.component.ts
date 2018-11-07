@@ -144,7 +144,8 @@ export class ListItemComponent implements OnInit {
       description: this.description,
       cost: this.cost,
       done: this.done,
-      measure: this.measure
+      measure: this.measure,
+      pictureUrl: this.pictureUrl
     };
 
     const dialogRef = this.dialog.open(UpdateItemComponent, {
