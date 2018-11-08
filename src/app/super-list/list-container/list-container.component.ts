@@ -1,3 +1,4 @@
+import { Item } from './../item';
 import { AddItemComponent } from './../add-item/add-item.component';
 import { SnackBarMsgComponent } from './../../messages-box/snack-bar-msg/snack-bar-msg.component';
 import { SuperListService, ItemUpdate } from './../super-list.service';
@@ -6,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SuperList } from '../super-list';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'nm-list-container',
@@ -124,5 +126,23 @@ export class ListContainerComponent implements OnInit, OnDestroy {
 
   public addItemFromList() {
     this.router.navigate(['addItemFromList']);
+  }
+
+  drop(event: CdkDragDrop<Item[]>) {
+    console.log(
+      'Previous Index: ',
+      event.previousIndex,
+      'Curent Index: ',
+      event.currentIndex
+    );
+    this.moveItemInList(event.previousIndex, event.currentIndex);
+  }
+
+  private moveItemInList(previousIndex: number, currentIndex: number) {
+    if (previousIndex !== currentIndex) {
+      const tempItem = this.superList.items[currentIndex];
+      this.superList.items[currentIndex] = this.superList.items[previousIndex];
+      this.superList.items[previousIndex] = tempItem;
+    }
   }
 }

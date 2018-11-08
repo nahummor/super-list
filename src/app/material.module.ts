@@ -19,6 +19,7 @@ import {
   MatMenuModule
 } from '@angular/material';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     MatChipsModule,
     MatProgressBarModule,
     ScrollDispatchModule,
-    MatMenuModule
+    MatMenuModule,
+    DragDropModule
   ],
   exports: [
     MatButtonModule,
@@ -59,7 +61,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     MatChipsModule,
     MatProgressBarModule,
     ScrollDispatchModule,
-    MatMenuModule
+    MatMenuModule,
+    DragDropModule
   ]
 })
 export class MaterialModule {}

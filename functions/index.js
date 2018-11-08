@@ -564,58 +564,6 @@ exports.addItem = functions.https.onRequest((request, response) => {
   });
 });
 
-// exports.addItem_old = functions.https.onRequest((request, response) => {
-//   cors(request, response, () => {
-//     const uid = request.body.uid;
-//     const superList = request.body.superList;
-//     const newItem = request.body.newItem;
-//     const token = request.body.token;
-
-//     admin
-//       .auth()
-//       .verifyIdToken(token)
-//       .then(decodedIdToken => {
-//         // set new item id
-//         if (superList.items.length > 0) {
-//           let index = superList.items.length - 1;
-//           newItem.id = superList.items[index].id + 1;
-//         } else {
-//           newItem.id = 0;
-//         }
-//         // newItem.id = superList.items.length;
-//         superList.items.push(newItem);
-
-//         db.collection('super-list')
-//           .doc(uid)
-//           .collection('user-list', ref => {
-//             return ref.where('name', '==', superList.name);
-//           })
-//           .doc(superList.id)
-//           .update({ items: superList.items })
-//           .then(
-//             () => {
-//               response.status(200).json({
-//                 message: 'פריט חדש נקלט בהצלחה',
-//                 superList: superList
-//               });
-//             },
-//             error => {
-//               response.status(401).json({
-//                 title: 'Error',
-//                 message: 'Error Add new Item',
-//                 error: error
-//               });
-//             }
-//           );
-//       })
-//       .catch(error => {
-//         response
-//           .status(403)
-//           .json({ errorMsg: 'Unauthorized user', error: error });
-//       });
-//   });
-// });
-
 exports.updateSharedItem = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const token = request.body.token;
