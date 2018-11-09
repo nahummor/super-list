@@ -129,12 +129,14 @@ export class ListContainerComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<Item[]>) {
-    console.log(
-      'Previous Index: ',
-      event.previousIndex,
-      'Curent Index: ',
-      event.currentIndex
-    );
+    // console.log(
+    //   'list ID: ',
+    //   this.superList.id,
+    //   'Previous Index: ',
+    //   event.previousIndex,
+    //   'Curent Index: ',
+    //   event.currentIndex
+    // );
     this.moveItemInList(event.previousIndex, event.currentIndex);
   }
 
@@ -143,6 +145,7 @@ export class ListContainerComponent implements OnInit, OnDestroy {
       const tempItem = this.superList.items[currentIndex];
       this.superList.items[currentIndex] = this.superList.items[previousIndex];
       this.superList.items[previousIndex] = tempItem;
+      this.superListSrvs.moveItem(previousIndex, currentIndex);
     }
   }
 }

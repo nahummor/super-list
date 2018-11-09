@@ -740,6 +740,45 @@ export class SuperListService {
     return updatePromise;
   }
 
+  public moveItemBySharedUser(uid: string, list: SuperList) {
+    this.db
+      .collection('super-list')
+      .doc(uid)
+      .collection('user-list')
+      .doc(list.id)
+      .update({ items: list.items })
+      .then(
+        () => {
+          // console.log(list.items);
+        },
+        error => {
+          console.log('Move Items by shared user: ', error);
+        }
+      );
+  }
+
+  public moveItem(previousIndex: number, currentIndex: number) {
+    const prevItem = this.superList.items[previousIndex];
+    const curentItem = this.superList.items[currentIndex];
+    // this.superList.items.splice(previousIndex, 1, curentItem);
+    // this.superList.items.splice(currentIndex, 1, prevItem);
+
+    this.db
+      .collection('super-list')
+      .doc(this.uid)
+      .collection('user-list')
+      .doc(this.superList.id)
+      .update({ items: this.superList.items })
+      .then(
+        () => {
+          // console.log(this.superList.items);
+        },
+        error => {
+          console.log('Move Items: ', error);
+        }
+      );
+  }
+
   public updateItem(item: Item) {
     // console.log('update lis ID: ', this.superList.id);
     // console.log('update item: ', item);
@@ -754,12 +793,6 @@ export class SuperListService {
       .update({ items: this.superList.items })
       .then(
         () => {
-          // this.setItemUpdate(
-          //   itemIndex,
-          //   item.name,
-          //   this.superList.name,
-          //   this.uid
-          // );
           this.sendMessage(item).then(payload => {
             payload.subscribe(data => {
               // console.log(data);

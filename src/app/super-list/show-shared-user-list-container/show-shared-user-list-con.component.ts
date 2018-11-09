@@ -1,3 +1,5 @@
+import { Item } from './../item';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SnackBarMsgComponent } from './../../messages-box/snack-bar-msg/snack-bar-msg.component';
 import { AddItemComponent } from './../add-item/add-item.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -102,5 +104,26 @@ export class ShowSharedUserListConComponent implements OnInit, OnDestroy {
 
   public goToList() {
     this.router.navigate(['showSharedUserList', this.userId, this.userEmail]);
+  }
+
+  drop(event: CdkDragDrop<Item[]>) {
+    // console.log(
+    //   'list ID: ',
+    //   this.superList.id,
+    //   'Previous Index: ',
+    //   event.previousIndex,
+    //   'Curent Index: ',
+    //   event.currentIndex
+    // );
+    this.moveItemInList(event.previousIndex, event.currentIndex);
+  }
+
+  private moveItemInList(previousIndex: number, currentIndex: number) {
+    if (previousIndex !== currentIndex) {
+      const tempItem = this.superList.items[currentIndex];
+      this.superList.items[currentIndex] = this.superList.items[previousIndex];
+      this.superList.items[previousIndex] = tempItem;
+      this.superListService.moveItemBySharedUser(this.userId, this.superList);
+    }
   }
 }

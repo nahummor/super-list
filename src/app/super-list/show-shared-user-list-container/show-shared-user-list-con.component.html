@@ -3,21 +3,30 @@
   <h4 class="main-header">{{superList.description}}</h4>
   <h4 class="main-header">📧 {{userEmail}}</h4>
 
-  <nm-list-item *ngFor="let item of superList.items"
-                [opButton]="true"
-                [id]="item.id"
-                [updateItemId]="updateItemIdArray[item.id]"
-                [name]="item.name"
-                [amount]="item.amount"
-                [description]="item.description"
-                [done]="item.done"
-                [cost]="item.cost"
-                [measure]="item.measure"
-                [sharedUser]=true
-                [userId]="userId"
-                [listId]="listId"
-                [pictureUrl]="item.pictureUrl"></nm-list-item>
-
+  <div cdkDropList
+       (cdkDropListDropped)="drop($event)">
+    <nm-list-item cdkDrag
+                  cdkDragLockAxis="y"
+                  *ngFor="let item of superList.items"
+                  [opButton]="true"
+                  [id]="item.id"
+                  [updateItemId]="updateItemIdArray[item.id]"
+                  [name]="item.name"
+                  [amount]="item.amount"
+                  [description]="item.description"
+                  [done]="item.done"
+                  [cost]="item.cost"
+                  [measure]="item.measure"
+                  [sharedUser]=true
+                  [userId]="userId"
+                  [listId]="listId"
+                  [pictureUrl]="item.pictureUrl">
+      <div class="touch-icon"
+           cdkDragHandle>
+        <mat-icon>touch_app</mat-icon>
+      </div>
+    </nm-list-item>
+  </div>
   <div class="floating-button">
     <button mat-fab
             [matBadge]="itemNotSelected"

@@ -178,17 +178,23 @@ $card-color: #f1f4fd;
     display: none;
   }
 
-  .action-button {
+  .opButton {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    margin: 0.1rem 0.1rem 0.1rem 0.1rem;
-    // @media (min-width: $xs-screen-size) {
-    //   padding-left: 0.8rem;
-    // }
+    justify-content: space-between;
 
-    button {
-      margin-left: 10px;
+    .action-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin: 0.1rem 0.1rem 0.1rem 0.1rem;
+      // @media (min-width: $xs-screen-size) {
+      //   padding-left: 0.8rem;
+      // }
+
+      button {
+        margin-left: 10px;
+      }
     }
   }
 }

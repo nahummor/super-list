@@ -88,7 +88,7 @@ export class ListItemComponent implements OnInit {
           this.superListSrvc.deleteItem(this.id).then(payload => {
             payload.subscribe(data => {
               dialogRef1.close();
-              console.log('delete Item data: ', data);
+              // console.log('delete Item data: ', data);
               const snakBarRef = this.snackBar.openFromComponent(
                 SnackBarMsgComponent,
                 {

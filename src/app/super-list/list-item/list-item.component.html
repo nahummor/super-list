@@ -84,7 +84,9 @@
   </div>
   <div dir="rtl"
        class="l3">
-    <div *ngIf="opButton">
+    <div *ngIf="opButton"
+         class="opButton">
+      <ng-content></ng-content>
       <div class="action-button">
         <button mat-mini-fab
                 matTooltip="מחיקת פריט"

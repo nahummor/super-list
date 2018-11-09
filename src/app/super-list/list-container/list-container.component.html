@@ -1,69 +1,64 @@
 <div class="main-container">
   <h3 class="main-header">{{ superList.name }}</h3>
   <h4 class="main-header">{{ superList.description }}</h4>
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
-    <nm-list-item
-      cdkDrag
-      *ngFor="let item of superList.items"
-      [opButton]="true"
-      [id]="item.id"
-      [updateItemId]="updateItemIdArray[item.id]"
-      [name]="item.name"
-      [amount]="item.amount"
-      [description]="item.description"
-      [done]="item.done"
-      [cost]="item.cost"
-      [measure]="item.measure"
-      [sharedUser]="false"
-      [pictureUrl]="item.pictureUrl"
-    ></nm-list-item>
+  <div cdkDropList
+       (cdkDropListDropped)="drop($event)">
+    <nm-list-item cdkDrag
+                  cdkDragLockAxis="y"
+                  *ngFor="let item of superList.items"
+                  [opButton]="true"
+                  [id]="item.id"
+                  [updateItemId]="updateItemIdArray[item.id]"
+                  [name]="item.name"
+                  [amount]="item.amount"
+                  [description]="item.description"
+                  [done]="item.done"
+                  [cost]="item.cost"
+                  [measure]="item.measure"
+                  [sharedUser]="false"
+                  [pictureUrl]="item.pictureUrl">
+      <div class="touch-icon"
+           cdkDragHandle>
+        <mat-icon>touch_app</mat-icon>
+      </div>
+    </nm-list-item>
   </div>
   <div class="floating-button">
-    <button
-      mat-fab
-      [matBadge]="itemNotSelected"
-      matBadgePosition="before"
-      matBadgeSize="medium"
-      matBadgeColor="accent"
-      color="primary"
-      [matMenuTriggerFor]="menu"
-    >
+    <button mat-fab
+            [matBadge]="itemNotSelected"
+            matBadgePosition="before"
+            matBadgeSize="medium"
+            matBadgeColor="accent"
+            color="primary"
+            [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button
-        mat-menu-item
-        matTooltip="הוספת פריט חדש"
-        matTooltipPosition="above"
-        (click)="addItem()"
-      >
+      <button mat-menu-item
+              matTooltip="הוספת פריט חדש"
+              matTooltipPosition="above"
+              (click)="addItem()">
         <mat-icon>add</mat-icon>
         <span>הוספה</span>
       </button>
-      <button
-        mat-menu-item
-        matTooltip="הוספת פריט מרשימה"
-        matTooltipPosition="above"
-        (click)="addItemFromList()"
-      >
+      <button mat-menu-item
+              matTooltip="הוספת פריט מרשימה"
+              matTooltipPosition="above"
+              (click)="addItemFromList()">
         <mat-icon>playlist_add</mat-icon>
         <span>בחירה</span>
       </button>
-      <button
-        mat-menu-item
-        matTooltip="איפוס כל הפריטים"
-        matTooltipPosition="above"
-        (click)="resetAllItems()"
-      >
+      <button mat-menu-item
+              matTooltip="איפוס כל הפריטים"
+              matTooltipPosition="above"
+              (click)="resetAllItems()">
         <mat-icon>check_box_outline_blank</mat-icon>
         <span>איפוס</span>
       </button>
-      <button
-        mat-menu-item
-        matTooltip="חזרה"
-        matTooltipPosition="above"
-        (click)="goToList()"
-      >
+      <button mat-menu-item
+              matTooltip="חזרה"
+              matTooltipPosition="above"
+              (click)="goToList()">
         <mat-icon>arrow_back</mat-icon>
         <span>חזרה</span>
       </button>
@@ -71,10 +66,10 @@
   </div>
   <div class="floating-sum">
     <mat-chip-list>
-      <mat-chip color="accent" selected>
+      <mat-chip color="accent"
+                selected>
         <span style="margin-right: 0.2rem">ש"ח</span>{{ listSum
-        }}<span style="margin-left: 0.2rem">סה"כ</span></mat-chip
-      >
+        }}<span style="margin-left: 0.2rem">סה"כ</span></mat-chip>
     </mat-chip-list>
   </div>
 </div>
